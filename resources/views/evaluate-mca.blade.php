@@ -1,5 +1,5 @@
 @extends('layouts/admin')
-@section('title', 'Listed Students')
+@section('title', 'Listed MCA Students')
 @section('content')
     <!-- Begin Page Content -->
     <div class="container">
@@ -21,22 +21,121 @@
             </div>
         @endif
         <div class="container card p-4">
-            <h4 class="mb-3 fw-bold text-bj">Listed Students</h4>
+            <h4 class="mb-3 fw-bold text-bj">Listed MCA Students</h4>
             <div class="row">
                 <div class="col">
                     <table class="table">
                         <thead>
+                            <th>Date</th>
+                            <th>Reg no</th>
                             <th>Name</th>
-                            <th>Enroll No</th>
-                            <th>Rank</th>
-                            <th>Marks</th>
-                            <th>Exam</th>
-                            <th>Mode</th>
-                            <th>Franchise</th>
+                            <th>Group</th>
+                            <th>Presentation</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
-                            @foreach ($students as $s)
+                            <tr>
+                                <td>17-03-24</td>
+                                <td>202116036</td>
+                                <td>Ritik Roshan</td>
+                                <td>Group 10</td>
+                                <td>Progress Presentation I</td>
+                                <td>
+                                    <div class="more-btn">
+                                        <button class="dropdown" type="button" id="dropdownMenuButton"
+                                            data-toggle="dropdown">
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <button class="dropdown-item view-button" data-toggle="modal"
+                                                data-target="#viewModal">View</button>
+                                            <button class="dropdown-item" data-toggle="modal"
+                                                data-target="#editModal">Edit</button>
+                                            <button class="dropdown-item" data-toggle="modal"
+                                                data-target="#deleteModal">Delete</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>17-03-24</td>
+                                <td>202116030</td>
+                                <td>Moyuk Rudra</td>
+                                <td>Group 5</td>
+                                <td>Progress Presentation I</td>
+                                <td>
+                                    <div class="more-btn">
+                                        <button class="dropdown" type="button" id="dropdownMenuButton"
+                                            data-toggle="dropdown">
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <button class="dropdown-item view-button" data-toggle="modal"
+                                                data-target="#viewModal">View</button>
+                                            <button class="dropdown-item" data-toggle="modal"
+                                                data-target="#editModal">Edit</button>
+                                            <button class="dropdown-item" data-toggle="modal"
+                                                data-target="#deleteModal">Delete</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>17-03-24</td>
+                                <td>202116030</td>
+                                <td>Sujal Adhikari</td>
+                                <td>Group 11</td>
+                                <td>Progress Presentation I</td>
+                                <td>
+                                    <div class="more-btn">
+                                        <button class="dropdown" type="button" id="dropdownMenuButton"
+                                            data-toggle="dropdown">
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <button class="dropdown-item view-button" data-toggle="modal"
+                                                data-target="#viewModal">View</button>
+                                            <button class="dropdown-item" data-toggle="modal"
+                                                data-target="#editModal">Edit</button>
+                                            <button class="dropdown-item" data-toggle="modal"
+                                                data-target="#deleteModal">Delete</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>17-03-24</td>
+                                <td>202116033</td>
+                                <td>Kunsang Moktan</td>
+                                <td>Group 4</td>
+                                <td>Progress Presentation I</td>
+                                <td>
+                                    <div class="more-btn">
+                                        <button class="dropdown" type="button" id="dropdownMenuButton"
+                                            data-toggle="dropdown">
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                            <i class="fa fa-circle" aria-hidden="true"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <button class="dropdown-item view-button" data-toggle="modal"
+                                                data-target="#viewModal">View</button>
+                                            <button class="dropdown-item" data-toggle="modal"
+                                                data-target="#editModal">Edit</button>
+                                            <button class="dropdown-item" data-toggle="modal"
+                                                data-target="#deleteModal">Delete</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {{-- @foreach ($students as $s)
                                 <tr>
                                     <td>{{ $s['name'] }}</td>
                                     <td>{{ $s['regno'] }}</td>
@@ -65,7 +164,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                     <div class="row">

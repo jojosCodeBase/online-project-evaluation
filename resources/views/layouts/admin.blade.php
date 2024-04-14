@@ -9,10 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title') | Student Rank Listing Portal</title>
+    <title>@yield('title') | Online Project Evaluation Portal</title>
 
     <!-- Custom fonts for this template-->
-    <link href="{{ asset('assets/images/logo.png') }}" rel="icon" type="image">
+    <link href="{{ asset('assets/images/headerlogo.png') }}" rel="icon" type="image">
     <link href="{{ asset('assets/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
 
     <!-- Custom styles for this template-->
@@ -38,10 +38,10 @@
         <ul class="navbar-nav bg-custom sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <div class="border">
+            <div class="border" style="background-color: #fff">
                 <a class="sidebar-brand d-flex align-items-center justify-content-center"
                     href="{{ route('dashboard') }}">
-                    <img src="{{ asset('assets/images/logo-full-side.png') }}" alt="">
+                    <img src="{{ asset('assets/images/smitlogo.png') }}" alt="" class="img-fluid">
                 </a>
             </div>
 
@@ -57,19 +57,31 @@
                     <span class="fs-6">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('add') ? 'active' : ''}}">
+            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('add') ? 'active' : ''}}">
                 <a class="nav-link d-flex align-items-center" href="{{ route('add') }}">
                     <i class="bi bi-person-fill-up fs-6 pe-2"></i>
-                    <span class="fs-6">List New Student</span>
+                    <span class="fs-6">Add Student</span>
+                </a>
+            </li> --}}
+            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('add') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('add') }}">
+                    <i class="bi bi-person-fill-up fs-6 pe-2"></i>
+                    <span class="fs-6">Add Faculty</span>
+                </a>
+            </li> --}}
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.MCA') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('show.MCA') }}">
+                    <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
+                    <span class="fs-6">Evaluate MCA Students</span>
                 </a>
             </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('show') }}">
-                    <i class="bi bi-bar-chart-fill fs-6 pe-2"></i>
-                    <span class="fs-6">Show Listed Students</span>
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.BCA') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('show.BCA') }}">
+                    <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
+                    <span class="fs-6">Evaluate BCA Students</span>
                 </a>
             </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('franchise-view') ? 'active' : ''}}">
+            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('franchise-view') ? 'active' : ''}}">
                 <a class="nav-link d-flex align-items-center" href="{{ route('franchise-view') }}">
                     <i class="bi bi-building-fill-add fs-6 pe-2"></i>
                     <span class="fs-6">Manage Franchise</span>
@@ -80,7 +92,7 @@
                     <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
                     <span class="fs-6">Manage Exam Category</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
         <!-- End of Sidebar -->
 
@@ -133,7 +145,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline small text-dark">{{ Auth::user()->name }}</span>
                                 <img class="img-profile rounded-circle"
-                                    src="{{ asset('assets/images/logo.png') }}">
+                                    src="{{ asset('assets/images/avatar.jpg') }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

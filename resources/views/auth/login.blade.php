@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>BISJHINTUS Student Listing - Admin Login</title>
+    <title>Online Project Evaluation - Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
@@ -19,8 +19,8 @@
             <div class="col-xl-5 col-lg-8 col-md-8">
                 <div class="card shadow-lg">
                     <div class="card-body p-xl-5 p-md-4 p-4">
-                        <h2 class="fw-bold text-secondary mt-3 mb-3 text-center">Admin Login</h2>
-                        <p class="text-secondary mb-4 text-center">BISJHINTUS Student Listing Admin</p>
+                        <h2 class="fw-bold text-secondary mt-3 mb-1 text-center">Welcome Back!</h2>
+                        <p class="text-secondary mb-4 text-center">Login with your account to continue</p>
                         <form action="{{ route('login') }}" method="POST">
                             @csrf
                             <div class="mb-3">

@@ -193,7 +193,7 @@ class DashboardController extends Controller
             return back()->with('error', 'Some error occured in updating student details');
     }
 
-    public function showStudents()
+    public function showBCAStudents()
     {
         $students = Students::orderBy('created_at', 'desc')->paginate(10);
 
@@ -205,7 +205,21 @@ class DashboardController extends Controller
                 $s['franchise'] = $name[0];
             }
         }
-        return view('listed-students', ['students' => $students]);
+        return view('evaluate-bca', ['students' => $students]);
+    }
+    public function showMCAStudents()
+    {
+        $students = Students::orderBy('created_at', 'desc')->paginate(10);
+
+        foreach ($students as $s) {
+            if ($s['franchise'] == 'Global')
+                continue;
+            else {
+                $name = Franchise::where('name', $s['franchise'])->pluck('name');
+                $s['franchise'] = $name[0];
+            }
+        }
+        return view('evaluate-mca', ['students' => $students]);
     }
 
     public function franchiseView()

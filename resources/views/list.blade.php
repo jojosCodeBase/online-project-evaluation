@@ -21,7 +21,7 @@
             </div>
         @endif
         <div class="container card p-4 border-0 shadow rounded">
-            <h4 class="text-bj mb-3 fw-bold">List New Student</h4>
+            <h4 class="text-bj mb-3 fw-bold">Add Student</h4>
             <div class="row">
                 <div class="col">
                     <form action="{{ route('list-student') }}" class="needs-validation" method="POST" enctype="multipart/form-data" novalidate >

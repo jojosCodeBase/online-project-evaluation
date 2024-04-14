@@ -52,7 +52,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/add-student/update', [DashboardController::class, 'updateStudent'])->name('update-student');
 
     Route::post('/admin/add-student', [DashboardController::class, 'addStudentView'])->name('add');
-    Route::get('/admin/show-students', [DashboardController::class, 'showStudents'])->name('show');
+    Route::get('/admin/show-students/BCA', [DashboardController::class, 'showBCAStudents'])->name('show.BCA');
+    Route::get('/admin/show-students/MCA', [DashboardController::class, 'showMCAStudents'])->name('show.MCA');
 
     // ajax
     Route::get('/admin/fetchFranchise/', [DashboardController::class, 'getFranchises'])->name('getFranchises');
