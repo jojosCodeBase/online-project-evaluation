@@ -1,0 +1,127 @@
+.bg-bj {
+    background-color: #39acc9;
+}
+
+.text-bj {
+    color: #39acc9;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.card {
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.card {
+    background-color: #fff;
+    /* padding: 20px; */
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.inner-card {
+    position: relative;
+    /* Ensure positioning context for absolute positioning */
+}
+
+.custom-span {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.custom-span::before {
+    content: attr(data-content);
+    position: absolute;
+    width: 180%;
+    height: 40px;
+    background: #39acc9;
+    transform: rotate(-45deg) translateY(-10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.2em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-badge .badge {
+    background-color: #39acc9;
+    font-size: 1.3rem;
+    letter-spacing: 5px;
+    max-width: 270px;
+    text-align: center;
+}
+
+.rank {
+    background-color: #39acc9;
+    width: 100px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.rank x {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    letter-spacing: 3px;
+}
+
+.btn-bj {
+    color: #fff;
+    background-color: #39acc9;
+    border-color: #39acc9
+}
+
+
+.btn-bj:hover {
+    color: #39acc9;
+    background-color: transparent;
+    border-color: #39acc9;
+}
+
+.inner-card img {
+    width: 100px;
+    height: 100px;
+}
+
+.row-divider {
+    height: 2px;
+    width: auto;
+    background-color: #08caec;
+}
+
+.card {
+    transition: 0.5s;
+}
+
+.expanded .card-body {
+    height: auto;
+}
+
+.hidden-items {
+    display: none;
+}
+
+.visible {
+    display: block;
+}

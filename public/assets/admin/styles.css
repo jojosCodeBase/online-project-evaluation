@@ -1,0 +1,239 @@
+/* custom styles start */
+.bg-custom {
+    /* background-color: #39acc9; */
+    background-color: #f1f1f1;
+}
+
+.bg-bj{
+    background-color: #39acc9;
+}
+
+/*
+.sidebar .nav-item .nav-link{
+    color: red;
+} */
+
+.small {
+    font-size: .9rem;
+}
+
+#alertsDropdown,
+#messagesDropdown {
+    font-size: 1rem;
+}
+
+#userDropdown span {
+    font-size: 1rem;
+}
+
+.collapse-item {
+    font-size: .9rem;
+    font-weight: bold;
+}
+
+.dropdown-item {
+    font-size: 1rem;
+}
+
+/* .collapsed span{
+    font-weight: bold;
+} */
+
+.custom-border {
+    border: 2px solid black;
+}
+
+/* .dark-blue{
+    background-color: #00072D;
+    background-color: #051650;
+} */
+
+#wrapper ul .nav-link,
+#wrapper ul .nav-link i {
+    color: black;
+}
+
+#wrapper ul .nav-item a {
+    color: black;
+    font-weight: 500;
+}
+
+.sidebar .nav-item{
+    margin: 0px 10px 0px 10px;
+}
+
+.sidebar .nav-item a:hover {
+    /* cursor: pointer; */
+    border-radius: 10px;
+    /* color: white; */
+    background-color: #fff;
+}
+
+.div-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.btn-custom {
+    background-color: #39acc9;
+}
+
+.sidebar .active {
+    background-color: #39acc9;
+    border-radius: 10px;
+}
+
+.sidebar .active a:hover {
+    background-color: #39acc9;
+    border-radius: 10px;
+}
+
+.sidebar .active span{
+    color: #fff;
+    font-weight: 400;
+}
+
+.reviwer-name {
+    font-weight: bold;
+}
+
+.badge {
+    font-size: 0.8rem;
+}
+
+.badge-pending {
+    border: 2px solid orange;
+    color: orange;
+}
+
+.badge-declined {
+    border: 2px solid red;
+    color: red;
+}
+
+.badge-published {
+    border: 2px solid green;
+    color: green;
+}
+
+.rating {
+    font-weight: bold;
+}
+
+.more-btn i {
+    font-size: 5px;
+}
+
+.more-btn button {
+    background: transparent;
+    border: none;
+}
+
+.page-active span {
+    background-color: #4e73df;
+    color: #fff;
+}
+
+.input {
+    border-radius: 0px;
+}
+.copyright span{
+    font-size: 1rem;
+}
+.progress{
+    height: 10px;
+}
+
+.sidebar-dark .sidebar-heading{
+    color: rgb(134, 133, 133);
+    font-size: 0.8rem;
+}
+
+.all-franchise-card{
+    margin-bottom: 50px;
+    background-color: red;
+}
+
+
+/* review card */
+.content {
+    overflow: hidden;
+    max-height: 100px; /* Set your desired height */
+    transition: max-height 0.3s ease-out;
+    text-align: justify;
+}
+
+.read-more-btn {
+    cursor: pointer;
+    color: blue;
+}
+
+.read-more-btn:hover{
+    text-decoration: underline;
+}
+
+.black-carousel-control span{
+    /* color: black; */
+    background: red;
+}
+
+.modal-body .title{
+    font-weight: bold;
+    color: #555;
+}
+.mobile-view-btn{
+    margin-top: 50px;
+}
+
+.preview-image {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.review-card{
+    max-width: 250px;
+}
+
+.form-control:focus-within{
+    box-shadow: none;
+    border: 2px solid #39acc9;
+}
+
+.text-red{
+    color: red;
+}
+
+.teachers-card .franchise-card{
+    height: 50vh;
+}
+
+
+.text-bj{
+    color: #39acc9;
+}
+
+
+.btn-bj {
+    color: #fff;
+    background-color: #39acc9;
+    border-color: #39acc9
+}
+
+.btn-bj:hover {
+    color: #fff;
+    background-color: #0b5ed7;
+    border-color: #0a58ca
+}
+
+
+.modal-dialog,
+.modal-content{
+    border: none;
+}
+
+.value{
+    color: #000;
+    /* color: #39acc9; */
+}
