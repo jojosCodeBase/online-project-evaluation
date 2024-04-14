@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>BISJHINTUS Student Listing - Admin Register</title>
+    <title>Online Project Evaluation Portal - Admin Register</title>
     <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
@@ -20,7 +20,7 @@
                 <div class="card shadow-lg">
                     <div class="card-body p-xl-5 p-md-4 p-4">
                         <h2 class="fw-bold text-secondary mt-3 mb-3 text-center">Admin Register</h2>
-                        <p class="text-secondary mb-4 text-center">BISJHINTUS Student Listing Admin</p>
+                        <p class="text-secondary mb-4 text-center">Online Project Evaluation Portal Admin</p>
                         <form action="{{ route('register') }}" method="POST">
                             @csrf
                             <div class="mb-3">
