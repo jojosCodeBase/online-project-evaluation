@@ -38,7 +38,7 @@
                                 <div class="font-weight-bold text-bj text-uppercase">
                                     Groups Assigned
                                 </div>
-                                <div class="h4 mb-0 mt-2 fw-bold text-gray-800">{{ $count }}</div>
+                                <div class="h4 mb-0 mt-2 fw-bold text-gray-800">5</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-graduation-cap fa-2x text-bj"></i>
@@ -72,7 +72,7 @@
                                 <div class="font-weight-bold text-bj text-uppercase">
                                     Projects Evaluated
                                 </div>
-                                <div class="h4 mb-0 mt-2 fw-bold text-gray-800">{{ $count }}</div>
+                                <div class="h4 mb-0 mt-2 fw-bold text-gray-800">15</div>
                             </div>
                             <div class="col-auto">
                                 {{-- <i class="fas fa-check fa-2x text-bj"></i> --}}
