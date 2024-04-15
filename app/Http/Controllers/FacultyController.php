@@ -3,23 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Franchise;
 use App\Models\Students;
+use App\Models\Franchise;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class FacultyController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard', ['count' => Students::count(), 'franchise' => Franchise::orderBy('name')->paginate(5)]);
-    }
-    public function studentIndex()
-    {
-        return view('student-dashboard', ['count' => Students::count(), 'franchise' => Franchise::orderBy('name')->paginate(5)]);
-    }
-    public function facultyIndex()
-    {
-        return view('faculty-dashboard', ['count' => Students::count(), 'franchise' => Franchise::orderBy('name')->paginate(5)]);
+        return view('faculty.dashboard', ['count' => Students::count(), 'franchise' => Franchise::orderBy('name')->paginate(5)]);
     }
 
     public function addStudentView()
@@ -213,7 +205,7 @@ class DashboardController extends Controller
                 $s['franchise'] = $name[0];
             }
         }
-        return view('admin.evaluate-bca', ['students' => $students]);
+        return view('faculty.evaluate-bca', ['students' => $students]);
     }
     public function showMCAStudents()
     {
@@ -227,12 +219,12 @@ class DashboardController extends Controller
                 $s['franchise'] = $name[0];
             }
         }
-        return view('admin.evaluate-mca', ['students' => $students]);
+        return view('faculty.evaluate-mca', ['students' => $students]);
     }
 
     public function groupsAssigned()
     {
-        return view('admin.groups-assigned', ['franchises' => Franchise::orderBy('name')->paginate(2)]);
+        return view('faculty.groups-assigned', ['franchises' => Franchise::orderBy('name')->paginate(2)]);
     }
 
     public function addFranchise(Request $r)

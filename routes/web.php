@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -35,12 +36,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // routes for other dashboard operations
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('/student/dashboard', [DashboardController::class, 'studentIndex'])->name('student.dashboard');
+
+    Route::get('/faculty/dashboard', [FacultyController::class, 'index'])->name('faculty.dashboard');
+
+
+    Route::get('/admin/groups-assigned', [DashboardController::class, 'groupsAssigned'])->name('admin.groups-assigned');
+    Route::get('/faculty/groups-assigned', [FacultyController::class, 'groupsAssigned'])->name('faculty.groups-assigned');
+
+    Route::get('/admin/show-students/BCA', [DashboardController::class, 'showBCAStudents'])->name('show.BCA');
+    Route::get('/admin/show-students/MCA', [DashboardController::class, 'showMCAStudents'])->name('show.MCA');
+
+    Route::get('/faculty/show-students/BCA', [FacultyController::class, 'showBCAStudents'])->name('faculty.show.BCA');
+    Route::get('/faculty/show-students/MCA', [FacultyController::class, 'showMCAStudents'])->name('faculty.show.MCA');
+
+
+
+
     Route::get('/admin/add-student', [DashboardController::class, 'addStudentView'])->name('add-view');
-
-
-    Route::get('/admin/franchise', [DashboardController::class, 'franchiseView'])->name('franchise-view');
-
-
     Route::post('/admin/franchise', [DashboardController::class, 'addFranchise'])->name('add-franchise');
 
     Route::get('/admin/manage-category', [DashboardController::class, 'manageCategory'])->name('manage-category');
@@ -52,8 +65,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/add-student/update', [DashboardController::class, 'updateStudent'])->name('update-student');
 
     Route::post('/admin/add-student', [DashboardController::class, 'addStudentView'])->name('add');
-    Route::get('/admin/show-students/BCA', [DashboardController::class, 'showBCAStudents'])->name('show.BCA');
-    Route::get('/admin/show-students/MCA', [DashboardController::class, 'showMCAStudents'])->name('show.MCA');
+
 
     // ajax
     Route::get('/admin/fetchFranchise/', [DashboardController::class, 'getFranchises'])->name('getFranchises');

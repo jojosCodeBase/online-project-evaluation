@@ -28,8 +28,22 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        $user = $request->user();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        switch ($user->role) {
+            case 0: // Admin
+                return redirect()->route('dashboard'); // Replace 'admin.dashboard' with your admin dashboard route name
+                break;
+            case 1: // Faculty
+                return redirect()->route('faculty.dashboard'); // Replace 'faculty.dashboard' with your faculty dashboard route name
+                break;
+            case 2: // Student
+                return redirect()->route('student.dashboard'); // Replace 'student.dashboard' with your student dashboard route name
+                break;
+            default:
+                return redirect(RouteServiceProvider::HOME);
+        }
+        // return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

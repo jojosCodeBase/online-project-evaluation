@@ -51,8 +51,8 @@
             <div class="sidebar-heading mb-2 mt-3">MAIN MENU</div>
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('dashboard') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('dashboard') }}">
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.dashboard') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('faculty.dashboard') }}">
                     <i class="bi bi-house-fill pr-3 fs-6 pe-2"></i>
                     <span class="fs-6">Dashboard</span>
                 </a>
@@ -67,24 +67,24 @@
                 <a class="nav-link d-flex align-items-center" href="{{ route('add') }}">
                     <i class="bi bi-person-fill-up fs-6 pe-2"></i>
                     <span class="fs-6">Add Faculty</span>
-                </a>
+                </a>`
             </li> --}}
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.MCA') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('show.MCA') }}">
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.show.MCA') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('faculty.show.MCA') }}">
                     <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
                     <span class="fs-6">Evaluate MCA Students</span>
                 </a>
             </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.BCA') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('show.BCA') }}">
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.show.BCA') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('faculty.show.BCA') }}">
                     <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
                     <span class="fs-6">Evaluate BCA Students</span>
                 </a>
             </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('admin.groups-assigned') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('admin.groups-assigned') }}">
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.groups-assigned') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('faculty.groups-assigned') }}">
                     <i class="bi bi-people-fill fs-6 pe-2"></i>
-                    <span class="fs-6">Manage Groups</span>
+                    <span class="fs-6">Groups Assigned</span>
                 </a>
             </li>
             {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('manage-category') ? 'active' : ''}}">
