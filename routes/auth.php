@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
+    Route::get('student-register', [RegisteredUserController::class, 'studentCreate'])
+                ->name('student-register');
+    Route::get('faculty-register', [RegisteredUserController::class, 'facultyCreate'])
+                ->name('faculty-register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 

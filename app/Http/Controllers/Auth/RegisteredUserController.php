@@ -20,10 +20,24 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        if(count(User::all()) >= 1)
-            return redirect()->route('login');
-        else
-            return view('auth.register');
+        return view('auth.register');
+        // if(count(User::all()) >= 1)
+        //     return redirect()->route('login');
+        // else
+    }
+    public function studentCreate()
+    {
+        return view('auth.student-register');
+        // if(count(User::all()) >= 1)
+        //     return redirect()->route('login');
+        // else
+    }
+    public function facultyCreate()
+    {
+        return view('auth.faculty-register');
+        // if(count(User::all()) >= 1)
+        //     return redirect()->route('login');
+        // else
     }
 
     /**
