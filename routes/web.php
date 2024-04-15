@@ -41,7 +41,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/faculty/dashboard', [FacultyController::class, 'index'])->name('faculty.dashboard');
 
 
-    Route::get('/admin/groups-assigned', [DashboardController::class, 'groupsAssigned'])->name('admin.groups-assigned');
+    Route::get('/admin/groups-assigned', [DashboardController::class, 'manageGroups'])->name('admin.manage-groups');
     Route::get('/faculty/groups-assigned', [FacultyController::class, 'groupsAssigned'])->name('faculty.groups-assigned');
 
     Route::get('/admin/show-students/BCA', [DashboardController::class, 'showBCAStudents'])->name('show.BCA');
@@ -50,7 +50,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/faculty/show-students/BCA', [FacultyController::class, 'showBCAStudents'])->name('faculty.show.BCA');
     Route::get('/faculty/show-students/MCA', [FacultyController::class, 'showMCAStudents'])->name('faculty.show.MCA');
 
-
+    Route::post('/admin/admin/add-group/', [DashboardController::class, 'addGroup'])->name('add-group');
 
 
     Route::get('/admin/add-student', [DashboardController::class, 'addStudentView'])->name('add-view');
@@ -63,6 +63,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/admin/add-student/add', [DashboardController::class, 'listStudent'])->name('list-student');
     Route::post('/admin/add-student/update', [DashboardController::class, 'updateStudent'])->name('update-student');
+    Route::post('/admin/franchise/update', [DashboardController::class, 'addGroup'])->name('update-franchise');
 
     Route::post('/admin/add-student', [DashboardController::class, 'addStudentView'])->name('add');
 
@@ -76,7 +77,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/getCategories/', [DashboardController::class, 'getCategories'])->name('getCategories');
 
     Route::get('/admin/franchise/getInfo/{id}', [DashboardController::class, 'getFranchiseInfo'])->name('get-franchise-info');
-    Route::post('/admin/franchise/update/', [DashboardController::class, 'updateFranchise'])->name('update-franchise');
     Route::delete('/admin/franchise-delete/', [DashboardController::class, 'deleteFranchise'])->name('delete-franchise');
 
 });

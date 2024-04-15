@@ -23,16 +23,23 @@
         @endif
     </div>
     <div class="container">
-        {{-- <div class="row">
-            <div class="col card p-4 border-0 shadow rounded">
-                <h4 class="text-bj mb-3 fw-bold">List New Franchise</h4>
+        <div class="row d-flex justify-content-end">
+            <div class="col-3 d-flex justify-content-end pe-0">
+                <input type="search" class="form-control" placeholder="Search group">
+            </div>
+            <div class="col-auto d-flex justify-content-end">
+                <button type="button" class="btn btn-bj" data-toggle="modal" data-target="#addModal">Add Group +</button>
+            </div>
+        </div>
+            {{-- <div class="col card p-4 border-0 shadow rounded">
+                <h4 class="text-bj mb-3 fw-bold">Add Group</h4>
                 <form action="{{ route('add-franchise') }}" class="needs-validation" method="POST" novalidate>
                     @csrf
                     <div class="row">
                         <div class="col">
-                            <label class="form-label">Franchise Name</label>
+                            <label class="form-label">Group Name</label>
                             <input type="text" name="franchise_name" class="form-control"
-                                placeholder="Eg: Bisjhintus Ooty" required>
+                                placeholder="Eg: Group 4" required>
                         </div>
                         <div class="col">
                             <label class="form-label">Franchise URL</label>
@@ -44,12 +51,11 @@
                         </div>
                     </div>
                 </form>
-            </div>
-        </div> --}}
+            </div> --}}
         <!-- Assigned Groups -->
         <div class="row mt-4">
             <div class="col card p-4 border-0 shadow rounded">
-                <h4 class="text-bj fw-bold">Assigned Groups</h4>
+                <h4 class="text-bj fw-bold mb-3">Listed Groups</h4>
                 <table class="table">
                     <thead>
                         <th>Group Name</th>
@@ -113,7 +119,7 @@
                                         <i class="fa fa-circle" aria-hidden="true"></i>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item" data-toggle="modal" data-target="#editModalX">Edit</button>
+                                        <button class="dropdown-item" data-toggle="modal" data-target="#editModal">Edit</button>
                                         <button class="dropdown-item" data-toggle="modal" data-target="#deleteModalX">Delete</button>
                                     </div>
                                 </div>
@@ -152,7 +158,58 @@
         </div>
     </div>
 
-    {{-- franchise edit modal start --}}
+    {{-- group edit modal start --}}
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-bj">
+                    <h5 class="modal-title text-light fw-bold" id="addModalLabel">Add Group</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('add-group') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col-12 mb-3">
+                                <label class="title form-label">Group Name</label>
+                                <input type="text" name="group_name" class="form-control" id="group_name" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="title form-label">Course</label>
+                                <select name="course" id="course" class="form-select">
+                                    <option value="" selected>Select course from list</option>
+                                    <option value="MCA">MCA</option>
+                                    <option value="BCA">BCA</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="title form-label">Project Guide</label>
+                                <input type="text" name="guide" id="guide" class="form-control" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="title form-label">Members</label>
+                                <input type="text" placeholder="Member 1" class="form-control" name="member[]" id="member">
+                                <div id="members-container" class="mt-2">
+                                    <!-- Members will be dynamically added here -->
+                                </div>
+                                <button class="btn btn-primary mt-2" id="add-member-btn">Add Member</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-bj">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- group add modal end --}}
+
+    {{-- group edit modal start --}}
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -186,9 +243,9 @@
             </div>
         </div>
     </div>
-    {{-- franchise edit modal end --}}
+    {{-- group edit modal end --}}
 
-    {{-- franchise delete modal start --}}
+    {{-- group delete modal start --}}
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -219,5 +276,23 @@
             </div>
         </div>
     </div>
-    {{-- franchise delete modal end --}}
+    {{-- group delete modal end --}}
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function(){
+        // Counter for dynamically created members input fields
+        let memberCount = 1;
+
+        // Add click event handler for the "Add Member" button
+        $('#add-member-btn').click(function(){
+            // Append a new input field for the member
+            $('#members-container').append(`
+                <input type="text" name="member${memberCount}" class="form-control mb-2" placeholder="Member ${memberCount + 1}" required>
+            `);
+            // Increment memberCount for next member
+            memberCount++;
+        });
+    });
+</script>
 @endsection

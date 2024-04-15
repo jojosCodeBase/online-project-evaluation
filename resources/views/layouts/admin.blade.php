@@ -81,8 +81,8 @@
                     <span class="fs-6">Evaluate BCA Students</span>
                 </a>
             </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('admin.groups-assigned') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('admin.groups-assigned') }}">
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('admin.manage-groups') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('admin.manage-groups') }}">
                     <i class="bi bi-people-fill fs-6 pe-2"></i>
                     <span class="fs-6">Manage Groups</span>
                 </a>

@@ -29,6 +29,62 @@
                                 <label class="form-label">Email</label>
                                 <input type="email" class="form-control" name="email" value="{{ $user->email }}">
                             </div>
+                            <!-- Additional fields -->
+                            <div class="form-group">
+                                <label class="form-label">Course</label>
+                                <select class="form-control" name="course">
+                                    <option value="BCA">BCA</option>
+                                    <option value="MCA">MCA</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Teacher Guide</label>
+                                <input type="text" class="form-control" name="teacher_guide">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Group Members</label>
+                                <input type="text" class="form-control" name="group_members">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Project Topic</label>
+                                <input type="text" class="form-control" name="project_topic">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Year</label>
+                                <input type="text" class="form-control" name="year">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Semester</label>
+                                <input type="text" class="form-control" name="semester">
+                            </div>
+                            <!-- End of additional fields -->
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-bj w-25" value="Save">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Profile Information</h4>
+                        <p>Update your account's profile information and email address.</p>
+                        <form method="post" action="{{ route('profile.update') }}">
+                            @csrf
+                            @method('patch')
+
+                            <div class="form-group">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" value="{{ $user->email }}">
+                            </div>
                             <div class="form-group">
                                 <input type="submit" class="btn btn-bj w-25" value="Save">
                             </div>
@@ -75,6 +131,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

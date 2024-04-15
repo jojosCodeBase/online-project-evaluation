@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GroupsMembers;
 use App\Models\User;
+use App\Models\Groups;
 use App\Models\Category;
 use App\Models\Students;
 use App\Models\Franchise;
@@ -10,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
@@ -280,27 +283,51 @@ class DashboardController extends Controller
         return view('admin.evaluate-mca', ['students' => $students]);
     }
 
-    public function groupsAssigned()
+    public function manageGroups()
     {
-        return view('admin.groups-assigned', ['franchises' => Franchise::orderBy('name')->paginate(2)]);
+        return view('admin.manage-groups', ['franchises' => Franchise::orderBy('name')->paginate(2)]);
     }
 
-    public function addFranchise(Request $r)
+    public function addGroup(Request $r)
     {
-        $r->validate([
-            'franchise_name' => 'required|string|max:50',
-            'url' => 'required|string',
+        $rules = [
+            'group_name' => 'required|string|max:255',
+            'course' => 'required|string|in:MCA,BCA',
+            'guide' => 'required|string|max:255',
+            'member.*' => 'required|string|max:255', // This ensures all members are required
+        ];
+
+        $messages = [
+            'member.*.required' => 'All members are required.',
+        ];
+
+        // Validate the request data
+        $validator = Validator::make($r->all(), $rules, $messages);
+
+        // Check if the validation fails
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $group = Groups::create([
+            'group_name' => $r->group_name,
+            'course' => $r->course,
+            'guide' => $r->guide
         ]);
 
-        $franchise = Franchise::create([
-            'name' => $r->franchise_name,
-            'url' => $r->url,
-        ]);
+        // Assuming 'member' is an array of members' names
+        foreach ($r->member as $memberName) {
+            GroupsMembers::create([
+                'group_id' => $group->id,
+                'name' => $memberName
+            ]);
+        }
 
-        if ($franchise)
-            return back()->with('success', 'Franchise Added Successfully');
+
+        if ($group)
+            return back()->with('success', 'Group Added Successfully');
         else
-            return back()->with('error', 'Some error occured in adding franchise');
+            return back()->with('error', 'Some error occured in adding group');
     }
 
     public function getFranchises()
