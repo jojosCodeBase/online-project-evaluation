@@ -81,4 +81,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 });
 
-require __DIR__.'/auth.php';
+
+Route::post('faculty/register', [DashboardController::class, 'storeFaculty'])->name('faculty.register');
+Route::post('student/register', [DashboardController::class, 'storeStudent'])->name('student.register');
+
+require __DIR__ . '/auth.php';

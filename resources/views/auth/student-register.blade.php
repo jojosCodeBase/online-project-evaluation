@@ -10,23 +10,40 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/login-style.css') }}">
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/headerlogo.png') }}">
 </head>
 
 <body>
     <div class="container">
         <div class="row d-flex justify-content-center align-items-center vh-100">
             <div class="col-xl-5 col-lg-8 col-md-8">
+                @if (session('success'))
+                    <div id="alertMessage" class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div id="alertMessage" class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div id="alertMessage" class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
                 <div class="card shadow-lg">
                     <div class="card-body p-xl-5 p-md-4 p-4">
                         <h2 class="fw-bold text-secondary mt-3 mb-3 text-center">Student Register</h2>
                         <p class="text-secondary mb-4 text-center">Online Project Evaluation Portal Student</p>
-                        <form action="{{ route('register') }}" method="POST">
+                        <form action="{{ route('student.register') }}" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Registration number" name="regno"
-                                        aria-describedby="basic-addon1" required>
+                                    <input type="text" class="form-control" placeholder="Registration number"
+                                        name="regno" aria-describedby="basic-addon1" required>
                                 </div>
                                 @error('regno')
                                     <span class="text-danger fs-6">{{ $message }}</span>
@@ -52,7 +69,8 @@
                             </div>
                             <div class="mb-3">
                                 <div class="input-group">
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                                    <input type="password" class="form-control" name="password" id="password"
+                                        placeholder="Password" required>
                                 </div>
                                 @error('password')
                                     <span class="text-danger fs-6">{{ $message }}</span>
@@ -60,7 +78,8 @@
                             </div>
                             <div class="mb-3">
                                 <div class="input-group">
-                                    <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm pasword" required>
+                                    <input type="password" class="form-control" name="password_confirmation"
+                                        id="password_confirmation" placeholder="Confirm pasword" required>
                                 </div>
                                 @error('password_confirmation')
                                     <span class="text-danger fs-6">{{ $message }}</span>
@@ -80,4 +99,3 @@
 </body>
 
 </html>
-

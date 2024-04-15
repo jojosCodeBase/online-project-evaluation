@@ -2,13 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Category;
-use App\Models\Franchise;
 use App\Models\Students;
+use App\Models\Franchise;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
 
 class DashboardController extends Controller
 {
+    public function storeFaculty(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed'],
+            'regno' => ['required', 'numeric'],
+        ]);
+
+        $user = User::create([
+            'regno' => $request->regno,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 1,
+        ]);
+
+        return redirect()->route('login')->with('success', 'Faculty Registered Successfully');
+
+
+        // Auth::login($user);
+        // return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function storeStudent(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed'],
+            'regno' => ['required', 'numeric'],
+        ]);
+
+        $user = User::create([
+            'regno' => $request->regno,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 2,
+        ]);
+
+        // Auth::login($user);
+        // return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('login')->with('success', 'Student Registered Successfully');
+
+    }
     public function index()
     {
         return view('admin.dashboard', ['count' => Students::count(), 'franchise' => Franchise::orderBy('name')->paginate(5)]);
