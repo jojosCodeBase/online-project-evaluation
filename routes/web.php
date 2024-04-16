@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,7 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // routes for other dashboard operations
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/student/dashboard', [DashboardController::class, 'studentIndex'])->name('student.dashboard');
+    Route::get('/student/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
 
     Route::get('/faculty/dashboard', [FacultyController::class, 'index'])->name('faculty.dashboard');
 
@@ -78,6 +79,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/admin/franchise/getInfo/{id}', [DashboardController::class, 'getFranchiseInfo'])->name('get-franchise-info');
     Route::delete('/admin/franchise-delete/', [DashboardController::class, 'deleteFranchise'])->name('delete-franchise');
+
+    // for students
+    Route::get('/student/dashboard/upload', [StudentController::class, 'upload'])->name('student.upload');
+    Route::get('/student/dashboard/chat', [StudentController::class, 'chat'])->name('student.chat');
+
+
 
 });
 

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body style="background-color: #f0f0f0;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Student Portal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Ritik Roshan
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="row mt-5 d-flex justify-content-center">
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <h1 class="text-center">Student Portal</h1>
+                        <h4 class="text-center">Group Number</h4>
+                        <h6>Group Members:</h6>
+                        <ul>
+                            <li>Student 1</li>
+                            <li>Student 2</li>
+                            <li>Student 3</li>
+                            <li>Student 4</li>
+                        </ul>
+                        <table class="table table-striped table-bordered">
+                            <thead class="bg-primary text-light">
+                                <tr>
+                                    <th>Presentation Type</th>
+                                    <th>Date</th>
+                                    <th>Upload File</th>
+                                    <th>Action</th>
+                                    <th>Feedback</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Synopsis Presentation</td>
+                                    <td>2024-02-17</td>
+                                    <td><input class="form-control" type="file"></td>
+                                    <td class="text-center"><button onclick="Submitfile()"
+                                            class="btn btn-primary">Upload</button></td>
+                                    <td class="text-center"><button class="view-btn btn btn-success"
+                                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Progress Presentation 1</td>
+                                    <td>2024-03-17</td>
+                                    <td><input class="form-control" type="file"></td>
+                                    <td class="text-center"><button onclick="Submitfile()"
+                                            class="btn btn-primary">Upload</button></td>
+                                    <td class="text-center"><button class="view-btn btn btn-success"
+                                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Progress Presentation 2</td>
+                                    <td>2024-04-17 (T)</td>
+                                    <td><input class="form-control" type="file"></td>
+                                    <td class="text-center"><button onclick="Submitfile()"
+                                            class="btn btn-primary">Upload</button></td>
+                                    <td class="text-center"><button class="view-btn btn btn-success"
+                                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">View</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Final Presentation</td>
+                                    <td>2024-04-26 (T)</td>
+                                    <td><input class="form-control" type="file"></td>
+                                    <td class="text-center"><button onclick="Submitfile()"
+                                            class="btn btn-primary">Upload</button></td>
+                                    <td class="text-center"><button class="view-btn btn btn-success"
+                                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">View</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Teacher Feedback</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet neque earum ipsam iusto, officiis
+                        reprehenderit incidunt similique accusamus quo nostrum!</p>
+                    <span class="badge bg-success p-2">Accepted</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div id="feedbackModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Feedback</h2>
+            <p>This is a sample feedback for the presentation.</p>
+        </div>
+    </div>
+
+    <script>
+        var modal = document.getElementById("feedbackModal");
+
+        var btn = document.getElementsByClassName("view-btn")[0];
+
+        var span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script> -->
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+</html>

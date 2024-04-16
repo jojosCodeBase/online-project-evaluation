@@ -66,14 +66,6 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard', ['count' => Students::count(), 'franchise' => Franchise::orderBy('name')->paginate(5)]);
     }
-    public function studentIndex()
-    {
-        return view('student-dashboard', ['count' => Students::count(), 'franchise' => Franchise::orderBy('name')->paginate(5)]);
-    }
-    public function facultyIndex()
-    {
-        return view('faculty-dashboard', ['count' => Students::count(), 'franchise' => Franchise::orderBy('name')->paginate(5)]);
-    }
 
     public function addStudentView()
     {
