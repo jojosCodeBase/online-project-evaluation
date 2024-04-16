@@ -16,11 +16,77 @@ use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
+    public function updateGroup(Request $request)
+    {
+        // dd($request->all());
+
+        $rules = [
+            'group_name' => 'required|string|max:255',
+            'course' => 'required|string|in:MCA,BCA',
+            'guide' => 'required|string|max:255',
+            'member.*' => 'required|string|max:255', // This ensures all members are required
+        ];
+
+        $messages = [
+            'member.*.required' => 'All members are required.',
+        ];
+
+        // Validate the request data
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        // Check if the validation fails
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Find the group by its ID
+        $group = Groups::findOrFail($request->id);
+
+
+        // Update the group attributes
+        $group->update([
+            'group_name' => $request->group_name,
+            'course' => $request->course,
+            'guide' => $request->guide
+        ]);
+
+        // Get the names of existing members for the group
+        $existingMemberNames = $group->members()->pluck('name');
+
+        // dd($existingMemberNames);
+
+        // Update or create group members
+        foreach ($request->member as $memberName) {
+            // Update member if it already exists
+            $existingMember = $group->members()->where('name', $memberName)->first();
+            if ($existingMember) {
+                $existingMember->update(['name' => $memberName]);
+            } else {
+                // Create member if it doesn't exist
+                $group->members()->create(['name' => $memberName]);
+            }
+        }
+
+        // Delete members that are not in the request
+        $group->members()->whereNotIn('name', $request->member)->delete();
+
+
+
+        if ($group)
+            return back()->with('success', 'Group Updated Successfully');
+        else
+            return back()->with('error', 'Some error occured in updating group');
+    }
+    public function getGroupInfo($id)
+    {
+        $group = Groups::with('members')->findOrFail($id);
+        return response()->json($group);
+    }
     public function storeFaculty(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed'],
             'regno' => ['required', 'numeric'],
         ]);
@@ -34,17 +100,13 @@ class DashboardController extends Controller
         ]);
 
         return redirect()->route('login')->with('success', 'Faculty Registered Successfully');
-
-
-        // Auth::login($user);
-        // return redirect(RouteServiceProvider::HOME);
     }
 
     public function storeStudent(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed'],
             'regno' => ['required', 'numeric'],
         ]);
@@ -60,191 +122,190 @@ class DashboardController extends Controller
         // Auth::login($user);
         // return redirect(RouteServiceProvider::HOME);
         return redirect()->route('login')->with('success', 'Student Registered Successfully');
-
     }
     public function index()
     {
         return view('admin.dashboard', ['count' => Students::count(), 'franchise' => Franchise::orderBy('name')->paginate(5)]);
     }
 
-    public function addStudentView()
-    {
-        $categories = Category::orderBy('name', 'asc')->get();
-        return view('list', ['categories' => $categories]);
-    }
+    // public function addStudentView()
+    // {
+    //     $categories = Category::orderBy('name', 'asc')->get();
+    //     return view('list', ['categories' => $categories]);
+    // }
 
-    public function franchiseMapping($fid)
-    {
-        $fname = Franchise::where('id', $fid)->pluck('name');
-        return $fname[0];
-    }
+    // public function franchiseMapping($fid)
+    // {
+    //     $fname = Franchise::where('id', $fid)->pluck('name');
+    //     return $fname[0];
+    // }
 
-    public function listStudent(Request $r)
-    {
-        $r->validate([
-            'profile' => 'required|image|max:1024',
-            'mode' => 'required|string|max:50',
-            'category' => 'required|string|max:50',
-            'placement' => 'required|string|max:50',
-            'state' => 'required|string|max:50',
-            'regno' => 'required|string|max:50',
-            'since' => 'required|integer|between:2001, 2099',
-            'month_year' => 'required|string|max:50',
-            'exam_name' => 'required|string|max:50',
-            'marks' => 'required|string|max:50',
-            'stu_rank' => 'required|string|max:50',
-            'stu_name' => 'required|string|max:50',
-            'student_review' => 'required|string|max:200',
-            'rating' => 'required|numeric',
-        ]);
+    // public function listStudent(Request $r)
+    // {
+    //     $r->validate([
+    //         'profile' => 'required|image|max:1024',
+    //         'mode' => 'required|string|max:50',
+    //         'category' => 'required|string|max:50',
+    //         'placement' => 'required|string|max:50',
+    //         'state' => 'required|string|max:50',
+    //         'regno' => 'required|string|max:50',
+    //         'since' => 'required|integer|between:2001, 2099',
+    //         'month_year' => 'required|string|max:50',
+    //         'exam_name' => 'required|string|max:50',
+    //         'marks' => 'required|string|max:50',
+    //         'stu_rank' => 'required|string|max:50',
+    //         'stu_name' => 'required|string|max:50',
+    //         'student_review' => 'required|string|max:200',
+    //         'rating' => 'required|numeric',
+    //     ]);
 
-        if ($r->mode == 'on') {
-            $r->franchise = "Global";
-        } else {
-            $r->validate(['franchise' => 'required|string|max:50']);
-            $r->franchise = $this->franchiseMapping($r->franchise);
-        }
+    //     if ($r->mode == 'on') {
+    //         $r->franchise = "Global";
+    //     } else {
+    //         $r->validate(['franchise' => 'required|string|max:50']);
+    //         $r->franchise = $this->franchiseMapping($r->franchise);
+    //     }
 
-        $file = $r->file('profile'); // Getting the uploaded file instance
+    //     $file = $r->file('profile'); // Getting the uploaded file instance
 
-        $filename = $r->regno . '_profile.' . $file->getClientOriginalExtension();
+    //     $filename = $r->regno . '_profile.' . $file->getClientOriginalExtension();
 
-        $publicPath = public_path();
+    //     $publicPath = public_path();
 
-        $subdirectory = 'assets/profile_images';
+    //     $subdirectory = 'assets/profile_images';
 
-        $directory = $publicPath . DIRECTORY_SEPARATOR . $subdirectory;
+    //     $directory = $publicPath . DIRECTORY_SEPARATOR . $subdirectory;
 
-        if (!file_exists($directory)) {
-            mkdir($directory, 0777, true);
-        }
+    //     if (!file_exists($directory)) {
+    //         mkdir($directory, 0777, true);
+    //     }
 
-        $fullPath = $directory . DIRECTORY_SEPARATOR . $filename;
+    //     $fullPath = $directory . DIRECTORY_SEPARATOR . $filename;
 
-        if (move_uploaded_file($file->getPathname(), $fullPath)) {
-            // File was successfully saved
-            $path = $filename;
-        } else {
-            // Failed to save the file
-            $path = null;
-        }
+    //     if (move_uploaded_file($file->getPathname(), $fullPath)) {
+    //         // File was successfully saved
+    //         $path = $filename;
+    //     } else {
+    //         // Failed to save the file
+    //         $path = null;
+    //     }
 
-        $student = Students::create([
-            'name' => $r->stu_name,
-            'rank' => $r->stu_rank,
-            'total_marks' => $r->marks,
-            'exam_name' => $r->exam_name,
-            'exam_month_year' => $r->month_year,
-            'since' => $r->since,
-            'regno' => $r->regno,
-            'state' => $r->state,
-            'placement' => $r->placement,
-            'category' => $r->category,
-            'mode' => $r->mode,
-            'franchise' => $r->franchise,
-            'review' => $r->student_review,
-            'rating' => $r->rating,
-            'profile' => $path,
-        ]);
+    //     $student = Students::create([
+    //         'name' => $r->stu_name,
+    //         'rank' => $r->stu_rank,
+    //         'total_marks' => $r->marks,
+    //         'exam_name' => $r->exam_name,
+    //         'exam_month_year' => $r->month_year,
+    //         'since' => $r->since,
+    //         'regno' => $r->regno,
+    //         'state' => $r->state,
+    //         'placement' => $r->placement,
+    //         'category' => $r->category,
+    //         'mode' => $r->mode,
+    //         'franchise' => $r->franchise,
+    //         'review' => $r->student_review,
+    //         'rating' => $r->rating,
+    //         'profile' => $path,
+    //     ]);
 
 
-        if ($student)
-            return back()->with('success', 'Student listed successfully');
-        else
-            return back()->with('error', 'Some error occured in listing student');
-    }
+    //     if ($student)
+    //         return back()->with('success', 'Student listed successfully');
+    //     else
+    //         return back()->with('error', 'Some error occured in listing student');
+    // }
 
-    public function updateStudent(Request $r)
-    {
-        $r->validate([
-            'mode' => 'required|string|max:50',
-            'category' => 'required|string|max:50',
-            'placement' => 'required|string|max:50',
-            'state' => 'required|string|max:50',
-            'since' => 'required|integer|between:2001, 2099',
-            'month_year' => 'required|string|max:50',
-            'exam_name' => 'required|string|max:50',
-            'marks' => 'required|string|max:50',
-            'stu_rank' => 'required|string|max:50',
-            'stu_name' => 'required|string|max:50',
-            'student_review' => 'required|string|max:200',
-            'rating' => 'required|numeric',
-        ]);
+    // public function updateStudent(Request $r)
+    // {
+    //     $r->validate([
+    //         'mode' => 'required|string|max:50',
+    //         'category' => 'required|string|max:50',
+    //         'placement' => 'required|string|max:50',
+    //         'state' => 'required|string|max:50',
+    //         'since' => 'required|integer|between:2001, 2099',
+    //         'month_year' => 'required|string|max:50',
+    //         'exam_name' => 'required|string|max:50',
+    //         'marks' => 'required|string|max:50',
+    //         'stu_rank' => 'required|string|max:50',
+    //         'stu_name' => 'required|string|max:50',
+    //         'student_review' => 'required|string|max:200',
+    //         'rating' => 'required|numeric',
+    //     ]);
 
-        if (!$r->has('keep_profile_image')) {
-            $r->validate(['profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg']);
-        }
+    //     if (!$r->has('keep_profile_image')) {
+    //         $r->validate(['profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg']);
+    //     }
 
-        if ($r->mode == 'on') {
-            $r->franchise = "Global";
-        } else {
-            $r->validate(['franchise' => 'required|string|max:50']);
-        }
+    //     if ($r->mode == 'on') {
+    //         $r->franchise = "Global";
+    //     } else {
+    //         $r->validate(['franchise' => 'required|string|max:50']);
+    //     }
 
-        if ($r->has('keep_profile_image')) {
-            $student = Students::where('regno', $r->regno)->update([
-                'name' => $r->stu_name,
-                'rank' => $r->stu_rank,
-                'total_marks' => $r->marks,
-                'exam_name' => $r->exam_name,
-                'exam_month_year' => $r->month_year,
-                'since' => $r->since,
-                'state' => $r->state,
-                'placement' => $r->placement,
-                'category' => $r->category,
-                'mode' => $r->mode,
-                'franchise' => $r->franchise,
-                'rating' => $r->rating,
-                'review' => $r->student_review,
-            ]);
-        } else {
-            $file = $r->file('profile_image'); // Getting the uploaded file instance
+    //     if ($r->has('keep_profile_image')) {
+    //         $student = Students::where('regno', $r->regno)->update([
+    //             'name' => $r->stu_name,
+    //             'rank' => $r->stu_rank,
+    //             'total_marks' => $r->marks,
+    //             'exam_name' => $r->exam_name,
+    //             'exam_month_year' => $r->month_year,
+    //             'since' => $r->since,
+    //             'state' => $r->state,
+    //             'placement' => $r->placement,
+    //             'category' => $r->category,
+    //             'mode' => $r->mode,
+    //             'franchise' => $r->franchise,
+    //             'rating' => $r->rating,
+    //             'review' => $r->student_review,
+    //         ]);
+    //     } else {
+    //         $file = $r->file('profile_image'); // Getting the uploaded file instance
 
-            $filename = $r->regno . '_profile.' . $file->getClientOriginalExtension();
+    //         $filename = $r->regno . '_profile.' . $file->getClientOriginalExtension();
 
-            $publicPath = public_path();
+    //         $publicPath = public_path();
 
-            $subdirectory = 'assets/profile_images';
+    //         $subdirectory = 'assets/profile_images';
 
-            $directory = $publicPath . DIRECTORY_SEPARATOR . $subdirectory;
+    //         $directory = $publicPath . DIRECTORY_SEPARATOR . $subdirectory;
 
-            if (!file_exists($directory)) {
-                mkdir($directory, 0777, true);
-            }
+    //         if (!file_exists($directory)) {
+    //             mkdir($directory, 0777, true);
+    //         }
 
-            $fullPath = $directory . DIRECTORY_SEPARATOR . $filename;
+    //         $fullPath = $directory . DIRECTORY_SEPARATOR . $filename;
 
-            if (move_uploaded_file($file->getPathname(), $fullPath)) {
-                // File was successfully saved
-                $path = $filename;
-            } else {
-                // Failed to save the file
-                $path = null;
-            }
+    //         if (move_uploaded_file($file->getPathname(), $fullPath)) {
+    //             // File was successfully saved
+    //             $path = $filename;
+    //         } else {
+    //             // Failed to save the file
+    //             $path = null;
+    //         }
 
-            $student = Students::where('regno', $r->regno)->update([
-                'name' => $r->stu_name,
-                'rank' => $r->stu_rank,
-                'total_marks' => $r->marks,
-                'exam_name' => $r->exam_name,
-                'exam_month_year' => $r->month_year,
-                'since' => $r->since,
-                'state' => $r->state,
-                'placement' => $r->placement,
-                'category' => $r->category,
-                'mode' => $r->mode,
-                'franchise' => $r->franchise,
-                'review' => $r->student_review,
-                'rating' => $r->rating,
-                'profile' => $path,
-            ]);
-        }
+    //         $student = Students::where('regno', $r->regno)->update([
+    //             'name' => $r->stu_name,
+    //             'rank' => $r->stu_rank,
+    //             'total_marks' => $r->marks,
+    //             'exam_name' => $r->exam_name,
+    //             'exam_month_year' => $r->month_year,
+    //             'since' => $r->since,
+    //             'state' => $r->state,
+    //             'placement' => $r->placement,
+    //             'category' => $r->category,
+    //             'mode' => $r->mode,
+    //             'franchise' => $r->franchise,
+    //             'review' => $r->student_review,
+    //             'rating' => $r->rating,
+    //             'profile' => $path,
+    //         ]);
+    //     }
 
-        if ($student)
-            return back()->with('success', 'Student details updated successfully');
-        else
-            return back()->with('error', 'Some error occured in updating student details');
-    }
+    //     if ($student)
+    //         return back()->with('success', 'Student details updated successfully');
+    //     else
+    //         return back()->with('error', 'Some error occured in updating student details');
+    // }
 
     public function showBCAStudents()
     {
@@ -276,8 +337,11 @@ class DashboardController extends Controller
     }
 
     public function manageGroups()
-    {
-        return view('admin.manage-groups', ['franchises' => Franchise::orderBy('name')->paginate(2)]);
+    { // Fetch all groups with their members from the database
+        $groups = Groups::with('members')->paginate(5);
+
+        // Pass the groups data to the view
+        return view('admin.manage-groups', compact('groups'));
     }
 
     public function addGroup(Request $r)
@@ -314,7 +378,6 @@ class DashboardController extends Controller
                 'name' => $memberName
             ]);
         }
-
 
         if ($group)
             return back()->with('success', 'Group Added Successfully');

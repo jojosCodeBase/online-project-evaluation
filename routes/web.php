@@ -51,7 +51,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/faculty/show-students/BCA', [FacultyController::class, 'showBCAStudents'])->name('faculty.show.BCA');
     Route::get('/faculty/show-students/MCA', [FacultyController::class, 'showMCAStudents'])->name('faculty.show.MCA');
 
-    Route::post('/admin/admin/add-group/', [DashboardController::class, 'addGroup'])->name('add-group');
+    Route::post('/admin/add-group/', [DashboardController::class, 'addGroup'])->name('add-group');
+    Route::post('/admin/update-group/', [DashboardController::class, 'updateGroup'])->name('update-group');
+
+    // ajax
+    Route::get('/groupInfo/{id}', [DashboardController::class, 'getGroupInfo']);
 
 
     Route::get('/admin/add-student', [DashboardController::class, 'addStudentView'])->name('add-view');
