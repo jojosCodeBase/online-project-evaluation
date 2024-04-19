@@ -1,8 +1,8 @@
 @extends('layouts/admin')
 @section('title', 'Manage Groups')
 @section('content')
-
     <div class="container">
+        @include('includes/alerts')
         <div class="row">
             <div class="col-5">
                 <h3 class="text-bj mb-3 fw-bold">Manage Project</h3>
@@ -11,8 +11,7 @@
                 <input type="search" class="form-control" placeholder="Search Project">
             </div>
             <div class="col-2">
-                <button type="button" class="btn btn-bj" data-toggle="modal" data-target="#addModal">Add Project
-                    +</button>
+                <button type="button" class="btn btn-bj" data-toggle="modal" data-target="#addModal">Add Project +</button>
             </div>
         </div>
 
@@ -23,51 +22,38 @@
                     <thead>
                         <th>Project Name</th>
                         <th>Course</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Mini Project</td>
-                            <td>BCA</td>
-                            <td><button type="button" class="btn btn-bj" data-toggle="modal"
-                                data-target="#groupEditModal" data-group-id="">
-                                    <i class="bi bi-pencil-fill"></i>
-                                </button></td>
-                            <td>
-                                <button type="button" class="btn btn-bj" data-toggle="modal" data-target="#deleteModal"
-                                    data-group-id="">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Major Project</td>
-                            <td>MCA</td>
-                            <td><button type="button" class="btn btn-bj" data-toggle="modal"
-                                data-target="#groupEditModal" data-group-id="">
-                                    <i class="bi bi-pencil-fill"></i>
-                                </button></td>
-                            <td>
-                                <button type="button" class="btn btn-bj" data-toggle="modal" data-target="#deleteModal"
-                                    data-group-id="">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        @foreach ($projects as $project)
+                            <tr>
+                                <td>{{ $project->project_name }}</td>
+                                <td>{{ $project->course }}</td>
+                                <td>
+                                    <button type="button" class="edit-btn btn btn-bj" data-toggle="modal"
+                                        data-target="#projectEditModal" data-project-id="{{ $project->id }}">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </button>
+                                    <button type="button" class="delete-btn btn btn-bj" data-toggle="modal" data-target="#projectDeleteModal"
+                                        data-project-id="{{ $project->id }}">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
                 <div class="row">
                     <div class="col">
-                        <span class="mx-2"></span>
+                        <span class="mx-2">{{ $projects->links() }}</span>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
-    {{-- group add modal start --}}
+
+    {{-- project add modal start --}}
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -77,17 +63,17 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('add-group') }}" method="POST">
+                <form action="{{ route('admin.project.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="row mb-3">
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Project Name</label>
-                                <input type="text" name="group_name" class="form-control" required>
+                                <input type="text" name="project_name" class="form-control" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Course</label>
-                                <input type="text" name="group_name" class="form-control" required>
+                                <input type="text" name="course" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -99,15 +85,14 @@
             </div>
         </div>
     </div>
-    {{-- add project modal end --}}
+    {{-- project add modal end --}}
 
     {{-- delete project modal Start --}}
-
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    <div class="modal fade" id="projectDeleteModal" tabindex="-1" role="dialog" aria-labelledby="projectDeleteModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="" method="post">
+                <form action="{{ route('admin.project.delete') }}" method="post">
                     <div class="modal-body">
                         @csrf
                         @method('delete')
@@ -120,7 +105,7 @@
                                 <h4 class="text-center text-dark">Delete Project</h6>
                                     <p class="text-danger text-center">Are you sure you want to delete this Project ? This
                                         action cannot be undone.</p>
-                                    <input type="text" name="stid" id="stid" value="" hidden>
+                                    <input type="text" name="id" value="" hidden>
                                     <div class="d-flex justify-content-center">
                                         <button type="button" class="btn btn-secondary w-25 me-5"
                                             data-dismiss="modal">Cancel</button>
@@ -133,31 +118,31 @@
             </div>
         </div>
     </div>
-
-    {{-- group delete modal end --}}
+    {{-- delete project modal end --}}
 
     {{-- edit project modal start --}}
-    <div class="modal fade" id="groupEditModal" tabindex="-1" role="dialog" aria-labelledby="groupEditModalLabel"
+    <div class="modal fade" id="projectEditModal" tabindex="-1" role="dialog" aria-labelledby="projectEditModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-bj">
-                    <h5 class="modal-title text-light fw-bold" id="groupEditModalLabel">Edit Group Details</h5>
+                    <h5 class="modal-title text-light fw-bold" id="projectEditModalLabel">Edit Group Details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('add-group') }}" method="POST">
+                <form action="{{ route('admin.project.update') }}" method="POST">
                     @csrf
+                    <input type="text" name="id" hidden>
                     <div class="modal-body">
                         <div class="row mb-3">
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Project Name</label>
-                                <input type="text" name="group_name" class="form-control" required>
+                                <input type="text" name="project_name" class="form-control" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Course</label>
-                                <input type="text" name="group_name" class="form-control" required>
+                                <input type="text" name="course" class="form-control" required>
                             </div>
 
                         </div>
@@ -170,7 +155,41 @@
             </div>
         </div>
     </div>
-
     {{-- Edit Project modal End --}}
+
+@endsection
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.edit-btn').click(function() {
+                var projectId = $(this).data('project-id');
+                // Send AJAX request to fetch project data
+                $.ajax({
+                    url: '/admin/projects/' + projectId, // Endpoint to fetch project details
+                    type: 'GET',
+                    success: function(response) {
+                        console.log(response);
+                        // Populate modal fields with project data
+                        $('#projectEditModal input[name="id"]').val(response
+                            .id);
+                        $('#projectEditModal input[name="project_name"]').val(response
+                            .project_name);
+                        $('#projectEditModal input[name="course"]').val(response.course);
+
+                        // Show the modal
+                        $('#projectEditModal').modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+
+            $('.delete-btn').click(function() {
+                var projectId = $(this).data('project-id');
+                $('#projectDeleteModal input[name="id"]').val(projectId);
+            });
+        });
+    </script>
 
 @endsection

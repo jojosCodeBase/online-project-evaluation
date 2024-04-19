@@ -108,42 +108,39 @@
                                 <th>Status</th>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>16-04-2024</td>
-                                    <td>09:30 AM</td>
-                                    <td>CA LAB</td>
-                                    <td>Progress Presentation II</td>
-                                    <td>BCA</td>
-                                    <td>
-                                        <span class="badge success-badge">Confirmed</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>24-04-2024</td>
-                                    <td>09:30 AM</td>
-                                    <td>CA LAB</td>
-                                    <td>Progress Presentation III</td>
-                                    <td>BCA</td>
-                                    <td>
-                                        <span class="badge warning-badge">Tentative</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>21-04-2024</td>
-                                    <td>02:30 AM</td>
-                                    <td>CA LAB</td>
-                                    <td>Progress Presentation II</td>
-                                    <td>MCA</td>
-                                    <td>
-                                        <span class="badge warning-badge">Tentative</span>
-                                    </td>
-                                </tr>
-                                {{-- @foreach ($franchise as $f)
+                                @foreach ($presentations as $presentation)
                                     <tr>
-                                        <td>{{ $f['name'] }}</td>
-                                        <td><a href="{{ $f['url'] }}">{{ $f['url'] }}</a></td>
+                                        <td>{{ $presentation->date }}</td>
+                                        <td>{{ $presentation->time }}</td>
+                                        <td>{{ $presentation->venue }}</td>
+                                        <td>{{ $presentation->presentation }}</td>
+                                        <td>{{ $presentation->project }}</td>
+                                        <td>
+                                            @php
+                                                $status = '';
+                                                switch ($presentation->status) {
+                                                    case 0:
+                                                        $status = 'Tentative';
+                                                        $badgeClass = 'badge-warning';
+                                                        break;
+                                                    case 1:
+                                                        $status = 'Confirmed';
+                                                        $badgeClass = 'badge-success';
+                                                        break;
+                                                    case 2:
+                                                        $status = 'Cancelled';
+                                                        $badgeClass = 'badge-danger';
+                                                        break;
+                                                    default:
+                                                        $status = 'Unknown';
+                                                        $badgeClass = 'badge-secondary';
+                                                        break;
+                                                }
+                                            @endphp
+                                            <span class="badge {{ $badgeClass }}">{{ $status }}</span>
+                                        </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                         {{-- {{ $franchise->links() }} --}}

@@ -1,8 +1,8 @@
 @extends('layouts/admin')
 @section('title', 'Manage Groups')
 @section('content')
-
     <div class="container">
+        @include('includes/alerts')
         <div class="row">
             <div class="col-4">
                 <h3 class="text-bj mb-3 fw-bold">Schedule Presentations</h3>
@@ -21,24 +21,49 @@
                 <h4 class="text-bj fw-bold mb-3">Scheduled Presentations</h4>
                 <table class="table">
                     <thead>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Venue</th>
-                        <th>Presentation</th>
-                        <th>Project</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Venue</th>
+                            <th>Presentation</th>
+                            <th>Project</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
                     </thead>
                     <tbody>
+                        @foreach($presentations as $presentation)
                         <tr>
-                            <td>19/04/2024</td>
-                            <td>09:30</td>
-                            <td>CA Lab</td>
-                            <td>Presentation l</td>
-                            <td>Minor</td>
+                            <td>{{ $presentation->date }}</td>
+                            <td>{{ $presentation->time }}</td>
+                            <td>{{ $presentation->venue }}</td>
+                            <td>{{ $presentation->presentation }}</td>
+                            <td>{{ $presentation->project }}</td>
                             <td>
-                                <Span class="badge badge-success">Confirmed</Span>
+                                @php
+                                    $status = '';
+                                    switch($presentation->status) {
+                                        case 0:
+                                            $status = 'Tentative';
+                                            $badgeClass = 'badge-warning';
+                                            break;
+                                        case 1:
+                                            $status = 'Confirmed';
+                                            $badgeClass = 'badge-success';
+                                            break;
+                                        case 2:
+                                            $status = 'Cancelled';
+                                            $badgeClass = 'badge-danger';
+                                            break;
+                                        default:
+                                            $status = 'Unknown';
+                                            $badgeClass = 'badge-secondary';
+                                            break;
+                                    }
+                                @endphp
+                                <span class="badge {{ $badgeClass }}">{{ $status }}</span>
                             </td>
+
                             <td>
                                 <div class="more-btn">
                                     <button class="dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown">
@@ -48,15 +73,18 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item edit-btn" data-toggle="modal"
-                                            data-target="#groupEditModal" data-group-id="">Edit</button>
-                                        <button class="dropdown-item" data-toggle="modal" data-target="#deleteModal"
-                                            data-group-id="">Delete</button>
+                                            data-target="#groupEditModal" data-group-id="{{ $presentation->id }}">Edit</button>
+                                        <button class="dropdown-item delete-btn" data-toggle="modal" data-target="#deleteModal"
+                                            data-group-id="{{ $presentation->id }}">Delete</button>
                                     </div>
                                 </div>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
+
+                {{-- pagination --}}
                 <div class="row">
                     <div class="col">
                         <span class="mx-2"></span>
@@ -77,37 +105,36 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('add-group') }}" method="POST">
+                <form action="{{ route('admin.schedule-presentation.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="row mb-3">
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Date</label>
-                                <input type="date" name="group_name" class="form-control" required>
+                                <input type="date" name="date" class="form-control" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Time</label>
-                                <input type="time" name="group_name" class="form-control" required>
+                                <input type="time" name="time" class="form-control" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Venue</label>
-                                <input type="text" name="group_name" class="form-control" required>
+                                <input type="text" name="venue" class="form-control" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Presentation Name</label>
-                                <input type="text" name="group_name" class="form-control" required>
+                                <input type="text" name="presentation" class="form-control" required>
                             </div>
-
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Project</label>
-                                <select name="course" class="form-select">
+                                <select name="project" class="form-select">
                                     <option value="" selected>Select Project from list</option>
-                                    <option value="MCA">Mejor</option>
-                                    <option value="BCA">Minor</option>
+                                    <option value="Major">Major</option>
+                                    <option value="Minor">Minor</option>
                                 </select>
                             </div>
                             <div class="col-12 mb-3">
-                                <input type="checkbox" id="chechbox">
+                                <input type="checkbox" id="checkbox" name="send_email_notification">
                                 <label for="checkbox" class="title form-label">Send Email Notification</label>
                             </div>
                         </div>
@@ -120,6 +147,7 @@
             </div>
         </div>
     </div>
+
     {{-- group add modal end --}}
 
     {{-- group edit modal start --}}
@@ -158,7 +186,7 @@
                                 <label class="title form-label">Project</label>
                                 <select name="course" class="form-select">
                                     <option value="" selected>Select Project from list</option>
-                                    <option value="MCA">Mejor</option>
+                                    <option value="MCA">Major</option>
                                     <option value="BCA">Minor</option>
                                 </select>
                             </div>

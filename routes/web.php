@@ -3,7 +3,9 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,15 +38,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/evaluate/major', [DashboardController::class, 'evaluateMajor'])->name('show.MCA');
 
         // Other admin-specific routes
-        Route::get('/presentations', [DashboardController::class, 'presentations'])->name('admin.presentation');
-        Route::get('/manage-project', [DashboardController::class, 'manageProject'])->name('admin.manage-project');
-        Route::get('/manage-presentation', [DashboardController::class, 'managePresentation'])->name('admin.manage-presentation');
+        // Route::get('/presentations', [DashboardController::class, 'presentations'])->name('admin.presentation');
+
+        Route::get('/manage-project', [ProjectController::class, 'index'])->name('admin.manage-project');
+        Route::post('/manage-project/add', [ProjectController::class, 'store'])->name('admin.project.store');
+        Route::post('/manage-project/update', [ProjectController::class, 'update'])->name('admin.project.update');
+        Route::delete('/manage-project/delete', [ProjectController::class, 'destroy'])->name('admin.project.delete');
+
+        Route::get('/manage-presentation', [PresentationController::class, 'index'])->name('admin.manage-presentation');
+        Route::post('/manage-presentation/add', [PresentationController::class, 'managePresentation'])->name('admin.presentation.store');
+
+        Route::get('/schedule-presentation', [PresentationController::class, 'schedule'])->name('admin.schedule-presentation');
+        Route::post('/schedule-presentation/add', [PresentationController::class, 'scheduleStore'])->name('admin.schedule-presentation.store');
 
         Route::post('add-group/', [DashboardController::class, 'addGroup'])->name('add-group');
         Route::post('update-group/', [DashboardController::class, 'updateGroup'])->name('update-group');
 
         // Ajax route
         Route::get('/groupInfo/{id}', [DashboardController::class, 'getGroupInfo']);
+        Route::get('/projects/{id}', [ProjectController::class, 'getProject']);
     });
 
     // Faculty routes
@@ -56,8 +68,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/groups-assigned', [FacultyController::class, 'groupsAssigned'])->name('faculty.groups-assigned');
 
         // Faculty show students
-        Route::get('/show-students/BCA', [FacultyController::class, 'showBCAStudents'])->name('faculty.show.BCA');
-        Route::get('/show-students/MCA', [FacultyController::class, 'showMCAStudents'])->name('faculty.show.MCA');
+        Route::get('/evaluate/minor', [FacultyController::class, 'evaluateMinor'])->name('faculty.evaluate-minor');
+        Route::get('/evaluate/major', [FacultyController::class, 'evaluateMajor'])->name('faculty.evaluate-major');
     });
 
     // Student routes
@@ -68,6 +80,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Student specific routes
         Route::get('/dashboard/upload', [StudentController::class, 'upload'])->name('student.upload');
         Route::get('/dashboard/chat', [StudentController::class, 'chat'])->name('student.chat');
+
+        Route::post('/upload-document', [StudentController::class, 'uploadDocument'])->name('upload.document');
+
     });
 });
 

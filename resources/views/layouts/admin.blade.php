@@ -79,8 +79,8 @@
                 </a>
             </li>
 
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('admin.presentation') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('admin.presentation') }}">
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('admin.schedule-presentation') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('admin.schedule-presentation') }}">
                     <i class="bi bi-bookmark-plus-fill"></i>
                     <span class="fs-6">Schedule Presentations</span>
                 </a>

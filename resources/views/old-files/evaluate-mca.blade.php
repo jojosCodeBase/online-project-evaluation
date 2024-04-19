@@ -3,23 +3,7 @@
 @section('content')
     <!-- Begin Page Content -->
     <div class="container">
-        @if (session('success'))
-            <div id="alertMessage" class="alert alert-success">
-                <span>{{ session('success') }}</span>
-            </div>
-        @endif
-        @if (session('error'))
-            <div id="alertMessage" class="alert alert-danger">
-                <span>{{ session('error') }}</span>
-            </div>
-        @endif
-        @if ($errors->any())
-            <div id="alertMessage" class="alert alert-danger">
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-            </div>
-        @endif
+       @include('includes/alerts')
         <div class="container card p-4">
             <h4 class="mb-3 fw-bold text-bj">Listed MCA Students</h4>
             <div class="row">

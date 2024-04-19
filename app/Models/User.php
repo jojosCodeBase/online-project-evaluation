@@ -45,4 +45,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function groups()
+    {
+        // Define the many-to-many relationship between User and Group models
+        // Assuming 'group_user' is the pivot table name
+        return $this->belongsToMany(Groups::class, 'groups_members', 'id', 'group_id');
+    }
 }

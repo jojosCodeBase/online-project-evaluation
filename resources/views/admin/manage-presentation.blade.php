@@ -22,14 +22,17 @@
             <h4 class="text-bj fw-bold mb-3">Listed Presentations</h4>
             <table class="table">
                 <thead>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Action</th>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Action</th>
+                    </tr>
                 </thead>
                 <tbody>
+                    @foreach($presentations as $presentation)
                     <tr>
-                        <td>Progress Presentation l</td>
-                        <td>Progress</td>
+                        <td>{{ $presentation->name }}</td>
+                        <td>{{ $presentation->type }}</td>
                         <td>
                             <div class="more-btn">
                                 <button class="dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown">
@@ -39,13 +42,14 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <button class="dropdown-item edit-btn" data-toggle="modal"
-                                        data-target="#groupEditModal" data-group-id="">Edit</button>
-                                    <button class="dropdown-item" data-toggle="modal" data-target="#deleteModal"
-                                        data-group-id="">Delete</button>
+                                        data-target="#presentationEditModal" data-group-id="{{ $presentation->id }}">Edit</button>
+                                    <button class="dropdown-item delete-btn" data-toggle="modal" data-target="#deleteModal"
+                                        data-group-id="{{ $presentation->id }}">Delete</button>
                                 </div>
                             </div>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
             <div class="row">
@@ -56,9 +60,10 @@
         </div>
     </div>
 
+
 </div>
 
-{{-- group add modal start --}}
+{{-- Add Presentation Modal --}}
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -68,22 +73,22 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('add-group') }}" method="POST">
+            <form action="{{ route('admin.presentation.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="col-12 mb-3">
                             <label class="title form-label">Presentation Name</label>
-                            <input type="text" name="group_name" class="form-control" required>
+                            <input type="text" name="presentation_name" class="form-control" required>
                         </div>
 
                         <div class="col-12 mb-3">
                             <label class="title form-label">Type</label>
-                            <select name="course" class="form-select">
-                                <option value="" selected>Select Presentation from list</option>
-                                <option value="MCA">Synopsis</option>
-                                <option value="BCA">Progress</option>
-                                <option value="BCA">Final</option>
+                            <select name="type" class="form-select">
+                                <option value="" selected>Select Type</option>
+                                <option value="Synopsis">Synopsis</option>
+                                <option value="Progress">Progress</option>
+                                <option value="Final">Final</option>
                             </select>
                         </div>
                     </div>
@@ -96,7 +101,7 @@
         </div>
     </div>
 </div>
-{{-- group add modal end --}}
+{{-- Add Presentation Modal End --}}
 
 {{-- group edit modal start --}}
 <div class="modal fade" id="groupEditModal" tabindex="-1" role="dialog" aria-labelledby="groupEditModalLabel"

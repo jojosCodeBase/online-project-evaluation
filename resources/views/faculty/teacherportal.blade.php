@@ -1,11 +1,10 @@
 @extends('layouts/faculty')
 @section('title', 'Listed MCA Students')
 @section('content')
-
     <div class="container-fluid">
         <h4 class="mb-3 fw-bold text-bj">Teacher Portal</h4>
     </div>
-
+    @include('includes/alerts')
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
