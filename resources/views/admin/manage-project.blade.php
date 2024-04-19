@@ -93,7 +93,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="{{ route('student.delete') }}" method="post">
+                <form action="" method="post">
                     <div class="modal-body">
                         @csrf
                         @method('delete')
@@ -145,7 +145,7 @@
                                 <label class="title form-label">Course</label>
                                 <input type="text" name="group_name" class="form-control" required>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div class="modal-footer">

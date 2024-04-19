@@ -1,5 +1,5 @@
 @extends('layouts/admin')
-@section('title', 'Listed BCA Students')
+@section('title', 'Listed MCA Students')
 @section('content')
     <!-- Begin Page Content -->
     <div class="container">
@@ -21,7 +21,7 @@
             </div>
         @endif
         <div class="container card p-4">
-            <h4 class="mb-3 fw-bold text-bj">Listed BCA Students</h4>
+            <h4 class="mb-3 fw-bold text-bj">Listed MCA Students</h4>
             <div class="row">
                 <div class="col">
                     <table class="table">
@@ -281,7 +281,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('update-student') }}" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="row mb-3">
@@ -439,7 +439,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="{{ route('student.delete') }}" method="post">
+                <form action="" method="post">
                     <div class="modal-body">
                         @csrf
                         @method('delete')
