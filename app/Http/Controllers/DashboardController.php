@@ -125,7 +125,7 @@ class DashboardController extends Controller
     }
     public function index()
     {
-        return view('admin.dashboard', ['count' => Students::count(), 'franchise' => Franchise::orderBy('name')->paginate(5)]);
+        return view('admin.dashboard');
     }
 
     // public function addStudentView()
@@ -309,31 +309,11 @@ class DashboardController extends Controller
 
     public function showBCAStudents()
     {
-        $students = Students::orderBy('created_at', 'desc')->paginate(10);
-
-        foreach ($students as $s) {
-            if ($s['franchise'] == 'Global')
-                continue;
-            else {
-                $name = Franchise::where('name', $s['franchise'])->pluck('name');
-                $s['franchise'] = $name[0];
-            }
-        }
-        return view('admin.evaluate-bca', ['students' => $students]);
+        return view('admin.evaluate-bca');
     }
     public function showMCAStudents()
     {
-        $students = Students::orderBy('created_at', 'desc')->paginate(10);
-
-        foreach ($students as $s) {
-            if ($s['franchise'] == 'Global')
-                continue;
-            else {
-                $name = Franchise::where('name', $s['franchise'])->pluck('name');
-                $s['franchise'] = $name[0];
-            }
-        }
-        return view('admin.evaluate-mca', ['students' => $students]);
+        return view('admin.evaluate-mca');
     }
 
     public function manageGroups()
@@ -385,122 +365,93 @@ class DashboardController extends Controller
             return back()->with('error', 'Some error occured in adding group');
     }
 
-    public function getFranchises()
-    {
-        $franchises = Franchise::all();
-        if (!is_null($franchises))
-            return response()->json(['franchises' => $franchises]);
-        else
-            return response()->json(['error' => 'Some error occured in fetching franchises']);
-    }
+    // public function deleteFranchise(Request $r)
+    // {
+    //     if (Franchise::where('id', $r->id)->delete())
+    //         return back()->with('success', 'Franchise deleted successfully');
+    //     else
+    //         return back()->with('error', 'Some error occured in deleting franchise');
+    // }
 
-    public function getFranchiseInfo($id)
-    {
-        return response()->json(['franchise' => Franchise::where('id', $id)->get()]);
-    }
-    public function updateFranchise(Request $r)
-    {
-        $r->validate([
-            'franchise_name' => 'required|string|max:50',
-            'url' => 'required|string',
-        ]);
-        $update = Franchise::where('id', $r->id)->update([
-            'name' => $r->franchise_name,
-            'url' => $r->url,
-        ]);
+    // public function getInfo($id)
+    // {
+    //     $student = Students::where('id', $id)->get();
+    //     if (!is_null($student)) {
+    //         return response()->json(['student' => $student]);
+    //     } else
+    //         return response()->json(['error' => 'Some error occured in fetching student details']);
+    // }
 
-        if ($update)
-            return back()->with('success', 'Franchise updated successfully');
-        else
-            return back()->with('error', 'Some error occured in updating franchise');
-    }
-    public function deleteFranchise(Request $r)
-    {
-        if (Franchise::where('id', $r->id)->delete())
-            return back()->with('success', 'Franchise deleted successfully');
-        else
-            return back()->with('error', 'Some error occured in deleting franchise');
-    }
+    // public function studentDelete(Request $r)
+    // {
+    //     $delete = Students::where('id', $r->stid)->delete();
+    //     if ($delete)
+    //         return back()->with('success', 'Student details deleted successfully');
+    //     else
+    //         return back()->with('error', 'Some error occured in deleting student details');
+    // }
+    // public function addCategory(Request $r)
+    // {
+    //     $r->validate([
+    //         'name' => 'required|unique:category,name',
+    //     ], [
+    //         'name.unique' => 'Exam Category already exists.',
+    //     ]);
 
-    public function getInfo($id)
-    {
-        $student = Students::where('id', $id)->get();
-        if (!is_null($student)) {
-            return response()->json(['student' => $student]);
-        } else
-            return response()->json(['error' => 'Some error occured in fetching student details']);
-    }
+    //     // Attempt to create the category
+    //     $category = Category::create([
+    //         'name' => $r->name,
+    //     ]);
 
-    public function studentDelete(Request $r)
-    {
-        $delete = Students::where('id', $r->stid)->delete();
-        if ($delete)
-            return back()->with('success', 'Student details deleted successfully');
-        else
-            return back()->with('error', 'Some error occured in deleting student details');
-    }
-    public function addCategory(Request $r)
-    {
-        $r->validate([
-            'name' => 'required|unique:category,name',
-        ], [
-            'name.unique' => 'Exam Category already exists.',
-        ]);
+    //     // Check if the category was created successfully
+    //     if ($category) {
+    //         return back()->with('success', 'Category added successfully!');
+    //     } else {
+    //         return back()->with('error', 'Some error occurred in adding category!');
+    //     }
+    // }
 
-        // Attempt to create the category
-        $category = Category::create([
-            'name' => $r->name,
-        ]);
+    // public function manageCategory()
+    // {
+    //     $categories = Category::orderBy('created_at', 'desc')->paginate(5);
+    //     return view('manage-category', ['categories' => $categories]);
+    // }
 
-        // Check if the category was created successfully
-        if ($category) {
-            return back()->with('success', 'Category added successfully!');
-        } else {
-            return back()->with('error', 'Some error occurred in adding category!');
-        }
-    }
+    // public function updateCategory(Request $r)
+    // {
+    //     $r->validate([
+    //         'name' => 'required|string|max:250',
+    //     ]);
+    //     $update = Category::where('id', $r->id)->update([
+    //         'name' => $r->name,
+    //     ]);
 
-    public function manageCategory()
-    {
-        $categories = Category::orderBy('created_at', 'desc')->paginate(5);
-        return view('manage-category', ['categories' => $categories]);
-    }
+    //     if ($update)
+    //         return back()->with('success', 'Category updated successfully');
+    //     else
+    //         return back()->with('error', 'Some error occured in updating category');
+    // }
 
-    public function updateCategory(Request $r)
-    {
-        $r->validate([
-            'name' => 'required|string|max:250',
-        ]);
-        $update = Category::where('id', $r->id)->update([
-            'name' => $r->name,
-        ]);
+    // public function getCategory($id)
+    // {
+    //     $category = Category::where('id', $id)->get();
 
-        if ($update)
-            return back()->with('success', 'Category updated successfully');
-        else
-            return back()->with('error', 'Some error occured in updating category');
-    }
+    //     if ($category)
+    //         return response()->json(['category' => $category]);
+    //     else
+    //         return response()->json(['message' => 'Some error occured in fetching category information']);
+    // }
 
-    public function getCategory($id)
-    {
-        $category = Category::where('id', $id)->get();
+    // public function categoryDelete(Request $r)
+    // {
+    //     if (Category::where('id', $r->id)->delete())
+    //         return back()->with('success', 'Category deleted successfully');
+    //     else
+    //         return back()->with('error', 'Some error occured in deleting category');
+    // }
 
-        if ($category)
-            return response()->json(['category' => $category]);
-        else
-            return response()->json(['message' => 'Some error occured in fetching category information']);
-    }
-
-    public function categoryDelete(Request $r)
-    {
-        if (Category::where('id', $r->id)->delete())
-            return back()->with('success', 'Category deleted successfully');
-        else
-            return back()->with('error', 'Some error occured in deleting category');
-    }
-
-    public function getCategories()
-    {
-        return response()->json(['categories' => Category::all()]);
-    }
+    // public function getCategories()
+    // {
+    //     return response()->json(['categories' => Category::all()]);
+    // }
 }

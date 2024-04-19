@@ -169,7 +169,7 @@
                     </table>
                     <div class="row">
                         <div class="col">
-                            <span class="mx-2">{{ $students->links() }}</span>
+                            {{-- <span class="mx-2">{{ $students->links() }}</span> --}}
                         </div>
                     </div>
                 </div>

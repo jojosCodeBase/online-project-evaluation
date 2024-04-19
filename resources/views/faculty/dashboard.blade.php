@@ -138,7 +138,7 @@
                                 @endforeach --}}
                             </tbody>
                         </table>
-                        {{ $franchise->links() }}
+                        {{-- {{ $franchise->links() }} --}}
                     </div>
                 </div>
             </div>
