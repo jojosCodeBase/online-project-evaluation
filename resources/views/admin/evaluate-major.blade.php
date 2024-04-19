@@ -1,11 +1,26 @@
 @extends('layouts/admin')
-@section('title', 'Listed MCA Students')
+@section('title', 'Evaluate Major Project')
 @section('content')
     <!-- Begin Page Content -->
     <div class="container">
        @include('includes/alerts')
         <div class="container card p-4">
-            <h4 class="mb-3 fw-bold text-bj">Listed MCA Students</h4>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <div class="row d-flex justify-content-start">
+                        <div class="col">
+                            <h4 class="mb-3 fw-bold text-bj">Listed Major Projects</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-8">
+                            <input type="search" class="form-control" placeholder="Search group">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col">
                     <table class="table">

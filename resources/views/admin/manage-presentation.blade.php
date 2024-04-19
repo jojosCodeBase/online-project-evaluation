@@ -1,5 +1,5 @@
 @extends('layouts/admin')
-@section('title', 'Manage Groups')
+@section('title', 'Manage Presentations')
 @section('content')
 
 

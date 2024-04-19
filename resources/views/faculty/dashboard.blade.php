@@ -82,7 +82,7 @@
                             <div class="col-auto">
                                 {{-- <i class="fas fa-check fa-2x text-bj"></i> --}}
                                 {{-- <i class="fas fa-file fa-2x text-bj"></i> --}}
-                                <i class="bi bi-person-standing-dress"></i>
+                                <i class="bi bi-person-standing-dress fa-2x text-bj"></i>
                             </div>
                         </div>
                     </div>

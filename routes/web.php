@@ -98,4 +98,8 @@ Route::get('/admin/password/reset', function () {
 Route::post('faculty/register', [DashboardController::class, 'storeFaculty'])->name('faculty.register');
 Route::post('student/register', [DashboardController::class, 'storeStudent'])->name('student.register');
 
+Route::get('/teacher-portal',function(){
+    return view('faculty.teacherportal');
+})->name('teacher-portal');
+
 require __DIR__ . '/auth.php';
