@@ -1,5 +1,5 @@
 @extends('layouts/admin')
-@section('title', 'Listed BCA Students')
+@section('title', 'Evaluate Minor Project')
 @section('content')
     <!-- Begin Page Content -->
     <div class="container">
@@ -21,7 +21,22 @@
             </div>
         @endif
         <div class="container card p-4">
-            <h4 class="mb-3 fw-bold text-bj">Listed BCA Students</h4>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <div class="row d-flex justify-content-start">
+                        <div class="col">
+                            <h4 class="mb-3 fw-bold text-bj">Listed Minor Projects</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-8">
+                            <input type="search" class="form-control" placeholder="Search group">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col">
                     <table class="table">

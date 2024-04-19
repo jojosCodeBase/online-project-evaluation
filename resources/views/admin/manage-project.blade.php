@@ -1,5 +1,5 @@
 @extends('layouts/admin')
-@section('title', 'Manage Groups')
+@section('title', 'Manage Project')
 @section('content')
 
     <div class="container">
@@ -23,18 +23,18 @@
                     <thead>
                         <th>Project Name</th>
                         <th>Course</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Mini Project</td>
                             <td>BCA</td>
-                            <td><button type="button" class="btn btn-bj" data-toggle="modal"
+                            <td>
+                                <button type="button" class="btn btn-bj" data-toggle="modal"
                                 data-target="#groupEditModal" data-group-id="">
                                     <i class="bi bi-pencil-fill"></i>
-                                </button></td>
-                            <td>
+                                </button>
+
                                 <button type="button" class="btn btn-bj" data-toggle="modal" data-target="#deleteModal"
                                     data-group-id="">
                                     <i class="bi bi-trash-fill"></i>
@@ -44,11 +44,12 @@
                         <tr>
                             <td>Major Project</td>
                             <td>MCA</td>
-                            <td><button type="button" class="btn btn-bj" data-toggle="modal"
+                            <td>
+                                <button type="button" class="btn btn-bj" data-toggle="modal"
                                 data-target="#groupEditModal" data-group-id="">
                                     <i class="bi bi-pencil-fill"></i>
-                                </button></td>
-                            <td>
+                                </button>
+
                                 <button type="button" class="btn btn-bj" data-toggle="modal" data-target="#deleteModal"
                                     data-group-id="">
                                     <i class="bi bi-trash-fill"></i>
