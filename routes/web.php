@@ -88,7 +88,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/student/dashboard/upload', [StudentController::class, 'upload'])->name('student.upload');
     Route::get('/student/dashboard/chat', [StudentController::class, 'chat'])->name('student.chat');
 
+    Route::get('/presentations',function(){
+        return view('admin.presentation');
+    })->name('admin.presentation');
 
+    Route::get('/manage-project',function(){
+        return view('admin.manage-project');
+    })->name('admin.manage-project');
+    
+    Route::get('/manage-presentation',function(){
+        return view('admin.manage-presentation');
+    })->name('admin.manage-presentation');
 
 });
 

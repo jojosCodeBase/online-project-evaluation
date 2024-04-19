@@ -57,42 +57,47 @@
                     <span class="fs-6">Dashboard</span>
                 </a>
             </li>
-            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('add') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('add') }}">
-                    <i class="bi bi-person-fill-up fs-6 pe-2"></i>
-                    <span class="fs-6">Add Student</span>
-                </a>
-            </li> --}}
-            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('add') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('add') }}">
-                    <i class="bi bi-person-fill-up fs-6 pe-2"></i>
-                    <span class="fs-6">Add Faculty</span>
-                </a>
-            </li> --}}
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.MCA') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('show.MCA') }}">
-                    <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
-                    <span class="fs-6">Evaluate MCA Students</span>
+
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('admin.manage-project') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('admin.manage-project') }}">
+                    <i class="bi bi-file-earmark-zip-fill"></i>
+                    <span class="fs-6">Manage Project</span>
                 </a>
             </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.BCA') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('show.BCA') }}">
-                    <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
-                    <span class="fs-6">Evaluate BCA Students</span>
+
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('admin.manage-presentation') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('admin.manage-presentation') }}">
+                    <i class="bi bi-easel3"></i>
+                    <span class="fs-6">Manage Presentations</span>
                 </a>
             </li>
+
             <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('admin.manage-groups') ? 'active' : ''}}">
                 <a class="nav-link d-flex align-items-center" href="{{ route('admin.manage-groups') }}">
                     <i class="bi bi-people-fill fs-6 pe-2"></i>
                     <span class="fs-6">Manage Groups</span>
                 </a>
             </li>
-            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('manage-category') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('manage-category') }}">
-                    <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
-                    <span class="fs-6">Manage Exam Category</span>
+
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('admin.presentation') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('admin.presentation') }}">
+                    <i class="bi bi-bookmark-plus-fill"></i>
+                    <span class="fs-6">Schedule Presentations</span>
                 </a>
-            </li> --}}
+            </li>
+
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.MCA') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('show.MCA') }}">
+                    <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
+                    <span class="fs-6">Evaluate Major Project</span>
+                </a>
+            </li>
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.BCA') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('show.BCA') }}">
+                    <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
+                    <span class="fs-6">Evaluate Minor Project</span>
+                </a>
+            </li>
         </ul>
         <!-- End of Sidebar -->
 

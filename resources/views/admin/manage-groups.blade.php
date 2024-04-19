@@ -20,14 +20,17 @@
                 @endforeach
             </div>
         @endif
-        <h3 class="text-bj mb-3 fw-bold">Manage Groups</h3>
+        
     </div>
     <div class="container">
-        <div class="row d-flex justify-content-end">
-            <div class="col-3 d-flex justify-content-end pe-0">
+        <div class="row">
+            <div class="col-5">
+                <h3 class="text-bj mb-3 fw-bold">Manage Groups</h3>
+            </div>
+            <div class="col-5 pe-0">
                 <input type="search" class="form-control" placeholder="Search group">
             </div>
-            <div class="col-auto d-flex justify-content-end">
+            <div class="col-2">
                 <button type="button" class="btn btn-bj" data-toggle="modal" data-target="#addModal">Add Group +</button>
             </div>
         </div>
