@@ -76,7 +76,7 @@
                             <label class="title form-label">Presentation Name</label>
                             <input type="text" name="group_name" class="form-control" required>
                         </div>
-                        
+
                         <div class="col-12 mb-3">
                             <label class="title form-label">Type</label>
                             <select name="course" class="form-select">
@@ -117,7 +117,7 @@
                             <label class="title form-label">Presentation Name</label>
                             <input type="text" name="group_name" class="form-control" required>
                         </div>
-                        
+
                         <div class="col-12 mb-3">
                             <label class="title form-label">Type</label>
                             <select name="course" class="form-select">
@@ -144,7 +144,7 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ route('student.delete') }}" method="post">
+            <form action="" method="post">
                 <div class="modal-body">
                     @csrf
                     @method('delete')

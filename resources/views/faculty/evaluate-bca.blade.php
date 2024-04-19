@@ -441,7 +441,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="{{ route('student.delete') }}" method="post">
+                <form action="" method="post">
                     <div class="modal-body">
                         @csrf
                         @method('delete')

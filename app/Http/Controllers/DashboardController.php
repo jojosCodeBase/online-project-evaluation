@@ -70,12 +70,27 @@ class DashboardController extends Controller
         // Delete members that are not in the request
         $group->members()->whereNotIn('name', $request->member)->delete();
 
-
-
         if ($group)
             return back()->with('success', 'Group Updated Successfully');
         else
             return back()->with('error', 'Some error occured in updating group');
+    }
+    public function presentations()
+    {
+        // Implement logic for /presentations route
+        return view('admin.presentation');
+    }
+
+    public function manageProject()
+    {
+        // Implement logic for /manage-project route
+        return view('admin.manage-project');
+    }
+
+    public function managePresentation()
+    {
+        // Implement logic for /manage-presentation route
+        return view('admin.manage-presentation');
     }
     public function getGroupInfo($id)
     {
@@ -307,13 +322,13 @@ class DashboardController extends Controller
     //         return back()->with('error', 'Some error occured in updating student details');
     // }
 
-    public function showBCAStudents()
+    public function evaluateMinor()
     {
-        return view('admin.evaluate-bca');
+        return view('admin.evaluate-minor');
     }
-    public function showMCAStudents()
+    public function evaluateMajor()
     {
-        return view('admin.evaluate-mca');
+        return view('admin.evaluate-major');
     }
 
     public function manageGroups()
