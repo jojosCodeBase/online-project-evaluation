@@ -1,25 +1,28 @@
 @extends('layouts/faculty')
 @section('title', 'Dashboard')
 @section('content')
-<style>
-    .badge{
-        font-weight: bold;
-        padding: 10px;
-        font-size: 14px;
-    }
-    .success-badge{
-        color: green;
-        border: 1px solid green;
-    }
-    .warning-badge{
-        color: rgb(224, 179, 31);
-        border: 1px solid rgb(207, 125, 18);
-    }
-    .danger-badge{
-        color: red;
-        border: 1px solid red;
-    }
-</style>
+    <style>
+        .badge {
+            font-weight: bold;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .success-badge {
+            color: green;
+            border: 1px solid green;
+        }
+
+        .warning-badge {
+            color: rgb(224, 179, 31);
+            border: 1px solid rgb(207, 125, 18);
+        }
+
+        .danger-badge {
+            color: red;
+            border: 1px solid red;
+        }
+    </style>
     <!-- Begin Page Content -->
     <div class="container-fluid">
 
@@ -47,23 +50,6 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card shadow h-100">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col mr-2">
-                                <div class="font-weight-bold text-bj text-uppercase">
-                                    Listed Faculties
-                                </div>
-                                <div class="h4 mb-0 mt-2 fw-bold text-gray-800">{{ $count }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x text-bj"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card shadow h-100">
                     <div class="card-body">
@@ -82,9 +68,31 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Listed Franchises -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col mr-2">
+                                <div class="font-weight-bold text-bj text-uppercase">
+                                    Teacher Guide
+                                </div>
+                                <div class="h4 mb-0 mt-2 fw-bold text-gray-800">Parimala Tamang</div>
+                            </div>
+                            <div class="col-auto">
+                                {{-- <i class="fas fa-check fa-2x text-bj"></i> --}}
+                                {{-- <i class="fas fa-file fa-2x text-bj"></i> --}}
+                                <i class="bi bi-person-standing-dress"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Listed Franchises -->
+    <div class="container-fluid">
         <div class="row">
             <div class="col">
                 <div class="card shadow h-100">
@@ -130,7 +138,7 @@
                                         <span class="badge warning-badge">Tentative</span>
                                     </td>
                                 </tr>
-                                {{-- @foreach($franchise as $f)
+                                {{-- @foreach ($franchise as $f)
                                     <tr>
                                         <td>{{ $f['name'] }}</td>
                                         <td><a href="{{ $f['url'] }}">{{ $f['url'] }}</a></td>
@@ -143,5 +151,7 @@
                 </div>
             </div>
         </div>
+    </div>
+
     </div>
 @endsection

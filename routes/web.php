@@ -99,6 +99,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/manage-presentation',function(){
         return view('admin.manage-presentation');
     })->name('admin.manage-presentation');
+    Route::get('/teacher-portal',function(){
+        return view('faculty.teacherportal');
+    })->name('teacher-portal');
 
 });
 

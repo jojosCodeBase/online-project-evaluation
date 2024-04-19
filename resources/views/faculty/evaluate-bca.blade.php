@@ -41,7 +41,9 @@
                                 <td>Group 10</td>
                                 <td>Progress Presentation I</td>
                                 <td>
-                                    <div class="more-btn">
+                                    <a href="{{ route('teacher-portal')}}"> <button type="button" class="btn btn-bj">Evaluate</button></a>
+                                   
+                                    {{-- <div class="more-btn">
                                         <button class="dropdown" type="button" id="dropdownMenuButton"
                                             data-toggle="dropdown">
                                             <i class="fa fa-circle" aria-hidden="true"></i>
@@ -55,7 +57,7 @@
                                                 data-target="#editModal">Edit</button>
                                             <button class="dropdown-item" data-toggle="modal"
                                                 data-target="#deleteModal">Delete</button>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </td>
                             </tr>
@@ -177,8 +179,8 @@
         </div>
     </div>
 
-    {{-- student info modal start --}}
-    <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
+    {{-- Evaluate modal start --}}
+    <div class="modal fade" id="ela" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -268,10 +270,10 @@
             </div>
         </div>
     </div>
-    {{-- student info modal end --}}
+    {{-- Evaluate modal end --}}
 
     {{-- student info edit modal start --}}
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+    {{-- <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -431,11 +433,11 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
     {{-- student info edit modal end --}}
 
     {{-- student info delete modal start --}}
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    {{-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -459,15 +461,13 @@
                                         <button type="submit" class="btn btn-danger w-25">Yes, delete !</button>
                                     </div>
                             </div>
-                            {{-- <div class="col">
-                            </div> --}}
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-    </div>
-    {{-- student info delete modal end --}}
+    </div> --}}
+    {{-- student info delete modal end--}}
     <script>
         var assetPath = "{{ asset('assets/profile_images') }}";
     </script>

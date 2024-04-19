@@ -18,18 +18,32 @@
 
         <div class="row mt-4">
             <div class="col card p-4 border-0 shadow rounded">
-                <h4 class="text-bj fw-bold mb-3">Listed Presentations</h4>
+                <h4 class="text-bj fw-bold mb-3">Listed Project</h4>
                 <table class="table">
                     <thead>
                         <th>Project Name</th>
-                        <th>Type</th>
+                        <th>Course</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Progress Presentation l</td>
-                            <td>Progress</td>
+                            <td>Mini Project</td>
+                            <td>BCA</td>
+                            <td><button type="button" class="btn btn-bj" data-toggle="modal"
+                                data-target="#groupEditModal" data-group-id="">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </button></td>
+                            <td>
+                                <button type="button" class="btn btn-bj" data-toggle="modal" data-target="#deleteModal"
+                                    data-group-id="">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Major Project</td>
+                            <td>MCA</td>
                             <td><button type="button" class="btn btn-bj" data-toggle="modal"
                                 data-target="#groupEditModal" data-group-id="">
                                     <i class="bi bi-pencil-fill"></i>
