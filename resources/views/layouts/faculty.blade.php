@@ -16,7 +16,8 @@
     <link href="{{ asset('assets/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
 
     <!-- Custom styles for this template-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="{{ asset('assets/admin/custom.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/styles.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -51,7 +52,8 @@
             <div class="sidebar-heading mb-2 mt-3">MAIN MENU</div>
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.dashboard') ? 'active' : ''}}">
+            <li
+                class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.dashboard') ? 'active' : '' }}">
                 <a class="nav-link d-flex align-items-center" href="{{ route('faculty.dashboard') }}">
                     <i class="bi bi-house-fill pr-3 fs-6 pe-2"></i>
                     <span class="fs-6">Dashboard</span>
@@ -69,19 +71,21 @@
                     <span class="fs-6">Add Faculty</span>
                 </a>`
             </li> --}}
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.evaluate-major') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('faculty.evaluate-major') }}">
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('teacher-portal') ? 'active' : '' }}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('teacher-portal') }}">
                     <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
                     <span class="fs-6">Evaluate Major Projects</span>
                 </a>
             </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.evaluate-minor') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('faculty.evaluate-minor') }}">
+            <li
+                class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.evaluate-minor') ? 'active' : '' }}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('teacher-portal') }}">
                     <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
                     <span class="fs-6">Evaluate Minor Projects</span>
                 </a>
             </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.groups-assigned') ? 'active' : ''}}">
+            <li
+                class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.groups-assigned') ? 'active' : '' }}">
                 <a class="nav-link d-flex align-items-center" href="{{ route('faculty.groups-assigned') }}">
                     <i class="bi bi-people-fill fs-6 pe-2"></i>
                     <span class="fs-6">Groups Assigned</span>
