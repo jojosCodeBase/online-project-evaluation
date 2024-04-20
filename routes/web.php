@@ -61,6 +61,11 @@ Route::middleware(['auth'])->group(function () {
 
     // Faculty routes
     Route::middleware(['faculty'])->prefix('faculty')->group(function () {
+        // Admin profile management
+
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         // Faculty dashboard
         Route::get('/dashboard', [FacultyController::class, 'index'])->name('faculty.dashboard');
 
@@ -74,6 +79,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Student routes
     Route::middleware(['student'])->prefix('student')->group(function () {
+
+        Route::get('/profile', [ProfileController::class, 'student_edit'])->name('student-profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'student_update'])->name('student-profile.update');
+        Route::delete('/profile', [ProfileController::class, 'student_destroy'])->name('student-profile.destroy');
         // Student dashboard
         Route::get('/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
 

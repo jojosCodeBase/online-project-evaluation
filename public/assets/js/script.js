@@ -18,7 +18,7 @@ function setCategory(id, type) {
         success: function (response) {
             if (type == 'name') {
                 $.each(response.categories, function (index, category) {
-                    if(category.id == id){
+                    if (category.id == id) {
                         $('#category').text(category.name);
                     }
                 });
@@ -339,3 +339,17 @@ document.addEventListener('DOMContentLoaded', function () {
     })();
 
 });
+
+// Script for number restriction Start
+
+function validateInput(event) {
+    const input = event.target.value;
+    const regex = /^[0-9]*$/; // Regular expression to match numbers only
+
+    if (!regex.test(input)) {
+        // If input is not a number, clear the input
+        event.target.value = input.replace(/[^0-9]/g, '');
+    }
+}
+
+// Script for number restriction End

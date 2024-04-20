@@ -1,5 +1,5 @@
 @extends('layouts/faculty')
-@section('title', 'Listed MCA Students')
+@section('title', 'Evaluate Marks')
 @section('content')
     <div class="container-fluid">
         <h4 class="mb-3 fw-bold text-bj">Teacher Portal</h4>
@@ -22,7 +22,7 @@
                                     <th>Presentation Type</th>
                                     <th>Date</th>
                                     <th>View Report</th>
-                                    <th>Grade</th>
+                                    <th>Evaluate</th>
                                     <th>Feedback</th>
                                     <th>Action</th>
                                 </tr>
@@ -36,14 +36,8 @@
                                         <button type="button" class="btn btn-bj"><i class="bi bi-eye-fill"></i></button>
                                     </td>
                                     <td>
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Grade</option>
-                                            <option value="1">A</option>
-                                            <option value="2">B</option>
-                                            <option value="3">C</option>
-                                            <option value="3">D</option>
-                                            <option value="3">F</option>
-                                        </select>
+                                        <button type="button" class="btn btn-bj"><i class="bi bi-eye-fill" data-toggle="modal"
+                                            data-target="#marks"></i></button>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-bj" data-toggle="modal"
@@ -85,10 +79,52 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light border-0" data-dismiss="modal"
                         style="color: blue;">Close</button>
+                        <button type="submit" class="btn btn-bj">Save</button>
                 </div>
             </div>
         </div>
     </div>
     {{-- Feedback modal end --}}
+
+    {{-- Marks modal start --}}
+    <div class="modal fade" id="marks" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-bj">
+                    <h5 class="modal-title text-light fw-bold" id="viewModalLabel">Mark</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-12 mb-3">
+                            <label class="title form-label">Student 1</label>
+                            <input type="text" name="project_name" class="form-control" class="form-control" id="numberInput" oninput="validateInput(event)" required>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="title form-label">Student 2</label>
+                            <input type="text" name="course" class="form-control" class="form-control" id="numberInput" oninput="validateInput(event)" required>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="title form-label">Student 3</label>
+                            <input type="text" name="course" class="form-control" class="form-control" id="numberInput" oninput="validateInput(event)"  required>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="title form-label">Student 4</label>
+                            <input type="text" name="course" class="form-control" id="numberInput" oninput="validateInput(event)" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light border-0" data-dismiss="modal"
+                        style="color: blue;">Close</button>
+                        <button type="submit" class="btn btn-bj">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Marks modal end --}}   
 
 @endsection
