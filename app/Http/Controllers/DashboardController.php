@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\GroupsMembers;
 use App\Models\User;
 use App\Models\Groups;
 use App\Models\Category;
+use App\Models\Projects;
 use App\Models\Students;
 use App\Models\Franchise;
 use Illuminate\Http\Request;
+use App\Models\GroupsMembers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
@@ -22,8 +23,9 @@ class DashboardController extends Controller
 
         $rules = [
             'group_name' => 'required|string|max:255',
-            'course' => 'required|string|in:MCA,BCA',
-            'guide' => 'required|string|max:255',
+            'project' => 'required|integer',
+            'guide' => 'required|integer',
+            'topic' => 'required|string|max:255',
             'member.*' => 'required|string|max:255', // This ensures all members are required
         ];
 
@@ -46,8 +48,9 @@ class DashboardController extends Controller
         // Update the group attributes
         $group->update([
             'group_name' => $request->group_name,
-            'course' => $request->course,
-            'guide' => $request->guide
+            'project_id' => $request->project,
+            'project_guide' => $request->guide,
+            'topic' => $request->topic,
         ]);
 
         // Get the names of existing members for the group
@@ -94,50 +97,10 @@ class DashboardController extends Controller
     }
     public function getGroupInfo($id)
     {
-        $group = Groups::with('members')->findOrFail($id);
+        $group = Groups::with(['members', 'project', 'guide'])->findOrFail($id);
         return response()->json($group);
     }
-    public function storeFaculty(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed'],
-            'regno' => ['required', 'numeric'],
-        ]);
 
-        $user = User::create([
-            'regno' => $request->regno,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 1,
-        ]);
-
-        return redirect()->route('login')->with('success', 'Faculty Registered Successfully');
-    }
-
-    public function storeStudent(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed'],
-            'regno' => ['required', 'numeric'],
-        ]);
-
-        $user = User::create([
-            'regno' => $request->regno,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 2,
-        ]);
-
-        // Auth::login($user);
-        // return redirect(RouteServiceProvider::HOME);
-        return redirect()->route('login')->with('success', 'Student Registered Successfully');
-    }
     public function index()
     {
         return view('admin.dashboard');
@@ -333,18 +296,21 @@ class DashboardController extends Controller
 
     public function manageGroups()
     { // Fetch all groups with their members from the database
-        $groups = Groups::with('members')->paginate(5);
-
+        $groups = Groups::with(['members', 'project', 'guide'])->paginate(5);
+        $projects = Projects::all();
+        $faculties = User::where('role', 1)->get();
         // Pass the groups data to the view
-        return view('admin.manage-groups', compact('groups'));
+        return view('admin.manage-groups', compact('groups', 'projects', 'faculties'));
     }
 
     public function addGroup(Request $r)
     {
+    // dd($r->all());
         $rules = [
             'group_name' => 'required|string|max:255',
-            'course' => 'required|string|in:MCA,BCA',
-            'guide' => 'required|string|max:255',
+            'project' => 'required|integer',
+            'guide' => 'required|integer',
+            'topic' => 'required|string|max:255',
             'member.*' => 'required|string|max:255', // This ensures all members are required
         ];
 
@@ -362,8 +328,9 @@ class DashboardController extends Controller
 
         $group = Groups::create([
             'group_name' => $r->group_name,
-            'course' => $r->course,
-            'guide' => $r->guide
+            'project_id' => $r->project,
+            'project_guide' => $r->guide,
+            'topic' => $r->topic
         ]);
 
         // Assuming 'member' is an array of members' names

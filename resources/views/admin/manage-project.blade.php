@@ -22,6 +22,7 @@
                     <thead>
                         <th>Project Name</th>
                         <th>Course</th>
+                        <th>Project Co-ordinator</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
@@ -29,6 +30,7 @@
                             <tr>
                                 <td>{{ $project->project_name }}</td>
                                 <td>{{ $project->course }}</td>
+                                <td>{{ $project->coordinator_name }}</td>
                                 <td>
                                     <button type="button" class="edit-btn btn btn-bj" data-toggle="modal"
                                         data-target="#projectEditModal" data-project-id="{{ $project->id }}">

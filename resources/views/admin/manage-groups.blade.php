@@ -25,7 +25,7 @@
                 <table class="table">
                     <thead>
                         <th>Group Name</th>
-                        <th>Course</th>
+                        <th>Project</th>
                         <th>Project Guide</th>
                         <th>Members</th>
                         <th>Action</th>
@@ -34,8 +34,8 @@
                         @foreach ($groups as $group)
                             <tr>
                                 <td>{{ $group->group_name }}</td>
-                                <td>{{ $group->course }}</td>
-                                <td>{{ $group->guide }}</td>
+                                <td>{{ $group->project->project_name }}</td>
+                                <td>{{ $group->guide->name }}</td>
                                 <td>
                                     @foreach ($group->members as $member)
                                         {{ $member->name }}
@@ -93,16 +93,26 @@
                                 <input type="text" name="group_name" class="form-control" required>
                             </div>
                             <div class="col-12 mb-3">
-                                <label class="title form-label">Course</label>
-                                <select name="course" class="form-select">
-                                    <option value="" selected>Select course from list</option>
-                                    <option value="MCA">MCA</option>
-                                    <option value="BCA">BCA</option>
+                                <label class="title form-label">Project</label>
+                                <select name="project" class="form-select">
+                                    <option value="" selected>Select Project from list</option>
+                                    @foreach ($projects as $project)
+                                        <option value="{{ $project['id'] }}">{{ $project['project_name'] }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Project Guide</label>
-                                <input type="text" name="guide" class="form-control" required>
+                                <select name="guide" class="form-select">
+                                    <option value="" selected>Select project guide list</option>
+                                    @foreach ($faculties as $faculty)
+                                        <option value="{{ $faculty['id'] }}">{{ $faculty['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="title form-label">Project Topic</label>
+                                <input type="text" name="topic" class="form-control" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Members</label>
@@ -146,12 +156,26 @@
                                 <input type="text" name="id" id="group_id" hidden>
                             </div>
                             <div class="col-12 mb-3">
-                                <label class="title form-label">Course</label>
-                                <input type="text" name="course" id="course" class="form-control" required>
+                                <label class="title form-label">Project</label>
+                                <select name="project" id="project" class="form-select">
+                                    <option value="" selected>Select Project from list</option>
+                                    @foreach ($projects as $project)
+                                        <option value="{{ $project['id'] }}">{{ $project['project_name'] }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Guide</label>
-                                <input type="text" name="guide" id="guide" class="form-control" required>
+                                <select name="guide" id="guide" class="form-select">
+                                    <option value="" selected>Select project guide list</option>
+                                    @foreach ($faculties as $faculty)
+                                        <option value="{{ $faculty['id'] }}">{{ $faculty['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="title form-label">Project Topic</label>
+                                <input type="text" name="topic" id="topic" class="form-control" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Members</label>
@@ -224,14 +248,15 @@
             $('.edit-btn').click(function() {
                 var groupId = $(this).data('group-id');
                 $.ajax({
-                    url: '/groupInfo/' + groupId,
+                    url: '/admin/groupInfo/' + groupId,
                     type: 'GET',
                     success: function(response) {
-                        // Populate modal fields with fetched group data
+                        console.log(response);
                         $('#group_name').val(response.group_name);
-                        $('#course').val(response.course);
-                        $('#guide').val(response.guide);
-                        $('#group_id').val(groupId);
+                        $('#project').val(response.project.id);
+                        $('#guide').val(response.guide.id);
+                        $('#group_id').val(response.id);
+                        $('#topic').val(response.topic);
 
                         // Clear previous member list
                         $('#member_list').empty();

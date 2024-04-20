@@ -79,14 +79,7 @@
                 </a>
             </li>
 
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('admin.schedule-presentation') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('admin.schedule-presentation') }}">
-                    <i class="bi bi-bookmark-plus-fill"></i>
-                    <span class="fs-6">Schedule Presentations</span>
-                </a>
-            </li>
-
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.MCA') ? 'active' : ''}}">
+            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.MCA') ? 'active' : ''}}">
                 <a class="nav-link d-flex align-items-center" href="{{ route('show.MCA') }}">
                     <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
                     <span class="fs-6">Evaluate Major Project</span>
@@ -97,7 +90,7 @@
                     <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
                     <span class="fs-6">Evaluate Minor Project</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
         <!-- End of Sidebar -->
 

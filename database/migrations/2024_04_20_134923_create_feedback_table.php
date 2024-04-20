@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('feedback', function (Blueprint $table) {
             $table->id();
-            $table->string('project_name');
-            $table->string('course');
-            $table->unsignedBigInteger('project_coordinator_id');
+            $table->unsignedBigInteger('presentation_id');
+            $table->text('feedback_text');
+            $table->unsignedBigInteger('feedback_by');
             $table->timestamps();
 
-            $table->foreign('project_coordinator_id')->references('id')->on('users');
+            $table->foreign('presentation_id')->references('id')->on('presentations');
+            $table->foreign('feedback_by')->references('id')->on('users');
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('feedback');
     }
 };

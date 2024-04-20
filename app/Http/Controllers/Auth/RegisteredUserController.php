@@ -21,9 +21,6 @@ class RegisteredUserController extends Controller
     public function create()
     {
         return view('auth.register');
-        // if(count(User::all()) >= 1)
-        //     return redirect()->route('login');
-        // else
     }
     public function studentCreate()
     {
@@ -57,12 +54,49 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 0,
         ]);
 
-        event(new Registered($user));
+        return redirect()->route('login')->with('success', 'Admin registered successfully');
+    }
 
-        Auth::login($user);
+    public function storeFaculty(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed'],
+            'regno' => ['required', 'numeric'],
+        ]);
 
-        return redirect(RouteServiceProvider::HOME);
+        $user = User::create([
+            'regno' => $request->regno,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 1,
+        ]);
+
+        return redirect()->route('login')->with('success', 'Faculty Registered Successfully');
+    }
+
+    public function storeStudent(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed'],
+            'regno' => ['required', 'numeric'],
+        ]);
+
+        $user = User::create([
+            'regno' => $request->regno,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 2,
+        ]);
+
+        return redirect()->route('login')->with('success', 'Student Registered Successfully');
     }
 }

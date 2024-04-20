@@ -12,6 +12,7 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect()->route('login'); // Or you can return a response with a 403 status code
+        return redirect('/login'); // Or you can return a response with a 403 status code
+        // return redirect('/login')->route('login'); // Or you can return a response with a 403 status code
     }
 }

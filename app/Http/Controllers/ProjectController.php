@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Projects;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Projects::paginate(5);
+        $projects = Projects::join('users', 'projects.project_coordinator_id', '=', 'users.id')
+        ->select('projects.*', 'users.name as coordinator_name')
+        ->paginate(5);
         return view('admin.manage-project', compact('projects'));
     }
 
@@ -20,7 +23,11 @@ class ProjectController extends Controller
             'course' => 'required|string',
         ]);
 
-        Projects::create($request->all());
+        Projects::create([
+            'project_name' => $request->project_name,
+            'course' => $request->course,
+            'project_coordinator_id' => Auth::user()->id,
+        ]);
 
         return redirect()->route('admin.manage-project')
             ->with('success', 'Project created successfully.');

@@ -25,7 +25,7 @@
                             @csrf
                             <div class="mb-3">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Registration number"
+                                    <input type="text" class="form-control" placeholder="Employee ID"
                                         name="regno" aria-describedby="basic-addon1" required>
                                 </div>
                                 @error('regno')

@@ -11,13 +11,23 @@ class Groups extends Model
     use HasFactory;
     protected $fillable = [
         'group_name',
-        'course',
-        'guide',
+        'project_id',
+        'project_guide',
+        'topic'
     ];
 
     // Relationship with GroupsMembers
     public function members()
     {
         return $this->hasMany(GroupsMembers::class, 'group_id'); // Assuming 'group_id' is the foreign key column
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Projects::class, 'project_id')->select(['id', 'project_name']);
+    }
+    public function guide()
+    {
+        return $this->belongsTo(User::class, 'project_guide')->select(['id', 'name']);
     }
 }

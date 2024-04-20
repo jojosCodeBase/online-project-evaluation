@@ -71,10 +71,10 @@
                                 <a href="{{ route('password.request') }}" target="_blank">Forgot password?</a>
                             </div>
                             <div class="form-group text-center">
-                                <a href="{{ route('student-register') }}" target="_blank">Student Register</a>
+                                <a href="{{ url('student/register') }}" target="_blank">Student Register</a>
                             </div>
                             <div class="form-group text-center">
-                                <a href="{{ route('faculty-register') }}" target="_blank">Faculty Register</a>
+                                <a href="{{ url('faculty/register') }}" target="_blank">Faculty Register</a>
                             </div>
                         </form>
                     </div>

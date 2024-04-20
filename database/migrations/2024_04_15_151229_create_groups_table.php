@@ -14,9 +14,14 @@ return new class extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->string('group_name');
-            $table->string('course');
-            $table->string('guide');
+            $table->unsignedBigInteger('project_id'); // Change to unsignedBigInteger for foreign key
+            $table->unsignedBigInteger('project_guide'); // Change to unsignedBigInteger for foreign key
+            $table->string('topic');
             $table->timestamps();
+
+            // Define foreign key constraints
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('project_guide')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

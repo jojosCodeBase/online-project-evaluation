@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Presentations extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name','project_id','date', 'time', 'venue', 'presentation', 'project', 'status',
+    ];
 }

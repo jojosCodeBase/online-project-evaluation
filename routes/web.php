@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FacultyController;
+use App\Mail\TestMail;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PresentationController;
+use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
-use App\Mail\TestMail;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PresentationController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Routes accessible to all authenticated users
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     // Admin routes
     Route::middleware(['admin'])->prefix('admin')->group(function () {
         // Admin profile management
@@ -47,10 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/manage-project/delete', [ProjectController::class, 'destroy'])->name('admin.project.delete');
 
         Route::get('/manage-presentation', [PresentationController::class, 'index'])->name('admin.manage-presentation');
-        Route::post('/manage-presentation/add', [PresentationController::class, 'managePresentation'])->name('admin.presentation.store');
-
-        Route::get('/schedule-presentation', [PresentationController::class, 'schedule'])->name('admin.schedule-presentation');
-        Route::post('/schedule-presentation/add', [PresentationController::class, 'scheduleStore'])->name('admin.schedule-presentation.store');
+        Route::post('/manage-presentation/add', [PresentationController::class, 'addPresentation'])->name('admin.presentation.store');
+        Route::put('/manage-presentation/update', [PresentationController::class, 'updatePresentation'])->name('admin.presentation.update');
 
         Route::post('add-group/', [DashboardController::class, 'addGroup'])->name('add-group');
         Route::post('update-group/', [DashboardController::class, 'updateGroup'])->name('update-group');
@@ -103,12 +102,9 @@ Route::get('/admin/password/reset', function () {
     return view('admin.forgot-password');
 })->name('forgot-password');
 
-// Registration routes
-Route::post('faculty/register', [DashboardController::class, 'storeFaculty'])->name('faculty.register');
-Route::post('student/register', [DashboardController::class, 'storeStudent'])->name('student.register');
-
 Route::get('/teacher-portal',function(){
     return view('faculty.teacherportal');
 })->name('teacher-portal');
+
 
 require __DIR__ . '/auth.php';
