@@ -7,6 +7,7 @@ use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StudentController;
+use App\Mail\TestMail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -88,6 +89,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Routes accessible without authentication
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/mail', function(){
+    Mail::to('kunsangmoktan11@gmail.com')->send(new TestMail());
+});
+Route::get('/mail-view', function(){
+    $link = 'https://bca.welcomehomestay.in/';
+    return view('emails.view-test', compact('link'));
+});
 
 // Forgot password route
 Route::get('/admin/password/reset', function () {
