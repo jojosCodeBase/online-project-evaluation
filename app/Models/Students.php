@@ -11,19 +11,13 @@ class Students extends Model
     protected $tables = 'students';
     protected $fillable = [
         'regno',
-        'name',
-        'rank',
-        'total_marks',
-        'exam_name',
-        'exam_month_year',
-        'since',
-        'state',
-        'placement',
-        'category',
-        'mode',
-        'franchise',
-        'profile',
-        'rating',
-        'review',
+        'year',
+        'semester',
+        'batch',
+        'user_id'
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

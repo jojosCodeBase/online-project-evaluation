@@ -14,12 +14,15 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $presentations = Presentations::all();
+        $presentations = Presentations::join('projects', 'projects.id', '=', 'presentations.project_id')
+        ->select('presentations.*', 'projects.project_name as project_name', 'projects.id as project_id')
+        ->paginate(10);
         return view('dashboard', compact('presentations'));
     }
     public function upload()
     {
         $presentations = Presentations::all();
+
         return view('upload-document', compact('presentations'));
     }
     public function uploadDocument(Request $request)

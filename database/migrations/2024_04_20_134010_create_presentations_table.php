@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('date');
             $table->string('type');
             $table->integer('status');
+            $table->integer('allow_file_upload')->default(0);
             $table->timestamps();
 
             $table->foreign('project_id')->references('id')->on('projects');

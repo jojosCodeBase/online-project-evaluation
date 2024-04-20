@@ -10,6 +10,6 @@ class Presentations extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','project_id','date', 'time', 'venue', 'presentation', 'project', 'status',
+        'name','project_id','date', 'time', 'venue', 'presentation', 'project', 'status', 'allow_file_upload'
     ];
 }

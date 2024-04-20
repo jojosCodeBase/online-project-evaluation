@@ -30,4 +30,8 @@ class Groups extends Model
     {
         return $this->belongsTo(User::class, 'project_guide')->select(['id', 'name']);
     }
+    public function group()
+    {
+        return $this->belongsTo(Groups::class);
+    }
 }

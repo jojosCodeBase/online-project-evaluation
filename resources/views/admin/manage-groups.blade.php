@@ -38,7 +38,7 @@
                                 <td>{{ $group->guide->name }}</td>
                                 <td>
                                     @foreach ($group->members as $member)
-                                        {{ $member->name }}
+                                        {{ $member->student->user->name }}
                                         @if (!$loop->last)
                                             , <!-- Add a comma if it's not the last member -->
                                         @endif
@@ -115,7 +115,7 @@
                                 <input type="text" name="topic" class="form-control" required>
                             </div>
                             <div class="col-12 mb-3">
-                                <label class="title form-label">Members</label>
+                                <label class="title form-label">Members Regno</label>
                                 <input type="text" placeholder="Member 1" class="form-control" name="member[]"
                                     id="member">
                                 <div id="members-container" class="mt-2">
@@ -251,7 +251,9 @@
                     url: '/admin/groupInfo/' + groupId,
                     type: 'GET',
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
+                        // console.log(response.members[0].student.user);
+                        // console.log(response.members[0].student.user.name);
                         $('#group_name').val(response.group_name);
                         $('#project').val(response.project.id);
                         $('#guide').val(response.guide.id);
@@ -263,9 +265,14 @@
 
                         // Add members dynamically to the modal
                         var memberList = $('#member_list');
+
                         $.each(response.members, function(index, member) {
-                            memberList.append('<input type="text" class="form-control mb-2" value="' + member.name + '" name="member[]">');
+                            console.log(member.student.user.name);
+                            memberList.append(
+                                '<input type="text" class="form-control mb-2" value="' +
+                                member.student.regno + '" name="member[]">');
                         });
+
 
                         // Show the edit modal
                         $('#groupEditModal').modal('show');

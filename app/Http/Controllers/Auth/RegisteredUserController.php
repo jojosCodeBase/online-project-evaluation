@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Students;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -90,11 +91,16 @@ class RegisteredUserController extends Controller
         ]);
 
         $user = User::create([
-            'regno' => $request->regno,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 2,
+        ]);
+
+        // Create student record associated with the user
+        Students::create([
+            'user_id' => $user->id, // Assign the newly created user's ID
+            'regno' => $request->regno,
         ]);
 
         return redirect()->route('login')->with('success', 'Student Registered Successfully');

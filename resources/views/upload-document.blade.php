@@ -35,9 +35,7 @@
                                 <tr>
                                     <th>Presentation Type</th>
                                     <th>Date</th>
-                                    <th>Upload File</th>
-                                    <th>Action</th>
-                                    <th>Feedback</th>
+                                    <th colspan="3">Upload File</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,17 +43,21 @@
                                     <tr>
                                         <td>{{ $presentation->name }}</td>
                                         <td>{{ $presentation->date }}</td>
-                                        <form action="{{ route('upload.document') }}" method="POST"
-                                            enctype="multipart/form-data">
-                                            @csrf
-                                            <td><input class="form-control" type="file" name="file" required></td>
-                                            <td class="text-center"><button type="submit"
-                                                    class="btn btn-primary">Upload</button></td>
-                                        </form>
-                                        <td class="text-center">
-                                            <button class="view-btn btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#staticBackdrop">View</button>
-                                        </td>
+                                        @if($presentation->allow_file_upload)
+                                            <form action="{{ route('upload.document') }}" method="POST"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <td><input class="form-control" type="file" name="file" required></td>
+                                                <td class="text-center"><button type="submit"
+                                                        class="btn btn-primary">Upload</button></td>
+                                            </form>
+                                            <td class="text-center">
+                                                <button class="view-btn btn btn-success" data-bs-toggle="modal"
+                                                    data-bs-target="#staticBackdrop">View</button>
+                                            </td>
+                                        @else
+                                            <td colspan="3" class="text-danger">Not accepting files</td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

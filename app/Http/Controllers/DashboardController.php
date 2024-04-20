@@ -26,7 +26,7 @@ class DashboardController extends Controller
             'project' => 'required|integer',
             'guide' => 'required|integer',
             'topic' => 'required|string|max:255',
-            'member.*' => 'required|string|max:255', // This ensures all members are required
+            'member.*' => 'required|integer', // This ensures all members are required
         ];
 
         $messages = [
@@ -54,24 +54,24 @@ class DashboardController extends Controller
         ]);
 
         // Get the names of existing members for the group
-        $existingMemberNames = $group->members()->pluck('name');
+        $existingMemberNames = $group->members()->pluck('regno');
 
-        // dd($existingMemberNames);
+        // dd($existingMemberregnos);
 
         // Update or create group members
-        foreach ($request->member as $memberName) {
+        foreach ($request->member as $memberRegno) {
             // Update member if it already exists
-            $existingMember = $group->members()->where('name', $memberName)->first();
+            $existingMember = $group->members()->where('regno', $memberRegno)->first();
             if ($existingMember) {
-                $existingMember->update(['name' => $memberName]);
+                $existingMember->update(['regno' => $memberRegno]);
             } else {
                 // Create member if it doesn't exist
-                $group->members()->create(['name' => $memberName]);
+                $group->members()->create(['regno' => $memberRegno]);
             }
         }
 
         // Delete members that are not in the request
-        $group->members()->whereNotIn('name', $request->member)->delete();
+        $group->members()->whereNotIn('regno', $request->member)->delete();
 
         if ($group)
             return back()->with('success', 'Group Updated Successfully');
@@ -97,7 +97,9 @@ class DashboardController extends Controller
     }
     public function getGroupInfo($id)
     {
-        $group = Groups::with(['members', 'project', 'guide'])->findOrFail($id);
+        // $group = Groups::with(['members', 'project', 'guide'])->findOrFail($id);
+        $group = Groups::with(['members.student.user', 'project', 'guide'])->findOrFail($id);
+
         return response()->json($group);
     }
 
@@ -295,8 +297,12 @@ class DashboardController extends Controller
     }
 
     public function manageGroups()
-    { // Fetch all groups with their members from the database
-        $groups = Groups::with(['members', 'project', 'guide'])->paginate(5);
+    {
+        // Fetch all groups with their members from the database
+        // $groups = Groups::with(['members', 'project', 'guide'])->paginate(5);
+        $groups = Groups::with(['members.student.user', 'project', 'guide'])->paginate(5);
+
+        // dd($groups);
         $projects = Projects::all();
         $faculties = User::where('role', 1)->get();
         // Pass the groups data to the view
@@ -311,7 +317,7 @@ class DashboardController extends Controller
             'project' => 'required|integer',
             'guide' => 'required|integer',
             'topic' => 'required|string|max:255',
-            'member.*' => 'required|string|max:255', // This ensures all members are required
+            'member.*' => 'required|integer', // This ensures all members are required
         ];
 
         $messages = [
@@ -334,10 +340,10 @@ class DashboardController extends Controller
         ]);
 
         // Assuming 'member' is an array of members' names
-        foreach ($r->member as $memberName) {
+        foreach ($r->member as $memberRegno) {
             GroupsMembers::create([
                 'group_id' => $group->id,
-                'name' => $memberName
+                'regno' => $memberRegno
             ]);
         }
 

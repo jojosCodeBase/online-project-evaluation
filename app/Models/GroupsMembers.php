@@ -11,12 +11,18 @@ class GroupsMembers extends Model
     use HasFactory;
     protected $fillable = [
         'group_id',
-        'name',
+        'regno',
     ];
 
     // Relationship with Group
     public function group()
     {
         return $this->belongsTo(Groups::class, 'group_id');
+    }
+
+    // Relationship with Student
+    public function student()
+    {
+        return $this->belongsTo(Students::class, 'regno', 'regno');
     }
 }
