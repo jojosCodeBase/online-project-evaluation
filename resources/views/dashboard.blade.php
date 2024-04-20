@@ -94,49 +94,54 @@
                     <div class="card-body">
                         <h4 class="text-bj fw-bold">Upcoming Presentations</h4>
                         <table class="table">
-                            <thead>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Venue</th>
-                                <th>Presentation</th>
-                                <th>Course</th>
-                                <th>Status</th>
-                            </thead>
-                            <tbody>
-                                @foreach ($presentations as $presentation)
+                            <table class="table">
+                                <thead>
                                     <tr>
-                                        <td>{{ $presentation->date }}</td>
-                                        <td>{{ $presentation->time }}</td>
-                                        <td>{{ $presentation->venue }}</td>
-                                        <td>{{ $presentation->presentation }}</td>
-                                        <td>{{ $presentation->project }}</td>
-                                        <td>
-                                            @php
-                                                $status = '';
-                                                switch ($presentation->status) {
-                                                    case 0:
-                                                        $status = 'Tentative';
-                                                        $badgeClass = 'badge-warning';
-                                                        break;
-                                                    case 1:
-                                                        $status = 'Confirmed';
-                                                        $badgeClass = 'badge-success';
-                                                        break;
-                                                    case 2:
-                                                        $status = 'Cancelled';
-                                                        $badgeClass = 'badge-danger';
-                                                        break;
-                                                    default:
-                                                        $status = 'Unknown';
-                                                        $badgeClass = 'badge-secondary';
-                                                        break;
-                                                }
-                                            @endphp
-                                            <span class="badge {{ $badgeClass }}">{{ $status }}</span>
-                                        </td>
+                                        <th>Presentation</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Venue</th>
+                                        <th>Project</th>
+                                        <th>Status</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
+                                </thead>
+                                <tbody>
+                                    @foreach ($presentations as $presentation)
+                                        <tr>
+                                            <td>{{ $presentation->name }}</td>
+                                            <td>{{ $presentation->date }}</td>
+                                            <td>{{ $presentation->time }}</td>
+                                            <td>{{ $presentation->venue }}</td>
+                                            <td>{{ $presentation->project_name }}</td>
+                                            <td>
+                                                @php
+                                                    $status = '';
+                                                    switch ($presentation->status) {
+                                                        case 0:
+                                                            $status = 'Tentative';
+                                                            $badgeClass = 'badge-warning';
+                                                            break;
+                                                        case 1:
+                                                            $status = 'Confirmed';
+                                                            $badgeClass = 'badge-success';
+                                                            break;
+                                                        case 2:
+                                                            $status = 'Cancelled';
+                                                            $badgeClass = 'badge-danger';
+                                                            break;
+                                                        default:
+                                                            $status = 'Unknown';
+                                                            $badgeClass = 'badge-secondary';
+                                                            break;
+                                                    }
+                                                @endphp
+                                                <span id="status" data-status="{{ $presentation->status }}"
+                                                    class="badge {{ $badgeClass }}">{{ $status }}</span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </table>
                         {{-- {{ $franchise->links() }} --}}
                     </div>

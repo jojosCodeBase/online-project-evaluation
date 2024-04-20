@@ -63,40 +63,10 @@
                     <span class="fs-6">Upload Document</span>
                 </a>
             </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('student.chat') ? 'active' : ''}}">
+            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('student.chat') ? 'active' : ''}}">
                 <a class="nav-link d-flex align-items-center" href="{{ route('student.chat') }}">
                     <i class="bi bi-chat-dots-fill fs-6 pe-2"></i>
                     <span class="fs-6">Group Chat</span>
-                </a>
-            </li>
-            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('add') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('add') }}">
-                    <i class="bi bi-person-fill-up fs-6 pe-2"></i>
-                    <span class="fs-6">Add Faculty</span>
-                </a>
-            </li> --}}
-            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.MCA') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('show.MCA') }}">
-                    <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
-                    <span class="fs-6">Evaluate MCA Students</span>
-                </a>
-            </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.BCA') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('show.BCA') }}">
-                    <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
-                    <span class="fs-6">Evaluate BCA Students</span>
-                </a>
-            </li> --}}
-            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('franchise-view') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('franchise-view') }}">
-                    <i class="bi bi-building-fill-add fs-6 pe-2"></i>
-                    <span class="fs-6">Manage Franchise</span>
-                </a>
-            </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('manage-category') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('manage-category') }}">
-                    <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
-                    <span class="fs-6">Manage Exam Category</span>
                 </a>
             </li> --}}
         </ul>

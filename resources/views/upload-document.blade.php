@@ -41,18 +41,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Synopsis Presentation</td>
-                                    <td>2024-02-17</td>
-                                    <form action="{{ route('upload.document') }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <td><input class="form-control" type="file" name="file" required></td>
-                                        <td class="text-center"><button type="submit" class="btn btn-primary">Upload</button></td>
-                                    </form>
-                                    <td class="text-center">
-                                        <button class="view-btn btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View</button>
-                                    </td>
-                                </tr>
+                                @foreach ($presentations as $presentation)
+                                    <tr>
+                                        <td>{{ $presentation->name }}</td>
+                                        <td>{{ $presentation->date }}</td>
+                                        <form action="{{ route('upload.document') }}" method="POST"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <td><input class="form-control" type="file" name="file" required></td>
+                                            <td class="text-center"><button type="submit"
+                                                    class="btn btn-primary">Upload</button></td>
+                                        </form>
+                                        <td class="text-center">
+                                            <button class="view-btn btn btn-success" data-bs-toggle="modal"
+                                                data-bs-target="#staticBackdrop">View</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

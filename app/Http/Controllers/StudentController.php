@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Presentations;
 use App\Models\Students;
 use App\Models\Franchise;
 use App\Models\FileUpload;
@@ -13,12 +14,13 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $presentations = ScheduledPresentations::all();
+        $presentations = Presentations::all();
         return view('dashboard', compact('presentations'));
     }
     public function upload()
     {
-        return view('upload-document');
+        $presentations = Presentations::all();
+        return view('upload-document', compact('presentations'));
     }
     public function uploadDocument(Request $request)
     {
