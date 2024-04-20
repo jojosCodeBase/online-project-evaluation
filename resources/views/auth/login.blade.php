@@ -38,7 +38,7 @@
                     <div class="card-body p-xl-5 p-md-4 p-4">
                         <h2 class="fw-bold text-secondary mt-3 mb-1 text-center">Welcome Back!</h2>
                         <p class="text-secondary mb-4 text-center">Login with your account to continue</p>
-                        <form action="{{ route('login') }}" method="POST">
+                        <form action="{{ route('login.post') }}" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <div class="input-group">
