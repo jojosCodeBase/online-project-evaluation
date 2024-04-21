@@ -10,6 +10,7 @@ use App\Models\Students;
 use App\Models\Franchise;
 use Illuminate\Http\Request;
 use App\Models\GroupsMembers;
+use App\Models\Presentations;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
@@ -105,7 +106,12 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('admin.dashboard');
+        $students = Students::count();
+        $faculties = User::where('role', 1)->count();
+        $presentations = Presentations::join('projects', 'projects.id', '=', 'presentations.project_id')
+        ->select('presentations.*', 'projects.project_name as project_name', 'projects.id as project_id')
+        ->paginate(10);
+        return view('admin.dashboard', compact('students', 'faculties', 'presentations'));
     }
 
     // public function addStudentView()

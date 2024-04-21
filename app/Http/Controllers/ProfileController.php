@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Models\GroupsMembers;
+use App\Models\Students;
+use App\Models\User;
+use App\Models\Groups;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -60,9 +64,34 @@ class ProfileController extends Controller
 
     public function student_edit(Request $request): View
     {
-        return view('profile.student-profile', [
-            'user' => $request->user(),
-        ]);
+        $user = Auth::user();
+
+        // $data = User::with('student')->findOrFail($user->id);
+        $user = User::with(['student' => function ($query) {
+            $query->with('groupMember.group');
+        }])->findOrFail($user->id);
+
+        // Now, you can access the group ID of the associated student
+        $groupId = $user->student->groupMember->group->id;
+
+        // dd($user);
+
+        $groupInfo = Groups::join('users', 'groups.project_guide', '=', 'users.id')
+        ->leftJoin('projects', 'projects.id', '=', 'groups.project_id')
+        ->select('groups.*', 'users.name as guide_name', 'projects.project_name')
+        ->where('groups.id', $groupId)
+        ->first();
+
+        // $groupMembers = GroupsMembers::join('groups', 'groups.id', '=', 'groups_members.group_id')
+        // join('groups', 'groups.id', '=', 'groups_members.group_id')
+        $groupMembers = GroupsMembers::join('students', 'students.regno', '=', 'groups_members.regno')
+        ->leftjoin('users', 'users.id', '=', 'students.user_id')
+        ->select('users.*', 'students.*')
+        ->where('groups_members.group_id', $groupId)
+        ->get();
+
+
+        return view('profile.student-profile', compact('user', 'groupInfo', 'groupMembers'));
     }
 
     /**
@@ -72,13 +101,20 @@ class ProfileController extends Controller
     {
         $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        // dd($request->all());
 
-        $request->user()->save();
+        $user = User::where('id', Auth::user()->id)
+        ->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $student = Students::where('user_id', Auth::user()->id)->update([
+            'year' => $request->year,
+            'semester' => $request->semester
+        ]);
+
+        return Redirect::route('student-profile.edit')->with('success', 'Profile updated successfully');
     }
 
     /**

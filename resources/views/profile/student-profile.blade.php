@@ -3,11 +3,7 @@
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">
-        @if (session('status'))
-            <div class="alert alert-success">
-                <span>{{ session('status') }}</span>
-            </div>
-        @endif
+        @include('includes/alerts')
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Student Profile</h1>
         </div>
@@ -17,7 +13,7 @@
                     <div class="card-body">
                         <h4>Profile Information</h4>
                         <p>Update your account's profile information and email address.</p>
-                        <form method="post" action="{{ route('profile.update') }}">
+                        <form method="post" action="{{ route('student-profile.update') }}">
                             @csrf
                             @method('patch')
                             <div class="row">
@@ -30,31 +26,40 @@
                                     <input type="email" class="form-control" name="email" value="{{ $user->email }}">
                                 </div>
                                 <div class="col-6 mb-3">
-                                    <label class="form-label">Course</label>
-                                    <select class="form-control" name="course">
-                                        <option value="BCA">BCA</option>
-                                        <option value="MCA">MCA</option>
-                                    </select>
+                                    <label class="form-label">Project</label>
+                                    <input type="text" class="form-control" name="project"
+                                        value="{{ $groupInfo->project_name }}" readonly>
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Teacher Guide</label>
-                                    <input type="text" class="form-control" name="teacher_guide">
+                                    <input type="text" class="form-control" name="teacher_guide"
+                                        value="{{ $groupInfo->guide_name }}" readonly>
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Group Members</label>
-                                    <input type="text" class="form-control" name="group_members">
+                                    @php
+                                        $members = '';
+                                        foreach ($groupMembers as $member) {
+                                            $members .= $member->name . ', ';
+                                        }
+                                        $members = rtrim($members, ', ');
+                                    @endphp
+
+
+                                    <input type="text" class="form-control" name="group_members" value="{{ $members }}" readonly>
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Project Topic</label>
-                                    <input type="text" class="form-control" name="project_topic">
+                                    <input type="text" class="form-control" name="project_topic"
+                                        value="{{ $groupInfo->topic }}" readonly>
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Year</label>
-                                    <input type="text" class="form-control" name="year">
+                                    <input type="text" class="form-control" name="year" value="{{ $user->student->year }}">
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Semester</label>
-                                    <input type="text" class="form-control" name="semester">
+                                    <input type="text" class="form-control" name="semester" value="{{ $user->student->semester }}">
                                 </div>
                             </div>
                             <div class="row">

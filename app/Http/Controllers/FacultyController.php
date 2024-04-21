@@ -38,6 +38,10 @@ class FacultyController extends Controller
         return view('faculty.evaluate-major', compact('projects', 'documents'));
     }
 
+    public function evaluateMajorMarks(Request $r){
+        dd($r->all());
+    }
+
     public function groupsAssigned()
     {
         $groups = Groups::with('members')->get();
