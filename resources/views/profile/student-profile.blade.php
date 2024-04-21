@@ -58,9 +58,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col">
+                                <div class="col-4">
                                     <!-- Save Button -->
-                                    <button type="submit" class="btn btn-primary w-25">Save</button>
+                                    <button type="submit" class="btn btn-primary btn-bj w-25">Save</button>
                                     <!-- End of First Section -->
                                 </div>
                             </div>
