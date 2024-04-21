@@ -75,6 +75,8 @@ Route::middleware(['auth'])->group(function () {
         // Faculty show students
         Route::get('/evaluate/minor', [FacultyController::class, 'evaluateMinor'])->name('faculty.evaluate-minor');
         Route::get('/evaluate/major', [FacultyController::class, 'evaluateMajor'])->name('faculty.evaluate-major');
+
+        Route::post('/evaluate/major', [FacultyController::class, 'evaluateMajorMarks'])->name('student.evaluate');
     });
 
     // Student routes
