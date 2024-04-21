@@ -51,7 +51,6 @@ class PresentationController extends Controller
     }
     public function updatePresentation(Request $request)
     {
-        // dd($request->all());
         // Validate the incoming request data
         $request->validate([
             'date' => 'required|date',
@@ -62,6 +61,11 @@ class PresentationController extends Controller
             'status' => 'required|integer',
         ]);
 
+        if($request->has('allow_file_upload'))
+            $request->allow_file_upload = 1;
+        else
+            $request->allow_file_upload = 0;
+
         // Create a new instance of the ScheduledPresentations model
         Presentations::where('id', $request->presentation_id)->update([
             'date' => $request->date,
@@ -71,6 +75,7 @@ class PresentationController extends Controller
             'project_id' => $request->project_id,
             'type' => 'Progress',
             'status' => $request->status, // You can set the status here or leave it as per your requirement
+            'allow_file_upload' => $request->allow_file_upload, // You can set the status here or leave it as per your requirement
             // 'send_email_notification' => $request->has('send_email_notification'), // Uncomment if needed
         ]);
 

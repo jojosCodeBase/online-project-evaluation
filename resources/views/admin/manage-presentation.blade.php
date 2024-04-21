@@ -1,5 +1,62 @@
 @extends('layouts/admin')
 @section('title', 'Manage Presentations')
+<style>
+    .switch {
+        --button-width: 3.2em;
+        --button-height: 1.8em;
+        --toggle-diameter: 1.5em;
+        --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
+        --toggle-shadow-offset: 10px;
+        --toggle-wider: 3em;
+        --color-grey: #cccccc;
+        --color-green: #4296f4;
+    }
+
+    .slider {
+        display: inline-block;
+        width: var(--button-width);
+        height: var(--button-height);
+        background-color: var(--color-grey);
+        border-radius: calc(var(--button-height) / 2);
+        position: relative;
+        transition: 0.3s all ease-in-out;
+    }
+
+    .slider::after {
+        content: "";
+        display: inline-block;
+        width: var(--toggle-diameter);
+        height: var(--toggle-diameter);
+        background-color: #fff;
+        border-radius: calc(var(--toggle-diameter) / 2);
+        position: absolute;
+        top: var(--button-toggle-offset);
+        transform: translateX(var(--button-toggle-offset));
+        box-shadow: var(--toggle-shadow-offset) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+        transition: 0.3s all ease-in-out;
+    }
+
+    .switch input[type="checkbox"]:checked+.slider {
+        background-color: var(--color-green);
+    }
+
+    .switch input[type="checkbox"]:checked+.slider::after {
+        transform: translateX(calc(var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset)));
+        box-shadow: calc(var(--toggle-shadow-offset) * -1) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+    }
+
+    .switch input[type="checkbox"] {
+        display: none;
+    }
+
+    .switch input[type="checkbox"]:active+.slider::after {
+        width: var(--toggle-wider);
+    }
+
+    .switch input[type="checkbox"]:checked:active+.slider::after {
+        transform: translateX(calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)));
+    }
+</style>
 @section('content')
     <div class="container">
         @include('includes/alerts')
@@ -73,6 +130,9 @@
                                             <i class="fa fa-circle" aria-hidden="true"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            {{-- <button class="dropdown-item edit-btn bg-success" data-toggle="modal"
+                                                data-target="#groupEditModal" data-group-id="{{ $presentation->id }}">Enable file upload
+                                            </button> --}}
                                             <button class="dropdown-item edit-btn" data-toggle="modal"
                                                 data-target="#groupEditModal" data-group-id="{{ $presentation->id }}"
                                                 data-group-name="{{ $presentation->name }}"
@@ -80,7 +140,8 @@
                                                 data-group-time="{{ $presentation->time }}"
                                                 data-group-venue="{{ $presentation->venue }}"
                                                 data-group-project="{{ $presentation->project_id }}"
-                                                data-group-status="{{ $presentation->status }}">Edit</button>
+                                                data-group-status="{{ $presentation->status }}"
+                                                data-group-file-upload="{{ $presentation->allow_file_upload }}">Edit</button>
                                             <button class="dropdown-item delete-btn" data-toggle="modal"
                                                 data-target="#deleteModal"
                                                 data-group-id="{{ $presentation->id }}">Delete</button>
@@ -210,6 +271,13 @@
                                 </select>
                             </div>
                             <div class="col-12 mb-3">
+                                <label for="" class="title form-label">Enable file upload</label><br>
+                                <label class="switch">
+                                    <input type="checkbox" name="allow_file_upload" id="file-upload-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="col-12 mb-3">
                                 <input type="checkbox" id="editSendEmailNotification" name="send_email_notification">
                                 <label for="editSendEmailNotification" class="title form-label">Send Email
                                     Notification</label>
@@ -272,6 +340,7 @@
             var presentationVenue = $(this).data('group-venue');
             var presentationProject = $(this).data('group-project');
             var presentationStatus = $(this).data('group-status');
+            var fileUpload = $(this).data('group-file-upload');
 
             $('#presentationId').val(presentationId);
             $('#editDate').val(presentationDate);
@@ -280,6 +349,13 @@
             $('#editPresentationName').val(presentationName);
             $('#editProject').val(presentationProject);
             $('#editStatus').val(presentationStatus);
+
+            if (fileUpload === 1) {
+                $('#file-upload-checkbox').prop('checked', true);
+            } else {
+                $('#file-upload-checkbox').prop('checked', false);
+            }
+
         });
     </script>
 @endsection

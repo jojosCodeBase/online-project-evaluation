@@ -12,4 +12,9 @@ class Presentations extends Model
     protected $fillable = [
         'name','project_id','date', 'time', 'venue', 'presentation', 'project', 'status', 'allow_file_upload'
     ];
+
+    public function project()
+    {
+        return $this->belongsTo(Projects::class, 'project_id')->select(['id', 'project_name']);
+    }
 }

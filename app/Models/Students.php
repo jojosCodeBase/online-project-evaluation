@@ -18,6 +18,11 @@ class Students extends Model
     ];
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    public function groupMember()
+    {
+        // Assuming 'regno' is the foreign key in the group_members table
+        return $this->hasOne(GroupsMembers::class, 'regno', 'regno');
     }
 }

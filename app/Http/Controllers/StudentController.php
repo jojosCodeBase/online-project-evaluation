@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Presentations;
+use App\Models\Document;
 use App\Models\Students;
 use App\Models\Franchise;
 use App\Models\FileUpload;
 use Illuminate\Http\Request;
+use App\Models\GroupsMembers;
+use App\Models\Presentations;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ScheduledPresentations;
 
@@ -15,58 +17,64 @@ class StudentController extends Controller
     public function index()
     {
         $presentations = Presentations::join('projects', 'projects.id', '=', 'presentations.project_id')
-        ->select('presentations.*', 'projects.project_name as project_name', 'projects.id as project_id')
-        ->paginate(10);
+            ->select('presentations.*', 'projects.project_name as project_name', 'projects.id as project_id')
+            ->paginate(10);
         return view('dashboard', compact('presentations'));
     }
     public function upload()
     {
+        // get user group id
+        $user = Auth::user();
+
+        // $regno = $user->student->regno;
+
+        $groupMember = GroupsMembers::where('regno', $user->student->regno)->first();
+
+        $groupId = $groupMember->group_id;
+
+        $documents = Document::where('group_id', $groupId)->get();
+        // dd($document);
         $presentations = Presentations::all();
 
-        return view('upload-document', compact('presentations'));
+        return view('upload-document', compact('presentations', 'documents'));
     }
     public function uploadDocument(Request $request)
     {
+        // dd($request->all());
         // Fetch the authenticated user
         $user = Auth::user();
+        $student = $user->student;
 
-        // Check if the user is a student
-        if ($user->role === 2) {
-            // Retrieve the group ID(s) associated with the student
-            $groupIds = $user->groups()->pluck('groups.id')->toArray();
+        if ($student) {
+            $regno = $student->regno;
 
-            // dd($groupIds);
+            $groupMember = GroupsMembers::where('regno', $student->regno)->first();
 
-            // You can choose how to handle the group ID(s) here, depending on your application's logic
-            // For example, you can use the first group ID or store multiple group IDs
-
-            // Example: Store the first group ID
-            // $groupId = count($groupIds) > 0 ? $groupIds[0] : null;
+            $groupId = $groupMember->group_id;
 
             if ($request->hasFile('file') && $request->file('file')->isValid()) {
                 $file = $request->file('file');
                 $directory = 'uploads';
-                $filePath = $file->move(public_path($directory), $file->getClientOriginalName());
+
+                $file->move(public_path($directory), $file->getClientOriginalName());
 
                 // Save file upload information to the database
-                $upload = new FileUpload();
-                $upload->file_path = $file->getClientOriginalName();
-                $upload->user_id = $user->id;
-                $upload->group_id = 1;
-                $upload->save();
+                $document = new Document();
+                $document->file_url = $file->getClientOriginalName();
+                $document->presentation_id = $request->presentation_id;
+                $document->uploaded_by = $regno;
+                $document->group_id = $groupId;
+                $document->save();
 
                 return redirect()->back()->with('success', 'File uploaded successfully.');
             }
 
-            // return redirect()->back()->with('error', 'No valid file uploaded.');
+        } else {
+            return redirect()->back()->with('error', 'Only students can upload files.');
         }
-
-        return redirect()->back()->with('error', 'Only students can upload files.');
     }
     public function chat()
     {
         return view('group-chat');
     }
-
-
 }

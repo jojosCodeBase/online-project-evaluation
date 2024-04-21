@@ -30,6 +30,7 @@
                 <div class="card">
                     <div class="card-body p-4">
                         <h4 class="text-center">Document Upload</h4>
+                        {{-- @dump($documents) --}}
                         <table class="table table-striped table-bordered">
                             <thead class="bg-primary text-light">
                                 <tr>
@@ -43,20 +44,39 @@
                                     <tr>
                                         <td>{{ $presentation->name }}</td>
                                         <td>{{ $presentation->date }}</td>
-                                        @if($presentation->allow_file_upload)
-                                            <form action="{{ route('upload.document') }}" method="POST"
-                                                enctype="multipart/form-data">
-                                                @csrf
-                                                <td><input class="form-control" type="file" name="file" required></td>
-                                                <td class="text-center"><button type="submit"
-                                                        class="btn btn-primary">Upload</button></td>
-                                            </form>
-                                            <td class="text-center">
-                                                <button class="view-btn btn btn-success" data-bs-toggle="modal"
-                                                    data-bs-target="#staticBackdrop">View</button>
-                                            </td>
+                                        @if ($presentation->allow_file_upload)
+                                            @php
+                                                $document = $documents
+                                                    ->where('presentation_id', $presentation->id)
+                                                    ->first();
+                                            @endphp
+                                            @if ($document)
+                                                <td>Document Uploaded <br> Uploaded by: {{ $document->uploaded_by }}</td>
+                                                <td class="text-center">
+                                                    @if($document->status == 0)
+                                                        <span class="badge badge-primary">Submitted</span>
+                                                    @elseif($document->status == 1)
+                                                        <span class="badge badge-success">Viewed</span>
+                                                    @elseif($document->status == 2)
+                                                        <button class="view-btn btn btn-success" data-bs-toggle="modal"
+                                                        data-bs-target="#staticBackdrop">View</button>
+                                                    @endif
+                                                </td>
+                                            @else
+                                                <form action="{{ route('upload.document') }}" method="POST"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input class="form-control" type="text" name="presentation_id"
+                                                        value="{{ $presentation->id }}" hidden>
+                                                    <td><input class="form-control" type="file" name="file"
+                                                            accept=".pdf" required></td>
+                                                    <td class="text-center"><button type="submit"
+                                                            class="btn btn-primary">Upload</button></td>
+                                                </form>
+                                                <td></td> <!-- Empty column as placeholder -->
+                                            @endif
                                         @else
-                                            <td colspan="3" class="text-danger">Not accepting files</td>
+                                            <td colspan="4" class="text-danger">Not accepting files</td>
                                         @endif
                                     </tr>
                                 @endforeach

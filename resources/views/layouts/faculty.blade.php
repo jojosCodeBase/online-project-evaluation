@@ -59,20 +59,8 @@
                     <span class="fs-6">Dashboard</span>
                 </a>
             </li>
-            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('add') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('add') }}">
-                    <i class="bi bi-person-fill-up fs-6 pe-2"></i>
-                    <span class="fs-6">Add Student</span>
-                </a>
-            </li> --}}
-            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('add') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('add') }}">
-                    <i class="bi bi-person-fill-up fs-6 pe-2"></i>
-                    <span class="fs-6">Add Faculty</span>
-                </a>`
-            </li> --}}
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('teacher-portal') ? 'active' : '' }}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('teacher-portal') }}">
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.evaluate-major') ? 'active' : '' }}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('faculty.evaluate-major') }}">
                     <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
                     <span class="fs-6">Evaluate Major Projects</span>
                 </a>
@@ -91,12 +79,6 @@
                     <span class="fs-6">Groups Assigned</span>
                 </a>
             </li>
-            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('manage-category') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('manage-category') }}">
-                    <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
-                    <span class="fs-6">Manage Exam Category</span>
-                </a>
-            </li> --}}
         </ul>
         <!-- End of Sidebar -->
 

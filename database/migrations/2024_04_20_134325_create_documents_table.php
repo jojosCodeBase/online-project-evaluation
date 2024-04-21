@@ -16,10 +16,13 @@ return new class extends Migration
             $table->unsignedBigInteger('presentation_id');
             $table->string('file_url');
             $table->unsignedBigInteger('group_id')->nullable();
+            $table->unsignedBigInteger('uploaded_by')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
 
             $table->foreign('presentation_id')->references('id')->on('presentations');
             $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('uploaded_by')->references('regno')->on('students');
         });
     }
 
