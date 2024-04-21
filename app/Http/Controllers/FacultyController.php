@@ -7,13 +7,13 @@ use App\Models\Category;
 use App\Models\Students;
 use App\Models\Franchise;
 use Illuminate\Http\Request;
-use App\Models\ScheduledPresentations;
+use App\Models\Presentations;
 
 class FacultyController extends Controller
 {
     public function index()
     {
-        $presentations = ScheduledPresentations::all();
+        $presentations = Presentations::all();
         return view('faculty.dashboard', compact('presentations'));
     }
 

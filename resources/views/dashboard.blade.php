@@ -50,23 +50,6 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card shadow h-100">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col mr-2">
-                                <div class="font-weight-bold text-bj text-uppercase">
-                                    Upcoming Presentation
-                                </div>
-                                <div class="h4 mb-0 mt-2 fw-bold text-gray-800">{{ $count }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x text-bj"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card shadow h-100">
                     <div class="card-body">
@@ -80,6 +63,26 @@
                             <div class="col-auto">
                                 {{-- <i class="fas fa-check fa-2x text-bj"></i> --}}
                                 <i class="fas fa-file fa-2x text-bj"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col mr-2">
+                                <div class="font-weight-bold text-bj text-uppercase">
+                                    Teacher Guide
+                                </div>
+                                <div class="h4 mb-0 mt-2 fw-bold text-gray-800">Parimala Tamang</div>
+                            </div>
+                            <div class="col-auto">
+                                {{-- <i class="fas fa-check fa-2x text-bj"></i> --}}
+                                {{-- <i class="fas fa-file fa-2x text-bj"></i> --}}
+                                <i class="bi bi-person-standing-dress fa-2x text-bj"></i>
                             </div>
                         </div>
                     </div>
