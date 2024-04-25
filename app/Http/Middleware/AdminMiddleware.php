@@ -3,16 +3,16 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 class AdminMiddleware
 {
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if(auth()->check() && auth()->user()->role === 0) {
+        if(Auth::user() && Auth::user()->role == 0){
             return $next($request);
+        }else{
+            return redirect('/login');
         }
-
-        return redirect('/login'); // Or you can return a response with a 403 status code
-        // return redirect('/login')->route('login'); // Or you can return a response with a 403 status code
     }
 }

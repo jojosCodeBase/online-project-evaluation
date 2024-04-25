@@ -4,14 +4,16 @@ namespace App\Http\Middleware;
 
 use Closure;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 class FacultyMiddleware
 {
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if(auth()->check() && auth()->user()->role === 1) {
+        if(Auth::user() && Auth::user()->role == 1){
             return $next($request);
+        }else{
+            return redirect('/login');
         }
-
-        return redirect()->route('login'); // Or you can return a response with a 403 status code
     }
 }
