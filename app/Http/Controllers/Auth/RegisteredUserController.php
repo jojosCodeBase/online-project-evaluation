@@ -47,7 +47,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -64,10 +64,10 @@ class RegisteredUserController extends Controller
     public function storeFaculty(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed'],
-            'regno' => ['required', 'numeric'],
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'password' => 'required|confirmed',
+            'regno' => 'required|numeric|unique:users',
         ]);
 
         $user = User::create([
@@ -84,10 +84,10 @@ class RegisteredUserController extends Controller
     public function storeStudent(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed'],
-            'regno' => ['required', 'numeric'],
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'password' => 'required|confirmed',
+            'regno' => 'required|numeric|unique:students',
         ]);
 
         $user = User::create([

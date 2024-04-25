@@ -102,7 +102,7 @@
                                 <th>Time</th>
                                 <th>Venue</th>
                                 <th>Presentation</th>
-                                <th>Course</th>
+                                <th>Project</th>
                                 <th>Status</th>
                             </thead>
                             <tbody>
@@ -111,8 +111,8 @@
                                         <td>{{ $presentation->date }}</td>
                                         <td>{{ $presentation->time }}</td>
                                         <td>{{ $presentation->venue }}</td>
-                                        <td>{{ $presentation->presentation }}</td>
-                                        <td>{{ $presentation->project }}</td>
+                                        <td>{{ $presentation->name }}</td>
+                                        <td>{{ $presentation->project->project_name }}</td>
                                         <td>
                                             @php
                                                 $status = '';
