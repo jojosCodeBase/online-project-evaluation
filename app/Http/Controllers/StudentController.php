@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\Evaluation;
 use App\Models\Students;
 use App\Models\Franchise;
 use App\Models\FileUpload;
@@ -30,13 +31,29 @@ class StudentController extends Controller
 
         $groupMember = GroupsMembers::where('regno', $user->student->regno)->first();
 
-        $groupId = $groupMember->group_id;
+        if(!is_null($groupMember)){
+            $groupId = $groupMember->group_id;
 
-        $documents = Document::where('group_id', $groupId)->get();
-        // dd($document);
-        $presentations = Presentations::all();
+            $documents = Document::where('group_id', $groupId)->get();
 
-        return view('upload-document', compact('presentations', 'documents'));
+            $presentations = Presentations::all();
+
+            // dd($document);
+
+            $feedback = Evaluation::where('group_id', $groupId)->get();
+            // dd($feedback);
+
+            // foreach($presentations as $presentation){
+            //     echo $feedback[]
+            // }
+            // if(is_null($feedback))
+            //     $feedback = "";
+
+            return view('upload-document', compact('presentations', 'documents', 'feedback'));
+        }else{
+            $presentations = [];
+            return view('upload-document', compact('presentations'));
+        }
     }
     public function uploadDocument(Request $request)
     {

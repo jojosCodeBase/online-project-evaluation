@@ -8,8 +8,10 @@ use App\Models\Document;
 use App\Models\Projects;
 use App\Models\Students;
 use App\Models\Franchise;
+use App\Models\Evaluation;
 use Illuminate\Http\Request;
 use App\Models\Presentations;
+use Illuminate\Support\Facades\Auth;
 
 class FacultyController extends Controller
 {
@@ -39,13 +41,33 @@ class FacultyController extends Controller
     }
 
     public function evaluateMajorMarks(Request $r){
-        dd($r->all());
+        // dd($r->all());
+        foreach($r->marks as $regno => $mark){
+            Evaluation::create([
+                'presentation_id' => $r->presentation_id,
+                'student_id' => $regno,
+                'evaluator_id' => Auth::user()->id,
+                'score' => $mark,
+                'comments' => $r->remarks,
+                'group_id' => $r->groupId,
+            ]);
+        }
+
+        try{
+            Document::where('presentation_id', $r->presentation_id)->where('group_id', $r->groupId)->update(['status' => 1]);
+            return back()->with('success', 'Evaluation successfully');
+        }catch(\Exception $e){
+            return back()->with('error', 'Some error occured');
+        }
+
     }
 
     public function groupsAssigned()
     {
-        $groups = Groups::with('members')->get();
+        $groups = Groups::with(['members.student.user', 'project'])->where('project_guide', Auth::user()->id)->get();
+        // dd($groups);
+        // $projects = Groups::with('project')->where('project_guide', Auth::user()->id)->get();
+
         return view('faculty.groups-assigned', compact('groups'));
     }
 }
-

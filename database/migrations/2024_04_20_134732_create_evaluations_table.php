@@ -16,13 +16,15 @@ return new class extends Migration
             $table->unsignedBigInteger('presentation_id');
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('evaluator_id');
+            $table->unsignedBigInteger('group_id');
             $table->integer('score');
             $table->text('comments');
             $table->timestamps();
 
             $table->foreign('presentation_id')->references('id')->on('presentations');
-            $table->foreign('student_id')->references('id')->on('users');
+            $table->foreign('student_id')->references('regno')->on('students');
             $table->foreign('evaluator_id')->references('id')->on('users');
+            $table->foreign('group_id')->references('id')->on('groups');
         });
     }
 

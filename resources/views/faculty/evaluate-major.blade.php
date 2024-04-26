@@ -4,8 +4,8 @@
     <div class="container-fluid">
         <h4 class="mb-3 fw-bold text-bj">Evaluate Major Project</h4>
     </div>
-    @include('includes/alerts')
     <div class="container-fluid">
+        @include('includes/alerts')
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -27,6 +27,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {{-- @dump($document) --}}
                                 @foreach ($documents as $document)
                                     <tr>
                                         <td>{{ $document->group->group_name }}</td>
@@ -41,7 +42,8 @@
                                             <button type="button" class="btn btn-bj evaluate-btn"
                                                 data-target="#evaluateModal" data-toggle="modal"
                                                 data-document-id="{{ $document->id }}"
-                                                data-group-id={{ $document->group->id }}><i
+                                                data-group-id={{ $document->group->id }}
+                                                data-presentation-id="{{ $document->presentation->id }}"><i
                                                     class="bi bi-pencil-fill"></i></button>
                                         </td>
                                         <td style="display: none;">
@@ -80,6 +82,7 @@
             <form action="{{ route('student.evaluate') }}" method="POST">
                 @csrf
                 <div class="modal-content">
+                    <input type="text" id="presentation_id" name="presentation_id" hidden>
                     <div class="modal-header">
                         <h5 class="modal-title" id="evaluateModalLabel">Evaluate Students</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -155,6 +158,9 @@
                 button.addEventListener('click', function() {
                     var row = this.closest('tr'); // Find the closest <tr> parent element
                     var groupId = $(this).data('group-id');
+
+                    $('#presentation_id').val($(this).data('presentation-id'));
+
                     // alert(groupId);
                     var hiddenTd = row.querySelector(
                         'td[style="display: none;"]'
@@ -182,6 +188,7 @@
                                 groupIdInput.type = 'number';
                                 groupIdInput.value = groupId;
                                 groupIdInput.name = 'groupId';
+                                groupIdInput.hidden = true;
 
                                 input.type = 'number';
                                 input.placeholder = 'Enter marks'
@@ -190,7 +197,7 @@
                                 input.classList.add('mb-2');
                                 studentList.appendChild(label);
                                 studentList.appendChild(input);
-                                studentList.appendChild(groupIdInput);d
+                                studentList.appendChild(groupIdInput);
                             });
                             var label = document.createElement('label');
                             label.textContent = 'Remarks';
