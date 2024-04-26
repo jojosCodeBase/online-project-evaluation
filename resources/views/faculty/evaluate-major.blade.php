@@ -78,6 +78,71 @@
 
     <div class="modal fade" id="evaluateModal" tabindex="-1" role="dialog" aria-labelledby="evaluateModalLabel"
         aria-hidden="true">
+        <div class="modal-dialog-lg" role="document">
+            <div class="modal-content">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <th>Student Name</th>
+                        <th>Presentation Content (10)</th>
+                        <th>Presentation Skill (10)</th>
+                        <th>Report Content (10)</th>
+                        <th>Viva Voice (10)</th>
+                        <th>Progress (10)</th>
+                        <th>Total (50)</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ritik Roshan</td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                        </tr>
+                        <tr>
+                            <td>Ayush Bhetwal</td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                        </tr>
+                        <tr>
+                            <td>Aman Kumar Saini</td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                        </tr>
+                        <tr>
+                            <td>Rohan Majhi</td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                        </tr>
+                    </tbody>
+                </table> 
+                <div class="p-3">
+                    <label for="" class="form-label">Remarks</label>
+                    <textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="Enter remarks"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- Add your evaluate button here if needed -->
+                    <button type="submit" class="btn btn-bj">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- <div class="modal fade" id="evaluateModal" tabindex="-1" role="dialog" aria-labelledby="evaluateModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form action="{{ route('student.evaluate') }}" method="POST">
                 @csrf
@@ -100,7 +165,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> --}}
 
     {{-- Marks modal start --}}
     <div class="modal fade" id="evaluatex" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
