@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('group_id');
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
-            $table->integer('regno');
+            $table->unsignedBigInteger('regno');
 
             // Define foreign key constraint for regno column
             $table->foreign('regno')->references('regno')->on('students')->onDelete('cascade');
