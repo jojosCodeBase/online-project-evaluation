@@ -14,22 +14,26 @@
                 <table class="table">
                     <thead>
                         <th>Group Name</th>
-                        <th>Course</th>
+                        <th>Project</th>
                         <th>Members</th>
                         <th>Progress</th>
                         {{-- <th>Action</th> --}}
                     </thead>
                     <tbody>
-                        @foreach ($groups as $group)
+                        {{-- @php
+                            $project_name = \App\Http\Models\Projects::where('id', $group->project_id)->get()
+                            @endphp --}}
+                            @foreach ($groups as $group)
                             <tr>
                                 <td>{{ $group->group_name }}</td>
-                                <td>{{ $group->course }}</td>
+                                {{-- @dump($group->project->project_name) --}}
+                                <td>{{ $group->project->project_name }}</td>
                                 <td>
                                     @foreach ($group->members as $member)
-                                    {{ $member->name }}
-                                    @if (!$loop->last)
-                                    , <!-- Add a comma if it's not the last member -->
-                                    @endif
+                                        {{ $member->student->user->name }}
+                                        @if (!$loop->last)
+                                            , <!-- Add a comma if it's not the last member -->
+                                        @endif
                                     @endforeach
                                 </td>
                                 <td>

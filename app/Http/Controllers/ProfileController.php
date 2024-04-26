@@ -72,26 +72,31 @@ class ProfileController extends Controller
         }])->findOrFail($user->id);
 
         // Now, you can access the group ID of the associated student
-        $groupId = $user->student->groupMember->group->id;
+        if(!is_null($user->student->groupMember)){
+            $groupId = $user->student->groupMember->group->id;
+            // dd($user);
 
-        // dd($user);
+            $groupInfo = Groups::join('users', 'groups.project_guide', '=', 'users.id')
+            ->leftJoin('projects', 'projects.id', '=', 'groups.project_id')
+            ->select('groups.*', 'users.name as guide_name', 'projects.project_name')
+            ->where('groups.id', $groupId)
+            ->first();
 
-        $groupInfo = Groups::join('users', 'groups.project_guide', '=', 'users.id')
-        ->leftJoin('projects', 'projects.id', '=', 'groups.project_id')
-        ->select('groups.*', 'users.name as guide_name', 'projects.project_name')
-        ->where('groups.id', $groupId)
-        ->first();
+            // $groupMembers = GroupsMembers::join('groups', 'groups.id', '=', 'groups_members.group_id')
+            // join('groups', 'groups.id', '=', 'groups_members.group_id')
+            $groupMembers = GroupsMembers::join('students', 'students.regno', '=', 'groups_members.regno')
+            ->leftjoin('users', 'users.id', '=', 'students.user_id')
+            ->select('users.*', 'students.*')
+            ->where('groups_members.group_id', $groupId)
+            ->get();
+            return view('profile.student-profile', compact('user', 'groupInfo', 'groupMembers'));
+        }else{
+            $groupInfo = [];
+            $groupMembers = [];
+            return view('profile.student-profile', compact('user', 'groupInfo', 'groupMembers'));
+        }
 
-        // $groupMembers = GroupsMembers::join('groups', 'groups.id', '=', 'groups_members.group_id')
-        // join('groups', 'groups.id', '=', 'groups_members.group_id')
-        $groupMembers = GroupsMembers::join('students', 'students.regno', '=', 'groups_members.regno')
-        ->leftjoin('users', 'users.id', '=', 'students.user_id')
-        ->select('users.*', 'students.*')
-        ->where('groups_members.group_id', $groupId)
-        ->get();
 
-
-        return view('profile.student-profile', compact('user', 'groupInfo', 'groupMembers'));
     }
 
     /**

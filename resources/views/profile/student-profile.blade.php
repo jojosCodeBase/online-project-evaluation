@@ -18,6 +18,10 @@
                             @method('patch')
                             <div class="row">
                                 <div class="col-6 mb-3">
+                                    <label class="form-label">Registration number</label>
+                                    <input type="text" class="form-control" name="regno" value="{{ $user->student->regno }}" readonly>
+                                </div>
+                                <div class="col-6 mb-3">
                                     <label class="form-label">Name</label>
                                     <input type="text" class="form-control" name="name" value="{{ $user->name }}">
                                 </div>
@@ -28,12 +32,12 @@
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Project</label>
                                     <input type="text" class="form-control" name="project"
-                                        value="{{ $groupInfo->project_name }}" readonly>
+                                        value="{{ empty($groupInfo->project_name) ? 'Not Available' : $groupInfo->project_name  }}" readonly>
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Teacher Guide</label>
                                     <input type="text" class="form-control" name="teacher_guide"
-                                        value="{{ $groupInfo->guide_name }}" readonly>
+                                        value="{{ empty($groupInfo->guide_name) ? 'Not Available' : $groupInfo->guide_name }}" readonly>
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Group Members</label>
@@ -51,7 +55,7 @@
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Project Topic</label>
                                     <input type="text" class="form-control" name="project_topic"
-                                        value="{{ $groupInfo->topic }}" readonly>
+                                        value="{{ empty($groupInfo->topic) ? 'Not Available' : $groupInfo->topic }}" readonly>
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Year</label>

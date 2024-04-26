@@ -40,53 +40,60 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @dump($feedback) --}}
-                                @foreach ($presentations as $presentation)
+                                @if (empty($presentations))
                                     <tr>
-                                        <td>{{ $presentation->name }}</td>
-                                        <td>{{ $presentation->date }}</td>
-                                        @if ($presentation->allow_file_upload)
-                                            @php
-                                                $document = $documents
-                                                    ->where('presentation_id', $presentation->id)
-                                                    ->first();
-                                                $comment = $feedback
-                                                    ->where('presentation_id', $presentation->id)
-                                                    ->pluck('comments')
-                                                    ->first();
-                                                // dd($comment);
-                                            @endphp
-                                            @if ($document)
-                                                <td>Document Uploaded <br> Uploaded by: {{ $document->uploaded_by }}</td>
-                                                <td class="text-center">
-                                                    @if ($document->status == 0)
-                                                        <span class="badge badge-primary">Submitted</span>
-                                                    @elseif($document->status == 1)
-                                                        <button type="button" class="view-btn btn btn-success"
-                                                            data-toggle="modal" data-target="#feedBackModal"
-                                                            data-feedback="{{ $comment }}">View</button>
-                                                        {{-- @elseif($document->status == 2)
-                                                    <span class="badge badge-success">Viewed</span> --}}
-                                                    @endif
-                                                </td>
-                                            @else
-                                                <form action="{{ route('upload.document') }}" method="POST"
-                                                    enctype="multipart/form-data">
-                                                    @csrf
-                                                    <input class="form-control" type="text" name="presentation_id"
-                                                        value="{{ $presentation->id }}" hidden>
-                                                    <td><input class="form-control" type="file" name="file"
-                                                            accept=".pdf" required></td>
-                                                    <td class="text-center"><button type="submit"
-                                                            class="btn btn-primary">Upload</button></td>
-                                                </form>
-                                                <td></td> <!-- Empty column as placeholder -->
-                                            @endif
-                                        @else
-                                            <td colspan="4" class="text-danger">Not accepting files</td>
-                                        @endif
+                                        <td class="text-center" colspan="3">Group not assigned, please wait until you are
+                                            assigned to a group</td>
                                     </tr>
-                                @endforeach
+                                @else
+                                    @foreach ($presentations as $presentation)
+                                        <tr>
+                                            <td>{{ $presentation->name }}</td>
+                                            <td>{{ $presentation->date }}</td>
+                                            @if ($presentation->allow_file_upload)
+                                                @php
+                                                    $document = $documents
+                                                        ->where('presentation_id', $presentation->id)
+                                                        ->first();
+                                                    $comment = $feedback
+                                                        ->where('presentation_id', $presentation->id)
+                                                        ->pluck('comments')
+                                                        ->first();
+                                                    // dd($comment);
+                                                @endphp
+                                                @if ($document)
+                                                    <td>Document Uploaded <br> Uploaded by: {{ $document->uploaded_by }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @if ($document->status == 0)
+                                                            <span class="badge badge-primary">Submitted</span>
+                                                        @elseif($document->status == 1)
+                                                            <button type="button" class="view-btn btn btn-success"
+                                                                data-toggle="modal" data-target="#feedBackModal"
+                                                                data-feedback="{{ $comment }}">View</button>
+                                                            {{-- @elseif($document->status == 2)
+                                                    <span class="badge badge-success">Viewed</span> --}}
+                                                        @endif
+                                                    </td>
+                                                @else
+                                                    <form action="{{ route('upload.document') }}" method="POST"
+                                                        enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input class="form-control" type="text" name="presentation_id"
+                                                            value="{{ $presentation->id }}" hidden>
+                                                        <td><input class="form-control" type="file" name="file"
+                                                                accept=".pdf" required></td>
+                                                        <td class="text-center"><button type="submit"
+                                                                class="btn btn-primary">Upload</button></td>
+                                                    </form>
+                                                    <td></td> <!-- Empty column as placeholder -->
+                                                @endif
+                                            @else
+                                                <td colspan="4" class="text-danger">Not accepting files</td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>

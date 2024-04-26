@@ -64,8 +64,10 @@ class FacultyController extends Controller
 
     public function groupsAssigned()
     {
-        $groups = Groups::with('members')->get();
+        $groups = Groups::with(['members.student.user', 'project'])->where('project_guide', Auth::user()->id)->get();
+        // dd($groups);
+        // $projects = Groups::with('project')->where('project_guide', Auth::user()->id)->get();
+
         return view('faculty.groups-assigned', compact('groups'));
     }
 }
-

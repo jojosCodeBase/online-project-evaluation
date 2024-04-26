@@ -31,24 +31,29 @@ class StudentController extends Controller
 
         $groupMember = GroupsMembers::where('regno', $user->student->regno)->first();
 
-        $groupId = $groupMember->group_id;
+        if(!is_null($groupMember)){
+            $groupId = $groupMember->group_id;
 
-        $documents = Document::where('group_id', $groupId)->get();
+            $documents = Document::where('group_id', $groupId)->get();
 
-        $presentations = Presentations::all();
+            $presentations = Presentations::all();
 
-        // dd($document);
+            // dd($document);
 
-        $feedback = Evaluation::where('group_id', $groupId)->get();
-        // dd($feedback);
+            $feedback = Evaluation::where('group_id', $groupId)->get();
+            // dd($feedback);
 
-        // foreach($presentations as $presentation){
-        //     echo $feedback[]
-        // }
-        // if(is_null($feedback))
-        //     $feedback = "";
+            // foreach($presentations as $presentation){
+            //     echo $feedback[]
+            // }
+            // if(is_null($feedback))
+            //     $feedback = "";
 
-        return view('upload-document', compact('presentations', 'documents', 'feedback'));
+            return view('upload-document', compact('presentations', 'documents', 'feedback'));
+        }else{
+            $presentations = [];
+            return view('upload-document', compact('presentations'));
+        }
     }
     public function uploadDocument(Request $request)
     {
