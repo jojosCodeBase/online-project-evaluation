@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Faculty;
 use App\Models\Students;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -63,19 +64,24 @@ class RegisteredUserController extends Controller
 
     public function storeFaculty(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
             'password' => 'required|confirmed',
-            'regno' => 'required|numeric|unique:users',
+            'regno' => 'required|numeric|unique:faculties',
         ]);
 
         $user = User::create([
-            'regno' => $request->regno,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 1,
+        ]);
+
+        Faculty::create([
+            'user_id' => $user->id,
+            'regno' => $request->regno,
         ]);
 
         return redirect()->route('login')->with('success', 'Faculty Registered Successfully');
