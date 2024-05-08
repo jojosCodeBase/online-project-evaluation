@@ -40,10 +40,12 @@ class SendPresentationUpdateEmail implements ShouldQueue
         $groupIds = $groups->pluck('id')->toArray();
 
         $members = GroupsMembers::with('student.user')->whereIn('group_id', $groupIds)->get();
-
+        // dd($members[0]->student->user->email);
         // // Send email to each user
         foreach ($members as $member) {
-            Mail::to($member->student->user->email)->send(new TestMail($presentation, $member->student->user->name));
+            // dd($member->student->user->email);
+            // Mail::to($member->student->user->email)->send(new TestMail($presentation, $member->student->user->name));
+            Mail::to('ritik456958@gmail.com')->send(new TestMail($presentation, $member->student->user->name));
         }
     }
 }
