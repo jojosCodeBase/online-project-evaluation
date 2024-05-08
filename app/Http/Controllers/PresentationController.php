@@ -85,7 +85,7 @@ class PresentationController extends Controller
         SendPresentationUpdateEmail::dispatch($request->presentation_id);
 
         // Optionally, you can return a response or redirect to a specific route
-        // return redirect()->back()->with('success', 'Presentation details updated successfully');
+        return redirect()->back()->with('success', 'Presentation details updated successfully');
     }
 
     public function destroy(Presentations $presentation)

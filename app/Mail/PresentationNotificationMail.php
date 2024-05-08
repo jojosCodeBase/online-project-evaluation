@@ -9,18 +9,19 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class TestMail extends Mailable
+class PresentationNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    protected $presentation, $receipent_name;
-    public function __construct($presentation, $receipent_name)
+    protected $presentation, $receipent_name, $project_coordinator;
+    public function __construct($presentation, $receipent_name, $project_coordinator)
     {
         $this->receipent_name = $receipent_name;
         $this->presentation = $presentation;
+        $this->project_coordinator = $project_coordinator;
     }
 
     /**
@@ -29,7 +30,7 @@ class TestMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Test Mail',
+            subject: 'Presentation Schedule Confirmation',
         );
     }
 
@@ -39,8 +40,8 @@ class TestMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.view-test',
-            with: ['link' => 'https://bca.welcomehomestay.in/', 'presentation' => $this->presentation, 'receipent_name' => $this->receipent_name]
+            view: 'emails.presentation_confirmation',
+            with: ['link' => 'https://ope.welcomehomestay.in/', 'presentation' => $this->presentation, 'receipent_name' => $this->receipent_name, 'project_coordinator' => $this->project_coordinator]
         );
     }
 

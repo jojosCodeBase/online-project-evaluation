@@ -33,7 +33,12 @@
                                 <td>{{ $project->coordinator_name }}</td>
                                 <td>
                                     <button type="button" class="edit-btn btn btn-bj" data-toggle="modal"
-                                        data-target="#projectEditModal" data-project-id="{{ $project->id }}">
+                                        data-target="#projectEditModal"
+                                        data-project-id="{{ $project->id }}"
+                                        data-project-name="{{ $project->project_name }}"
+                                        data-project-course="{{ $project->course }}"
+                                        data-project-coordinator-id="{{ $project->project_coordinator_id }}"
+                                        >
                                         <i class="bi bi-pencil-fill"></i>
                                     </button>
                                     <button type="button" class="delete-btn btn btn-bj" data-toggle="modal" data-target="#projectDeleteModal"
@@ -76,6 +81,15 @@
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Course</label>
                                 <input type="text" name="course" class="form-control" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="title form-label">Project Co-ordinator</label>
+                                <select name="co_ordinator" id="" class="form-select" required>
+                                    <option value="">Select co-ordinator from list</option>
+                                    @foreach ($faculties as $faculty)
+                                        <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -135,18 +149,26 @@
                 </div>
                 <form action="{{ route('admin.project.update') }}" method="POST">
                     @csrf
-                    <input type="text" name="id" hidden>
+                    <input type="text" name="id" id="edit-project_id" hidden>
                     <div class="modal-body">
                         <div class="row mb-3">
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Project Name</label>
-                                <input type="text" name="project_name" class="form-control" required>
+                                <input type="text" name="project_name" id="edit-project_name" class="form-control" required>
                             </div>
                             <div class="col-12 mb-3">
                                 <label class="title form-label">Course</label>
-                                <input type="text" name="course" class="form-control" required>
+                                <input type="text" name="course" id="edit-project_course" class="form-control" required>
                             </div>
-
+                            <div class="col-12 mb-3">
+                                <label class="title form-label">Project Co-ordinator</label>
+                                <select name="co_ordinator" id="edit-project_co_ordinator" class="form-select" required>
+                                    <option value="">Select co-ordinator from list</option>
+                                    @foreach ($faculties as $faculty)
+                                        <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -165,26 +187,14 @@
         $(document).ready(function() {
             $('.edit-btn').click(function() {
                 var projectId = $(this).data('project-id');
-                // Send AJAX request to fetch project data
-                $.ajax({
-                    url: '/admin/projects/' + projectId, // Endpoint to fetch project details
-                    type: 'GET',
-                    success: function(response) {
-                        console.log(response);
-                        // Populate modal fields with project data
-                        $('#projectEditModal input[name="id"]').val(response
-                            .id);
-                        $('#projectEditModal input[name="project_name"]').val(response
-                            .project_name);
-                        $('#projectEditModal input[name="course"]').val(response.course);
+                var projectName = $(this).data('project-name');
+                var projectCourse = $(this).data('project-course');
+                var projectCoordinator = $(this).data('project-coordinator-id');
 
-                        // Show the modal
-                        $('#projectEditModal').modal('show');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
+                $('#edit-project_id').val(projectId);
+                $('#edit-project_name').val(projectName);
+                $('#edit-project_course').val(projectCourse);
+                $('#edit-project_co_ordinator').val(projectCoordinator);
             });
 
             $('.delete-btn').click(function() {

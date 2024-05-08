@@ -152,7 +152,7 @@
                       </tr>
                       <tr>
                         <td style="font-size: 14px; line-height: 170%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
-                          Regards, <br><strong>Dr. Moumita Pramanik</strong>,<br>
+                          Regards, <br><strong>{{ $project_coordinator }}</strong>,<br>
                           Project Co-ordinator, Department of Computer Applications, <br>Sikkim Manipal Institute of Technology
                         </td>
                       </tr>

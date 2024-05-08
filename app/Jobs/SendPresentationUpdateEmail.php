@@ -11,6 +11,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Mail\PresentationNotificationMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
@@ -31,21 +32,20 @@ class SendPresentationUpdateEmail implements ShouldQueue
         // $presentation = Presentations::findOrFail($this->presentationId);
         // $users = Presentations::with('project')->where('id', $this->presentationId)->get();
         $presentation = Presentations::with('project')->findOrFail($this->presentationId);
-        // dd($presentation);
 
         $project = $presentation->project;
+
+        $project_coordinator = User::where('id', $project->project_coordinator_id)->pluck('name')->first();
+        // dd($project_coordinator);
 
         $groups = Groups::where('project_id', $project->id)->get();
 
         $groupIds = $groups->pluck('id')->toArray();
 
         $members = GroupsMembers::with('student.user')->whereIn('group_id', $groupIds)->get();
-        // dd($members[0]->student->user->email);
-        // // Send email to each user
+
         foreach ($members as $member) {
-            // dd($member->student->user->email);
-            // Mail::to($member->student->user->email)->send(new TestMail($presentation, $member->student->user->name));
-            Mail::to('ritik456958@gmail.com')->send(new TestMail($presentation, $member->student->user->name));
+            Mail::to($member->student->user->email)->send(new PresentationNotificationMail($presentation, $member->student->user->name, $project_coordinator));
         }
     }
 }
