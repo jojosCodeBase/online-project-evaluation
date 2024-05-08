@@ -100,9 +100,9 @@ Route::middleware(['auth'])->group(function () {
 // Routes accessible without authentication
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/mail', function(){
-    Mail::to('kunsangmoktan11@gmail.com')->send(new TestMail());
-});
+// Route::get('/mail', function(){
+//     Mail::to('kunsangmoktan11@gmail.com')->send(new TestMail());
+// });
 Route::get('/mail-view', function(){
     $link = 'https://bca.welcomehomestay.in/';
     return view('emails.view-test', compact('link'));

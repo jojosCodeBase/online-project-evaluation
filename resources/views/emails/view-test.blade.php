@@ -6,7 +6,7 @@
 
 <head>
   <title></title>
-  <!--[if !mso]><!-- -->
+  <!--[if !mso]> -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!--<![endif]-->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -89,7 +89,7 @@
                     <tbody>
                       <tr>
                         <td style="padding: 0 0 24px 0; font-size: 18px; line-height: 150%; font-weight: bold; color: #000000; letter-spacing: 0.01em;">
-                          Dear Kunsang Moktan,
+                          Dear {{ $receipent_name }},
                         </td>
                       </tr>
                       <tr>
@@ -103,17 +103,17 @@
                             <tbody>
                               <tr>
                                 <td style="padding: 0 0 8px; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
-                                  Date: <span style="font-weight: bold;">26-04-2024</span>
+                                  Date: <span style="font-weight: bold;">{{ $presentation->date }}</span>
                                 </td>
                               </tr>
                               <tr>
                                 <td style="padding: 0 0 8px; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
-                                  Time: <span style="font-weight: bold;">09:30 AM</span>
+                                  Time: <span style="font-weight: bold;">{{ $presentation->time }}</span>
                                 </td>
                               </tr>
                               <tr>
                                 <td style="padding: 0 0 8px; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
-                                  Venue: <span style="font-weight: bold;">CA Lab</span>
+                                  Venue: <span style="font-weight: bold;">{{ $presentation->venue }}</span>
                                 </td>
                               </tr>
                               <tr>
@@ -123,12 +123,12 @@
                               </tr>
                               <tr>
                                 <td style="padding: 0 0 8px; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
-                                  Type of Presentation: <span style="font-weight: bold">Progress</span>
+                                  Type of Presentation: <span style="font-weight: bold">{{ $presentation->type }}</span>
                                 </td>
                               </tr>
                               <tr>
                                 <td style="padding: 0 0 24px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
-                                  Name of Presentation: <span style="font-weight: bold">Progress Presentation II</span>
+                                  Name of Presentation: <span style="font-weight: bold">{{ $presentation->name }}</span>
                                 </td>
                               </tr>
                               <tr>

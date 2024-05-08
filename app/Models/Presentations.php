@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Presentations extends Model
 {
@@ -15,6 +15,6 @@ class Presentations extends Model
 
     public function project()
     {
-        return $this->belongsTo(Projects::class, 'project_id')->select(['id', 'project_name']);
+        return $this->belongsTo(Projects::class, 'project_id');
     }
 }

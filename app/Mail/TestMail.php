@@ -16,9 +16,11 @@ class TestMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    protected $presentation, $receipent_name;
+    public function __construct($presentation, $receipent_name)
     {
-        //
+        $this->receipent_name = $receipent_name;
+        $this->presentation = $presentation;
     }
 
     /**
@@ -38,7 +40,7 @@ class TestMail extends Mailable
     {
         return new Content(
             view: 'emails.view-test',
-            with: ['link' => 'https://bca.welcomehomestay.in/']
+            with: ['link' => 'https://bca.welcomehomestay.in/', 'presentation' => $this->presentation, 'receipent_name' => $this->receipent_name]
         );
     }
 

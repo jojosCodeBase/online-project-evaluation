@@ -11,4 +11,9 @@ class Projects extends Model
 
     protected $table = 'projects';
     protected $fillable = ['project_name', 'course', 'project_coordinator_id'];
+
+    public function groups()
+    {
+        return $this->hasMany(Groups::class, 'project_id');
+    }
 }

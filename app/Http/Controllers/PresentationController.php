@@ -6,6 +6,7 @@ use App\Models\Projects;
 use Illuminate\Http\Request;
 use App\Models\Presentations;
 use App\Models\ScheduledPresentations;
+use App\Jobs\SendPresentationUpdateEmail;
 
 class PresentationController extends Controller
 {
@@ -51,6 +52,7 @@ class PresentationController extends Controller
     }
     public function updatePresentation(Request $request)
     {
+        // dd($request->all());
         // Validate the incoming request data
         $request->validate([
             'date' => 'required|date',
@@ -61,26 +63,29 @@ class PresentationController extends Controller
             'status' => 'required|integer',
         ]);
 
-        if($request->has('allow_file_upload'))
+        if ($request->has('allow_file_upload'))
             $request->allow_file_upload = 1;
         else
             $request->allow_file_upload = 0;
 
         // Create a new instance of the ScheduledPresentations model
-        Presentations::where('id', $request->presentation_id)->update([
-            'date' => $request->date,
-            'time' => $request->time,
-            'venue' => $request->venue,
-            'name' => $request->presentation_name,
-            'project_id' => $request->project_id,
-            'type' => 'Progress',
-            'status' => $request->status, // You can set the status here or leave it as per your requirement
-            'allow_file_upload' => $request->allow_file_upload, // You can set the status here or leave it as per your requirement
-            // 'send_email_notification' => $request->has('send_email_notification'), // Uncomment if needed
-        ]);
+        // Presentations::where('id', $request->presentation_id)->update([
+        //     'date' => $request->date,
+        //     'time' => $request->time,
+        //     'venue' => $request->venue,
+        //     'name' => $request->presentation_name,
+        //     'project_id' => $request->project_id,
+        //     'type' => 'Progress',
+        //     'status' => $request->status, // You can set the status here or leave it as per your requirement
+        //     'allow_file_upload' => $request->allow_file_upload, // You can set the status here or leave it as per your requirement
+        //     // 'send_email_notification' => $request->has('send_email_notification'), // Uncomment if needed
+        // ]);
+
+        // Dispatch a job to send emails to users in the background
+        SendPresentationUpdateEmail::dispatch($request->presentation_id);
 
         // Optionally, you can return a response or redirect to a specific route
-        return redirect()->back()->with('success', 'Presentation details updated successfully');
+        // return redirect()->back()->with('success', 'Presentation details updated successfully');
     }
 
     public function destroy(Presentations $presentation)
