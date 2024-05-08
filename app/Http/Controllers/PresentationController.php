@@ -69,17 +69,17 @@ class PresentationController extends Controller
             $request->allow_file_upload = 0;
 
         // Create a new instance of the ScheduledPresentations model
-        // Presentations::where('id', $request->presentation_id)->update([
-        //     'date' => $request->date,
-        //     'time' => $request->time,
-        //     'venue' => $request->venue,
-        //     'name' => $request->presentation_name,
-        //     'project_id' => $request->project_id,
-        //     'type' => 'Progress',
-        //     'status' => $request->status, // You can set the status here or leave it as per your requirement
-        //     'allow_file_upload' => $request->allow_file_upload, // You can set the status here or leave it as per your requirement
-        //     // 'send_email_notification' => $request->has('send_email_notification'), // Uncomment if needed
-        // ]);
+        Presentations::where('id', $request->presentation_id)->update([
+            'date' => $request->date,
+            'time' => $request->time,
+            'venue' => $request->venue,
+            'name' => $request->presentation_name,
+            'project_id' => $request->project_id,
+            'type' => 'Progress',
+            'status' => $request->status, // You can set the status here or leave it as per your requirement
+            'allow_file_upload' => $request->allow_file_upload, // You can set the status here or leave it as per your requirement
+            // 'send_email_notification' => $request->has('send_email_notification'), // Uncomment if needed
+        ]);
 
         // Dispatch a job to send emails to users in the background
         SendPresentationUpdateEmail::dispatch($request->presentation_id);
