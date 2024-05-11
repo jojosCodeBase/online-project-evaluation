@@ -27,35 +27,41 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @dump($document) --}}
-                                @foreach ($documents as $document)
+                                @if ($documents->isEmpty())
                                     <tr>
-                                        <td>{{ $document->group->group_name }}</td>
-                                        <td>{{ $document->presentation->name }}</td>
-                                        <td>{{ $document->presentation->project->project_name }}</td>
-                                        <td>{{ $document->presentation->date }}</td>
-                                        <td>
-                                            <a href="{{ asset('uploads') . '/' . $document->file_url }}" class="btn btn-bj"
-                                                target="_blank"><i class="bi bi-eye-fill"></i></a>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-bj evaluate-btn"
-                                                data-target="#evaluateModal" data-toggle="modal"
-                                                data-document-id="{{ $document->id }}"
-                                                data-group-id={{ $document->group->id }}
-                                                data-presentation-id="{{ $document->presentation->id }}"><i
-                                                    class="bi bi-pencil-fill"></i></button>
-                                        </td>
-                                        <td style="display: none;">
-                                            <ul>
-                                                @foreach ($document->group->members as $member)
-                                                    <li data-student-id="{{ $member->student->regno }}">
-                                                        {{ $member->student->user->name }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </td>
+                                        <td colspan="6" class="text-center">No documents uploaded</td>
                                     </tr>
-                                @endforeach
+                                @else
+                                    @foreach ($documents as $document)
+                                        <tr>
+                                            <td>{{ $document->group->group_name }}</td>
+                                            <td>{{ $document->presentation->name }}</td>
+                                            <td>{{ $document->presentation->project->project_name }}</td>
+                                            <td>{{ $document->presentation->date }}</td>
+                                            <td>
+                                                <a href="{{ asset('uploads') . '/' . $document->file_url }}"
+                                                    class="btn btn-bj" target="_blank"><i class="bi bi-eye-fill"></i></a>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-bj evaluate-btn"
+                                                    data-target="#evaluateModal" data-toggle="modal"
+                                                    data-document-id="{{ $document->id }}"
+                                                    data-group-id={{ $document->group->id }}
+                                                    data-presentation-id="{{ $document->presentation->id }}"><i
+                                                        class="bi bi-pencil-fill"></i></button>
+                                            </td>
+                                            <td style="display: none;">
+                                                <ul>
+                                                    @foreach ($document->group->members as $member)
+                                                        <li data-student-id="{{ $member->student->regno }}">
+                                                            {{ $member->student->user->name }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+
                             </tbody>
                         </table>
                         {{--
@@ -128,7 +134,7 @@
                             <td><input type="number"></td>
                         </tr>
                     </tbody>
-                </table> 
+                </table>
                 <div class="p-3">
                     <label for="" class="form-label">Remarks</label>
                     <textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="Enter remarks"></textarea>
@@ -187,13 +193,13 @@
                         </div>
                         <div class="col-12 mb-3">
                             <label class="title form-label">Student 2</label>
-                            <input type="text" name="course" class="form-control" class="form-control" id="numberInput"
-                                oninput="validateInput(event)" required>
+                            <input type="text" name="course" class="form-control" class="form-control"
+                                id="numberInput" oninput="validateInput(event)" required>
                         </div>
                         <div class="col-12 mb-3">
                             <label class="title form-label">Student 3</label>
-                            <input type="text" name="course" class="form-control" class="form-control" id="numberInput"
-                                oninput="validateInput(event)" required>
+                            <input type="text" name="course" class="form-control" class="form-control"
+                                id="numberInput" oninput="validateInput(event)" required>
                         </div>
                         <div class="col-12 mb-3">
                             <label class="title form-label">Student 4</label>

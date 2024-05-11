@@ -23,26 +23,35 @@ class FacultyController extends Controller
 
     public function evaluateMinor()
     {
-        // $document = Document::where('project_id', $projectId)->get();
-        $projects = Projects::where('project_name', 'Minor')->get();
-        // $documents = Document::where('group_id', $groupId)->get();
-        // dd($document);
-        $presentations = Presentations::all();
-        return view('faculty.evaluate-minor', compact('presentations', 'projects'));
+        $projects = Projects::where('project_name', 'Minor')->first();
+        // dd($projects);
+
+        $documents = Document::with(['group.members.student.user', 'presentation.project'])
+            ->whereHas('presentation.project', function ($query) use ($projects) {
+                $query->where('id', $projects->id);
+            })
+            ->get();
+
+        // dd($documents);
+        return view('faculty.evaluate-minor', compact('documents', 'projects'));
     }
     public function evaluateMajor()
     {
-        //  $document = Document::where('project_id', $projectId)->get();
         $projects = Projects::where('project_name', 'Major')->first();
 
         $documents = Document::with(['group.members.student.user', 'presentation.project'])
+            ->whereHas('presentation.project', function ($query) use ($projects) {
+                $query->where('id', $projects->id);
+            })
             ->get();
+
         return view('faculty.evaluate-major', compact('projects', 'documents'));
     }
 
-    public function evaluateMajorMarks(Request $r){
+    public function evaluateMajorMarks(Request $r)
+    {
         // dd($r->all());
-        foreach($r->marks as $regno => $mark){
+        foreach ($r->marks as $regno => $mark) {
             Evaluation::create([
                 'presentation_id' => $r->presentation_id,
                 'student_id' => $regno,
@@ -53,10 +62,10 @@ class FacultyController extends Controller
             ]);
         }
 
-        try{
+        try {
             Document::where('presentation_id', $r->presentation_id)->where('group_id', $r->groupId)->update(['status' => 1]);
             return back()->with('success', 'Evaluation successfully');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('error', 'Some error occured');
         }
 

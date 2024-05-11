@@ -196,11 +196,12 @@
     {{-- group edit modal end --}}
 
     {{-- group delete modal start --}}
-    {{-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="{{ route('delete-franchise') }}" method="POST">
+                {{-- <form action="{{ route('delete-group') }}" method="POST"> --}}
+                <form action="" method="POST">
                     <div class="modal-body">
                         @csrf
                         @method('delete')
@@ -210,7 +211,7 @@
                                     <i class="rounded-circle bi bi-exclamation-triangle-fill text-warning"
                                         style="font-size: 50px;"></i>
                                 </div>
-                                <h4 class="text-center text-dark">Delete Franchise</h6>
+                                <h4 class="text-center text-dark">Delete Group</h6>
                                     <p class="text-danger text-center">Are you sure you want to delete this franchise ?
                                         This
                                         action cannot be undone.</p>
@@ -226,7 +227,7 @@
                 </form>
             </div>
         </div>
-    </div> --}}
+    </div>
     {{-- group delete modal end --}}
 @endsection
 @section('scripts')
@@ -282,6 +283,11 @@
                         // Handle error
                     }
                 });
+            });
+
+            $('.delete-btn').click(function(){
+                var groupId = $(this).data('group-id');
+                alert(groupId);
             });
         });
     </script>

@@ -67,7 +67,7 @@
             </li>
             <li
                 class="nav-item px-0 div-center mb-2 {{ request()->url() == route('faculty.evaluate-minor') ? 'active' : '' }}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('teacher-portal') }}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('faculty.evaluate-minor') }}">
                     <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
                     <span class="fs-6">Evaluate Minor Projects</span>
                 </a>
