@@ -1,5 +1,10 @@
 @extends('layouts/faculty')
 @section('title', 'Evaluate Marks')
+<style>
+    tbody input {
+        width: 100%;
+    }
+</style>
 @section('content')
     <div class="container-fluid">
         <h4 class="mb-3 fw-bold text-bj">Evaluate Major Project</h4>
@@ -85,66 +90,33 @@
     <div class="modal fade" id="evaluateModal" tabindex="-1" role="dialog" aria-labelledby="evaluateModalLabel"
         aria-hidden="true">
         <div class="modal-dialog-lg" role="document">
-            <div class="modal-content">
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <th>Student Name</th>
-                        <th>Presentation Content (10)</th>
-                        <th>Presentation Skill (10)</th>
-                        <th>Report Content (10)</th>
-                        <th>Viva Voice (10)</th>
-                        <th>Progress (10)</th>
-                        <th>Total (50)</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Ritik Roshan</td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                        </tr>
-                        <tr>
-                            <td>Ayush Bhetwal</td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                        </tr>
-                        <tr>
-                            <td>Aman Kumar Saini</td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                        </tr>
-                        <tr>
-                            <td>Rohan Majhi</td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="p-3">
-                    <label for="" class="form-label">Remarks</label>
-                    <textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="Enter remarks"></textarea>
+            <form action="{{ route('student.evaluate') }}" method="POST">
+                @csrf
+                <div class="modal-content">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <th>Student Name</th>
+                            <th>Presentation Content (10)</th>
+                            <th>Presentation Skill (10)</th>
+                            <th>Report Content (10)</th>
+                            <th>Viva Voice (10)</th>
+                            <th>Progress (10)</th>
+                            <th>Total (50)</th>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div class="p-3">
+                        <label for="" class="form-label">Remarks</label>
+                        <textarea name="remarks" id="" cols="30" rows="10" class="form-control" placeholder="Enter remarks"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <!-- Add your evaluate button here if needed -->
+                        <button type="submit" class="btn btn-bj">Save</button>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <!-- Add your evaluate button here if needed -->
-                    <button type="submit" class="btn btn-bj">Save</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
     {{-- <div class="modal fade" id="evaluateModal" tabindex="-1" role="dialog" aria-labelledby="evaluateModalLabel"
@@ -174,7 +146,7 @@
     </div> --}}
 
     {{-- Marks modal start --}}
-    <div class="modal fade" id="evaluatex" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
+    {{-- <div class="modal fade" id="evaluate" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
@@ -219,75 +191,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     {{-- Marks modal end --}}
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var evaluateButtons = document.querySelectorAll('.evaluate-btn');
-            evaluateButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    var row = this.closest('tr'); // Find the closest <tr> parent element
-                    var groupId = $(this).data('group-id');
-
-                    $('#presentation_id').val($(this).data('presentation-id'));
-
-                    // alert(groupId);
-                    var hiddenTd = row.querySelector(
-                        'td[style="display: none;"]'
-                    ); // Select the hidden <td> containing the student names
-
-                    // Check if hidden <td> is found
-                    if (hiddenTd !== null) {
-                        var studentsUl = hiddenTd.querySelector('ul');
-                        var students = studentsUl.querySelectorAll('li');
-
-                        var modal = document.getElementById('evaluateModal');
-                        var studentList = modal.querySelector('.modal-body');
-                        // Check if student names are found
-
-                        studentList.innerHTML = '';
-
-                        if (students.length > 0) {
-                            students.forEach(function(student) {
-                                var studentId = student.getAttribute('data-student-id');
-                                var label = document.createElement('label');
-                                label.textContent = student.textContent;
-                                label.classList.add('form-label');
-                                var input = document.createElement('input');
-                                var groupIdInput = document.createElement('input');
-                                groupIdInput.type = 'number';
-                                groupIdInput.value = groupId;
-                                groupIdInput.name = 'groupId';
-                                groupIdInput.hidden = true;
-
-                                input.type = 'number';
-                                input.placeholder = 'Enter marks'
-                                input.name = 'marks[' + studentId + ']';
-                                input.classList.add('form-control');
-                                input.classList.add('mb-2');
-                                studentList.appendChild(label);
-                                studentList.appendChild(input);
-                                studentList.appendChild(groupIdInput);
-                            });
-                            var label = document.createElement('label');
-                            label.textContent = 'Remarks';
-                            label.classList.add('form-label');
-                            var text_area = document.createElement('textarea');
-                            text_area.classList.add('form-control');
-                            text_area.name = 'remarks';
-                            studentList.appendChild(label);
-                            studentList.appendChild(text_area);
-                        } else {
-                            console.error('No students found for the selected document.');
-                        }
-                    } else {
-                        console.error('Hidden <td> not found for the selected document.');
-                    }
-                });
-            });
-        });
-    </script>
 
     {{-- <script>
      document.addEventListener('DOMContentLoaded', function() {
@@ -329,8 +235,77 @@
         });
     });
    </script> --}}
+@endsection
+@section('scripts')
+    <script>
+        // $(document).ready(function() {
+        $('.evaluate-btn').on('click', function() {
+            var row = $(this).closest('tr'); // Find the closest <tr> parent element
+            var groupId = $(this).data('group-id');
 
+            // alert(groupId);
+            $('#presentation_id').val($(this).data('presentation-id'));
 
+            $.ajax({
+                url: '/faculty/get-group-members/' + groupId,
+                type: 'GET',
+                success: function(response) {
+                    // Process the response here
+                    console.log(response); // Example: Display members in console
+                    var tbody = $('tbody'); // Get the tbody element
+                    tbody.empty(); // Clear existing content
+                    $.each(response, function(index, member) {
+                        // Access and display regno and name attributes
+                        console.log(member.student.regno);
+                        console.log(member.student.user.name);
 
+                        // Create a new table row
+                        var newRow = $('<tr>');
 
+                        // Populate the row with member attributes
+                        newRow.append($('<td>').text(member.student.user.name));
+
+                        // Loop to create and append input fields
+                        for (var i = 0; i < 6; i++) {
+                            var input = $('<input>').attr({
+                                'type': 'number',
+                                'name': 'marks[]',
+                                'class': 'restrictMarksInput',
+                                'id': 'input_' + index + '_' +
+                                    i, // Unique id for each input
+                            });
+
+                            // Make the last input readonly
+                            if (i === 5) {
+                                input.prop('readonly', true);
+                            } else {
+                                // Add input event listener to calculate total for this row
+                                input.on('input', function() {
+                                    total = 0;
+                                    newRow.find('input[type=number]').not(':last').each(
+                                        function() {
+                                            total += parseInt($(this).val()) || 0;
+                                        });
+                                    newRow.find('input[type=number]:last').val(total);
+                                });
+                            }
+
+                            // Append the input field to the table cell
+                            newRow.append($('<td>').append(input));
+                        }
+
+                        // Append the new row to the tbody
+                        tbody.append(newRow);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error); // Log any errors
+                }
+            });
+        });
+
+        // Bind input event to calculate total when inputs change
+        $(document).on('input', 'input[type=number]', calculateTotal);
+        // });
+    </script>
 @endsection

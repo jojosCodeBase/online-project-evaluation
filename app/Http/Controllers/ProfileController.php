@@ -66,7 +66,6 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        // $data = User::with('student')->findOrFail($user->id);
         $user = User::with(['student' => function ($query) {
             $query->with('groupMember.group');
         }])->findOrFail($user->id);

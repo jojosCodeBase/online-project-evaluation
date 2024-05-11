@@ -36,8 +36,6 @@ Route::middleware(['auth'])->group(function () {
 
         // Admin groups management
         Route::get('/groups-assigned', [DashboardController::class, 'manageGroups'])->name('admin.manage-groups');
-        Route::get('/evaluate/minor', [DashboardController::class, 'evaluateMinor'])->name('show.BCA');
-        Route::get('/evaluate/major', [DashboardController::class, 'evaluateMajor'])->name('show.MCA');
 
         // Other admin-specific routes
         // Route::get('/presentations', [DashboardController::class, 'presentations'])->name('admin.presentation');
@@ -53,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('add-group/', [DashboardController::class, 'addGroup'])->name('add-group');
         Route::post('update-group/', [DashboardController::class, 'updateGroup'])->name('update-group');
+        Route::delete('delete-group/', [DashboardController::class, 'deleteGroup'])->name('delete-group');
 
         // Ajax route
         Route::get('/groupInfo/{id}', [DashboardController::class, 'getGroupInfo']);
@@ -77,6 +76,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/evaluate/major', [FacultyController::class, 'evaluateMajor'])->name('faculty.evaluate-major');
 
         Route::post('/evaluate/major', [FacultyController::class, 'evaluateMajorMarks'])->name('student.evaluate');
+
+        Route::get('/get-group-members/{groupId}', [DashboardController::class, 'getGroupMembers']);
     });
 
     // Student routes

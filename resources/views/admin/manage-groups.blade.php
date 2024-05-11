@@ -56,7 +56,7 @@
                                             <button class="dropdown-item edit-btn" data-toggle="modal"
                                                 data-target="#groupEditModal"
                                                 data-group-id="{{ $group->id }}">Edit</button>
-                                            <button class="dropdown-item" data-toggle="modal" data-target="#deleteModal"
+                                            <button class="dropdown-item delete-btn" data-toggle="modal" data-target="#deleteModal"
                                                 data-group-id="{{ $group->id }}">Delete</button>
                                         </div>
                                     </div>
@@ -200,8 +200,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                {{-- <form action="{{ route('delete-group') }}" method="POST"> --}}
-                <form action="" method="POST">
+                <form action="{{ route('delete-group') }}" method="POST">
                     <div class="modal-body">
                         @csrf
                         @method('delete')
@@ -212,10 +211,10 @@
                                         style="font-size: 50px;"></i>
                                 </div>
                                 <h4 class="text-center text-dark">Delete Group</h6>
-                                    <p class="text-danger text-center">Are you sure you want to delete this franchise ?
+                                    <p class="text-danger text-center">Are you sure you want to delete this group ?
                                         This
                                         action cannot be undone.</p>
-                                    <input type="text" name="id" id="fid" value="" hidden>
+                                    <input type="text" name="id" id="delete_group_id" value="" hidden>
                                     <div class="d-flex justify-content-center">
                                         <button type="button" class="btn btn-secondary w-25 me-5"
                                             data-dismiss="modal">Cancel</button>
@@ -287,7 +286,7 @@
 
             $('.delete-btn').click(function(){
                 var groupId = $(this).data('group-id');
-                alert(groupId);
+                $('#delete_group_id').val(groupId);
             });
         });
     </script>

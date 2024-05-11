@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Groups;
 use App\Models\Document;
-use App\Models\Evaluation;
 use App\Models\Students;
 use App\Models\Franchise;
+use App\Models\Evaluation;
 use App\Models\FileUpload;
 use Illuminate\Http\Request;
 use App\Models\GroupsMembers;
@@ -24,24 +26,25 @@ class StudentController extends Controller
     }
     public function upload()
     {
-        // get user group id
         $user = Auth::user();
+        $user->load(['student.groupMember.group']);
 
-        // $regno = $user->student->regno;
+        // Assuming the user is a student and belongs to only one group for simplicity
+        $groupId = $user->student->groupMember->group->id;
+        $projectId = $user->student->groupMember->group->project_id;
+
+        // dd($projectId);
 
         $groupMember = GroupsMembers::where('regno', $user->student->regno)->first();
 
-        if(!is_null($groupMember)){
+        if (!is_null($groupMember)) {
             $groupId = $groupMember->group_id;
 
             $documents = Document::where('group_id', $groupId)->get();
 
-            $presentations = Presentations::all();
-
-            // dd($document);
+            $presentations = Presentations::where('project_id', $projectId)->get();
 
             $feedback = Evaluation::where('group_id', $groupId)->get();
-            // dd($feedback);
 
             // foreach($presentations as $presentation){
             //     echo $feedback[]
@@ -50,7 +53,7 @@ class StudentController extends Controller
             //     $feedback = "";
 
             return view('upload-document', compact('presentations', 'documents', 'feedback'));
-        }else{
+        } else {
             $presentations = [];
             return view('upload-document', compact('presentations'));
         }

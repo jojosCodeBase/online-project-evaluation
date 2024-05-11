@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Groups;
 use App\Models\Category;
+use App\Models\Document;
 use App\Models\Projects;
 use App\Models\Students;
 use App\Models\Franchise;
@@ -109,8 +110,8 @@ class DashboardController extends Controller
         $students = Students::count();
         $faculties = User::where('role', 1)->count();
         $presentations = Presentations::join('projects', 'projects.id', '=', 'presentations.project_id')
-        ->select('presentations.*', 'projects.project_name as project_name', 'projects.id as project_id')
-        ->paginate(10);
+            ->select('presentations.*', 'projects.project_name as project_name', 'projects.id as project_id')
+            ->paginate(10);
         return view('admin.dashboard', compact('students', 'faculties', 'presentations'));
     }
 
@@ -121,6 +122,14 @@ class DashboardController extends Controller
     public function evaluateMajor()
     {
         return view('admin.evaluate-major');
+    }
+
+    public function getGroupMembers($groupId){
+        $members = GroupsMembers::with('student.user')
+        ->where('group_id', $groupId)
+        ->get();
+        // dd($members);
+        return response()->json($members);
     }
 
     public function manageGroups()
@@ -138,7 +147,7 @@ class DashboardController extends Controller
 
     public function addGroup(Request $r)
     {
-    // dd($r->all());
+        // dd($r->all());
         $rules = [
             'group_name' => 'required|string|max:255',
             'project' => 'required|integer',
@@ -180,93 +189,23 @@ class DashboardController extends Controller
             return back()->with('error', 'Some error occured in adding group');
     }
 
-    // public function deleteFranchise(Request $r)
-    // {
-    //     if (Franchise::where('id', $r->id)->delete())
-    //         return back()->with('success', 'Franchise deleted successfully');
-    //     else
-    //         return back()->with('error', 'Some error occured in deleting franchise');
-    // }
+    public function deleteGroup(Request $r)
+    {
+        $groupId = $r->id;
 
-    // public function getInfo($id)
-    // {
-    //     $student = Students::where('id', $id)->get();
-    //     if (!is_null($student)) {
-    //         return response()->json(['student' => $student]);
-    //     } else
-    //         return response()->json(['error' => 'Some error occured in fetching student details']);
-    // }
+        // Delete associated documents
+        $deletedDocuments = Document::where('group_id', $groupId)->delete();
 
-    // public function studentDelete(Request $r)
-    // {
-    //     $delete = Students::where('id', $r->stid)->delete();
-    //     if ($delete)
-    //         return back()->with('success', 'Student details deleted successfully');
-    //     else
-    //         return back()->with('error', 'Some error occured in deleting student details');
-    // }
-    // public function addCategory(Request $r)
-    // {
-    //     $r->validate([
-    //         'name' => 'required|unique:category,name',
-    //     ], [
-    //         'name.unique' => 'Exam Category already exists.',
-    //     ]);
+        // Delete associated group members
+        $deletedMembers = GroupsMembers::where('group_id', $groupId)->delete();
 
-    //     // Attempt to create the category
-    //     $category = Category::create([
-    //         'name' => $r->name,
-    //     ]);
+        // Delete the group
+        $deletedGroup = Groups::where('id', $groupId)->delete();
 
-    //     // Check if the category was created successfully
-    //     if ($category) {
-    //         return back()->with('success', 'Category added successfully!');
-    //     } else {
-    //         return back()->with('error', 'Some error occurred in adding category!');
-    //     }
-    // }
-
-    // public function manageCategory()
-    // {
-    //     $categories = Category::orderBy('created_at', 'desc')->paginate(5);
-    //     return view('manage-category', ['categories' => $categories]);
-    // }
-
-    // public function updateCategory(Request $r)
-    // {
-    //     $r->validate([
-    //         'name' => 'required|string|max:250',
-    //     ]);
-    //     $update = Category::where('id', $r->id)->update([
-    //         'name' => $r->name,
-    //     ]);
-
-    //     if ($update)
-    //         return back()->with('success', 'Category updated successfully');
-    //     else
-    //         return back()->with('error', 'Some error occured in updating category');
-    // }
-
-    // public function getCategory($id)
-    // {
-    //     $category = Category::where('id', $id)->get();
-
-    //     if ($category)
-    //         return response()->json(['category' => $category]);
-    //     else
-    //         return response()->json(['message' => 'Some error occured in fetching category information']);
-    // }
-
-    // public function categoryDelete(Request $r)
-    // {
-    //     if (Category::where('id', $r->id)->delete())
-    //         return back()->with('success', 'Category deleted successfully');
-    //     else
-    //         return back()->with('error', 'Some error occured in deleting category');
-    // }
-
-    // public function getCategories()
-    // {
-    //     return response()->json(['categories' => Category::all()]);
-    // }
+        if ($deletedGroup && $deletedMembers && $deletedDocuments) {
+            return back()->with('success', 'Group and associated members, documents deleted successfully');
+        } else {
+            return back()->with('error', 'Some error occurred in deleting group');
+        }
+    }
 }

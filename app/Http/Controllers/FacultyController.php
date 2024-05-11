@@ -50,7 +50,7 @@ class FacultyController extends Controller
 
     public function evaluateMajorMarks(Request $r)
     {
-        // dd($r->all());
+        dd($r->all());
         foreach ($r->marks as $regno => $mark) {
             Evaluation::create([
                 'presentation_id' => $r->presentation_id,
