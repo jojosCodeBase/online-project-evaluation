@@ -9,6 +9,7 @@ use App\Models\Document;
 use App\Models\Projects;
 use App\Models\Students;
 use App\Models\Franchise;
+use App\Models\Evaluation;
 use Illuminate\Http\Request;
 use App\Models\GroupsMembers;
 use App\Models\Presentations;
@@ -115,13 +116,10 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact('students', 'faculties', 'presentations'));
     }
 
-    public function evaluateMinor()
+    public function evaluations()
     {
-        return view('admin.evaluate-minor');
-    }
-    public function evaluateMajor()
-    {
-        return view('admin.evaluate-major');
+        $evaluations = Evaluation::all();
+        return view('admin.evaluations', compact('evaluations'));
     }
 
     public function getGroupMembers($groupId){

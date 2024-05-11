@@ -50,21 +50,27 @@ class FacultyController extends Controller
 
     public function evaluateMajorMarks(Request $r)
     {
-        dd($r->all());
-        foreach ($r->marks as $regno => $mark) {
+        // dd($r->all());
+        foreach ($r->marks as $student_id => $mark) {
             Evaluation::create([
                 'presentation_id' => $r->presentation_id,
-                'student_id' => $regno,
+                'student_id' => $student_id,
                 'evaluator_id' => Auth::user()->id,
-                'score' => $mark,
-                'comments' => $r->remarks,
-                'group_id' => $r->groupId,
+                'group_id' => $r->group_id,
+                'presentation_content' => $mark[0], // assuming this comes from $r
+                'presentation_skills' => $mark[1], // assuming this comes from $r
+                'report_content' => $mark[2],// assuming this comes from $r
+                'viva_voice' => $mark[3], // assuming this comes from $r
+                'progress' => $mark[4],// assuming this comes from $r
+                'total' => $mark[5], // assuming this comes from $r
+                // 'remarks' => $r->remarks,
             ]);
         }
 
+
         try {
-            Document::where('presentation_id', $r->presentation_id)->where('group_id', $r->groupId)->update(['status' => 1]);
-            return back()->with('success', 'Evaluation successfully');
+            Document::where('presentation_id', $r->presentation_id)->where('group_id', $r->group_id)->update(['status' => 1]);
+            return back()->with('success', 'Evaluation successfully saved');
         } catch (\Exception $e) {
             return back()->with('error', 'Some error occured');
         }

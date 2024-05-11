@@ -92,6 +92,8 @@
         <div class="modal-dialog-lg" role="document">
             <form action="{{ route('student.evaluate') }}" method="POST">
                 @csrf
+                <input type="text" id="evaluate_presentation_id" name="presentation_id" hidden>
+                <input type="text" id="evaluate_group_id" name="group_id" hidden>
                 <div class="modal-content">
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -243,8 +245,8 @@
             var row = $(this).closest('tr'); // Find the closest <tr> parent element
             var groupId = $(this).data('group-id');
 
-            // alert(groupId);
-            $('#presentation_id').val($(this).data('presentation-id'));
+            $('#evaluate_presentation_id').val($(this).data('presentation-id'));
+            $('#evaluate_group_id').val(groupId);
 
             $.ajax({
                 url: '/faculty/get-group-members/' + groupId,
@@ -256,6 +258,7 @@
                     tbody.empty(); // Clear existing content
                     $.each(response, function(index, member) {
                         // Access and display regno and name attributes
+                        console.log(member.group_id);
                         console.log(member.student.regno);
                         console.log(member.student.user.name);
 
@@ -269,7 +272,7 @@
                         for (var i = 0; i < 6; i++) {
                             var input = $('<input>').attr({
                                 'type': 'number',
-                                'name': 'marks[]',
+                                'name': 'marks[' + member.student.user.id + '][]',
                                 'class': 'restrictMarksInput',
                                 'id': 'input_' + index + '_' +
                                     i, // Unique id for each input

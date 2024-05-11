@@ -13,8 +13,13 @@ class Evaluation extends Model
         'presentation_id',
         'student_id',
         'evaluator_id',
-        'score',
-        'comments',
         'group_id',
+        'presentation_content',
+        'presentation_skills',
+        'report_content',
+        'viva_voice',
+        'progress',
+        'total',
+        'remarks',
     ];
 }

@@ -25,15 +25,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Faculty',
-            'email' => 'faculty@gmail.com',
+            'name' => 'Dr. Moumita Pramanik',
+            'email' => 'moumitapramanik@gmail.com',
             'password' => Hash::make(12345678),
             'role' => 1,
         ]);
 
         $user = User::create([
-            'name' => 'Student',
-            'email' => 'student@gmail.com',
+            'name' => 'Kunsang Moktan',
+            'email' => 'kunsang@gmail.com',
             'password' => Hash::make(12345678),
             'role' => 2,
         ]);
@@ -42,5 +42,30 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id, // Assign the newly created user's ID
             'regno' => 202116033,
         ]);
+
+        $user = User::create([
+            'name' => 'Moyuk Rudra',
+            'email' => 'moyuk@gmail.com',
+            'password' => Hash::make(12345678),
+            'role' => 2,
+        ]);
+
+        Students::create([
+            'user_id' => $user->id, // Assign the newly created user's ID
+            'regno' => 202116030,
+        ]);
+
+        $user = User::create([
+            'name' => 'Ritik Roshan',
+            'email' => 'ritik@gmail.com',
+            'password' => Hash::make(12345678),
+            'role' => 2,
+        ]);
+
+        Students::create([
+            'user_id' => $user->id, // Assign the newly created user's ID
+            'regno' => 202116038,
+        ]);
+
     }
 }

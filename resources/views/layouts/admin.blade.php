@@ -79,13 +79,13 @@
                 </a>
             </li>
 
-            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.MCA') ? 'active' : ''}}">
-                <a class="nav-link d-flex align-items-center" href="{{ route('show.MCA') }}">
+            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('evaluations') ? 'active' : ''}}">
+                <a class="nav-link d-flex align-items-center" href="{{ route('evaluations') }}">
                     <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
-                    <span class="fs-6">Evaluate Major Project</span>
+                    <span class="fs-6">Evaluations</span>
                 </a>
             </li>
-            <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.BCA') ? 'active' : ''}}">
+            {{-- <li class="nav-item px-0 div-center mb-2 {{ request()->url() == route('show.BCA') ? 'active' : ''}}">
                 <a class="nav-link d-flex align-items-center" href="{{ route('show.BCA') }}">
                     <i class="bi bi-clipboard2-check-fill fs-6 pe-2"></i>
                     <span class="fs-6">Evaluate Minor Project</span>

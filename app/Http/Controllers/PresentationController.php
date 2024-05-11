@@ -81,8 +81,10 @@ class PresentationController extends Controller
             // 'send_email_notification' => $request->has('send_email_notification'), // Uncomment if needed
         ]);
 
-        // Dispatch a job to send emails to users in the background
-        SendPresentationUpdateEmail::dispatch($request->presentation_id);
+        if($request->has('send_email_notification')){
+            // Dispatch a job to send emails to users in the background
+            SendPresentationUpdateEmail::dispatch($request->presentation_id);
+        }
 
         // Optionally, you can return a response or redirect to a specific route
         return redirect()->back()->with('success', 'Presentation details updated successfully');

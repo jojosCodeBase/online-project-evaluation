@@ -34,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
         // Admin dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+        Route::get('/evaluations', [DashboardController::class, 'evaluations'])->name('evaluations');
+
         // Admin groups management
         Route::get('/groups-assigned', [DashboardController::class, 'manageGroups'])->name('admin.manage-groups');
 
