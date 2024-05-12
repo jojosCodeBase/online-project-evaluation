@@ -15,7 +15,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col">
-                        <h5 class="mb-3 fw-bold text-bj">Listed Groups</h5>
+                        <h5 class="mb-3 fw-bold text-bj">Listed Students</h5>
                     </div>
                 </div>
                 <div class="row">
@@ -24,53 +24,28 @@
                             <thead>
                                 <tr>
                                     <th>Group Number</th>
+                                    <th>Student name</th>
                                     <th>Presentation</th>
                                     <th>Project</th>
-                                    <th>Date</th>
                                     <th>Internal</th>
                                     <th>External</th>
                                     {{-- <th>Evaluate</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @dump($evaluations) --}}
-                                @if ($evaluations->isEmpty())
+                                @foreach ($grouped as $studentId => $evaluations)
                                     <tr>
-                                        <td colspan="6" class="text-center">No evaluations uploaded</td>
+                                        @php
+                                            $firstEvaluation = $evaluations->first();
+                                            $student = $firstEvaluation->student;
+                                            $studentName = $student->user->name ?? 'Unknown'; // Access user's name
+                                        @endphp
+                                        <td>{{ $studentId }}</td>
+                                        <td>{{ $studentName }}</td>
+                                        <td>{{ $averageTotals[$studentId] }}</td>
+                                        <td>&nbsp;</td>
                                     </tr>
-                                @else
-                                    @foreach ($evaluations as $document)
-                                        <tr>
-                                            <td>{{ $document->group_id }}</td>
-                                            <td>{{ $document->presentation_id }}</td>
-                                            <td>Mini Project</td>
-                                            {{-- <td>{{ $document->presentation->project->project_name }}</td> --}}
-                                            <td>{{ $document->created_at }}</td>
-                                            <td>{{ $document->total }}</td>
-                                            <td>NA</td>
-                                            {{-- <td>
-                                                <a href="{{ asset('uploads') . '/' . $document->file_url }}"
-                                                    class="btn btn-bj" target="_blank"><i class="bi bi-eye-fill"></i></a>
-                                            </td> --}}
-                                            {{-- <td>
-                                                <button type="button" class="btn btn-bj evaluate-btn"
-                                                    data-target="#evaluateModal" data-toggle="modal"
-                                                    data-document-id="{{ $document->id }}"
-                                                    data-group-id={{ $document->group->id }}
-                                                    data-presentation-id="{{ $document->presentation->id }}"><i
-                                                        class="bi bi-pencil-fill"></i></button>
-                                            </td>
-                                            <td style="display: none;">
-                                                <ul>
-                                                    @foreach ($document->group->members as $member)
-                                                        <li data-student-id="{{ $member->student->regno }}">
-                                                            {{ $member->student->user->name }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </td> --}}
-                                        </tr>
-                                    @endforeach
-                                @endif
+                                @endforeach
 
                             </tbody>
                         </table>

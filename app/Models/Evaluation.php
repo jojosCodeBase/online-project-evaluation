@@ -22,4 +22,14 @@ class Evaluation extends Model
         'total',
         'remarks',
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Students::class, 'student_id');
+    }
+
+    public function presentation()
+    {
+        return $this->belongsTo(Presentations::class, 'presentation_id');
+    }
 }

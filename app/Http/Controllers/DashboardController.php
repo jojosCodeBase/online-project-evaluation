@@ -118,13 +118,40 @@ class DashboardController extends Controller
 
     public function evaluations()
     {
-        // $evaluations = Evaluation::groupBy('group_id', 'presentation_id')->get();
-        // $evaluations = Evaluation::select('*')
-        $evaluations = Evaluation::select('presentation_id', 'student_id', 'evaluator_id', 'group_id')
-            ->groupBy('presentation_id', 'student_id', 'evaluator_id', 'group_id')
-            ->get();
-        // dd($evaluations);
-        return view('admin.evaluations', compact('evaluations'));
+        // $groupedEvaluations = $evaluations->groupBy(['group_id', 'presentation_id']);
+
+        // $studentIds = [];
+
+        // // Iterate over each group of evaluations
+        // foreach ($groupedEvaluations as $groups) {
+            //     // Extract distinct student IDs from the current group and merge with existing IDs
+            //     foreach($groups as $group){
+                //         $studentIds = array_merge($studentIds, $group->pluck('student_id')->unique()->toArray());
+                //     }
+                // }
+
+                // // dd($studentIds);
+        $evaluations = Evaluation::all();
+        $grouped = $evaluations->groupBy(['student_id']);
+
+        $averageTotals = [];
+        $studentIds = Evaluation::distinct('student_id')->pluck('student_id');
+
+        foreach ($studentIds as $studentId) {
+            $totalSum = Evaluation::where('student_id', $studentId)
+                ->sum('total');
+
+            $evaluationCount = Evaluation::where('student_id', $studentId)
+                ->count();
+
+            if ($evaluationCount > 0) {
+                $averageTotal = $totalSum / $evaluationCount;
+                $averageTotals[$studentId] = $averageTotal;
+            }
+        }
+
+        // dd($grouped);
+        return view('admin.evaluations', compact('averageTotals', 'grouped'));
     }
 
     public function getGroupMembers($groupId)
