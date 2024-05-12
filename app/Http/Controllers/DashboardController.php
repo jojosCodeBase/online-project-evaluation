@@ -118,14 +118,20 @@ class DashboardController extends Controller
 
     public function evaluations()
     {
-        $evaluations = Evaluation::all();
+        // $evaluations = Evaluation::groupBy('group_id', 'presentation_id')->get();
+        // $evaluations = Evaluation::select('*')
+        $evaluations = Evaluation::select('presentation_id', 'student_id', 'evaluator_id', 'group_id')
+            ->groupBy('presentation_id', 'student_id', 'evaluator_id', 'group_id')
+            ->get();
+        // dd($evaluations);
         return view('admin.evaluations', compact('evaluations'));
     }
 
-    public function getGroupMembers($groupId){
+    public function getGroupMembers($groupId)
+    {
         $members = GroupsMembers::with('student.user')
-        ->where('group_id', $groupId)
-        ->get();
+            ->where('group_id', $groupId)
+            ->get();
         // dd($members);
         return response()->json($members);
     }

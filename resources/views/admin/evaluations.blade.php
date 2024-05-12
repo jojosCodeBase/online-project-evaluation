@@ -11,7 +11,7 @@
     </div>
     <div class="container-fluid">
         @include('includes/alerts')
-        <div class="card">
+        <div class="card border-0 shadow">
             <div class="card-body">
                 <div class="row">
                     <div class="col">
