@@ -23,8 +23,9 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Group Number</th>
+                                    <th>Regno</th>
                                     <th>Student name</th>
+                                    <th>Group</th>
                                     <th>Presentation</th>
                                     <th>Project</th>
                                     <th>Internal</th>
@@ -37,11 +38,14 @@
                                     <tr>
                                         @php
                                             $firstEvaluation = $evaluations->first();
-                                            $student = $firstEvaluation->student;
-                                            $studentName = $student->user->name ?? 'Unknown'; // Access user's name
+                                            $groupName = $firstEvaluation->group->group_name;
+                                            // dd($firstEvaluation->student)
                                         @endphp
-                                        <td>{{ $studentId }}</td>
-                                        <td>{{ $studentName }}</td>
+                                        <td>{{ $firstEvaluation->student->regno }}</td>
+                                        <td>{{ $firstEvaluation->user->name }}</td>
+                                        <td>{{ $firstEvaluation->group->group_name }}</td>
+                                        <td>{{ $firstEvaluation->presentation->name }}</td>
+                                        <td>{{ $firstEvaluation->presentation->project->project_name }}</td>
                                         <td>{{ $averageTotals[$studentId] }}</td>
                                         <td>&nbsp;</td>
                                     </tr>

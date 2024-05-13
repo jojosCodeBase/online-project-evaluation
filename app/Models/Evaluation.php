@@ -23,13 +23,21 @@ class Evaluation extends Model
         'remarks',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'student_id');
+    }
     public function student()
     {
-        return $this->belongsTo(Students::class, 'student_id');
+        return $this->belongsTo(Students::class, 'student_id', 'user_id');
     }
 
     public function presentation()
     {
         return $this->belongsTo(Presentations::class, 'presentation_id');
+    }
+    public function group()
+    {
+        return $this->belongsTo(Groups::class, 'group_id');
     }
 }
