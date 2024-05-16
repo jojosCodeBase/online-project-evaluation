@@ -29,7 +29,7 @@
                                     <th>Presentation</th>
                                     <th>Project</th>
                                     <th>Internal</th>
-                                    <th>External</th>
+                                    {{-- <th>External</th> --}}
                                     {{-- <th>Evaluate</th> --}}
                                 </tr>
                             </thead>
@@ -47,7 +47,7 @@
                                         <td>{{ $firstEvaluation->presentation->name }}</td>
                                         <td>{{ $firstEvaluation->presentation->project->project_name }}</td>
                                         <td>{{ $averageTotals[$studentId] }}</td>
-                                        <td>&nbsp;</td>
+                                        {{-- <td>&nbsp;</td> --}}
                                     </tr>
                                 @endforeach
 
