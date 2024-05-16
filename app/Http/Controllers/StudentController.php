@@ -9,6 +9,7 @@ use App\Models\Students;
 use App\Models\Franchise;
 use App\Models\Evaluation;
 use App\Models\FileUpload;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\GroupsMembers;
 use App\Models\Presentations;
@@ -22,7 +23,16 @@ class StudentController extends Controller
         $presentations = Presentations::join('projects', 'projects.id', '=', 'presentations.project_id')
             ->select('presentations.*', 'projects.project_name as project_name', 'projects.id as project_id')
             ->paginate(10);
-        return view('dashboard', compact('presentations'));
+
+        $userdata = User::with('student.groupMember.group')->where('id', Auth::user()->id)->first();
+        $project_id = $userdata->student->groupMember->group->project_id;
+        $upcoming_presentation = Presentations::where('project_id', $project_id)->latest()->pluck('date')->first();
+        $upcoming_presentation = Carbon::parse($upcoming_presentation)->format('d-m-Y');
+
+        $projectGuide = User::where('id', $userdata->student->groupMember->group->project_guide)->pluck('name')->first();
+        $documentsSubmitted = Document::where('group_id', $userdata->student->groupMember->group->id)->count();
+
+        return view('dashboard', compact('presentations', 'upcoming_presentation', 'projectGuide', 'documentsSubmitted'));
     }
     public function upload()
     {

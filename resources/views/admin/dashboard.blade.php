@@ -67,24 +67,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card shadow h-100">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col mr-2">
-                                <div class="font-weight-bold text-bj text-uppercase">
-                                    Projects Evaluated
-                                </div>
-                                <div class="h4 mb-0 mt-2 fw-bold text-gray-800">28</div>
-                            </div>
-                            <div class="col-auto">
-                                {{-- <i class="fas fa-check fa-2x text-bj"></i> --}}
-                                <i class="fas fa-file fa-2x text-bj"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Listed Franchises -->

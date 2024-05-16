@@ -18,7 +18,9 @@ class FacultyController extends Controller
     public function index()
     {
         $presentations = Presentations::all();
-        return view('faculty.dashboard', compact('presentations'));
+        $assigned_groups = Groups::where('project_guide', Auth::user()->id)->count();
+        $evaluated = Evaluation::where('evaluator_id', Auth::user()->id)->count();
+        return view('faculty.dashboard', compact('presentations', 'assigned_groups', 'evaluated'));
     }
 
     public function evaluateMinor()

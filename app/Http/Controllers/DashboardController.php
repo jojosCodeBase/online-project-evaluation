@@ -4,18 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Groups;
-use App\Models\Category;
 use App\Models\Document;
 use App\Models\Projects;
 use App\Models\Students;
-use App\Models\Franchise;
 use App\Models\Evaluation;
 use Illuminate\Http\Request;
 use App\Models\GroupsMembers;
 use App\Models\Presentations;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
@@ -118,19 +113,6 @@ class DashboardController extends Controller
 
     public function evaluations()
     {
-        // $groupedEvaluations = $evaluations->groupBy(['group_id', 'presentation_id']);
-
-        // $studentIds = [];
-
-        // // Iterate over each group of evaluations
-        // foreach ($groupedEvaluations as $groups) {
-            //     // Extract distinct student IDs from the current group and merge with existing IDs
-            //     foreach($groups as $group){
-                //         $studentIds = array_merge($studentIds, $group->pluck('student_id')->unique()->toArray());
-                //     }
-                // }
-
-                // // dd($studentIds);
         $evaluations = Evaluation::all();
         $grouped = $evaluations->groupBy(['student_id']);
 

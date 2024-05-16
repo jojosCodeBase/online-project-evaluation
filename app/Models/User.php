@@ -45,12 +45,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // public function groups()
-    // {
-    //     // Define the many-to-many relationship between User and Group models
-    //     // Assuming 'group_user' is the pivot table name
-    //     return $this->belongsToMany(Groups::class, 'groups_members', 'id', 'group_id');
-    // }
     public function student()
     {
         // Assuming 'student_id' is the foreign key in the users table
