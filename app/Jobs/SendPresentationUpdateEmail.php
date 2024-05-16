@@ -47,5 +47,11 @@ class SendPresentationUpdateEmail implements ShouldQueue
         foreach ($members as $member) {
             Mail::to($member->student->user->email)->send(new PresentationNotificationMail($presentation, $member->student->user->name, $project_coordinator));
         }
+
+        $faculties = User::where('role', 1)->get();
+
+        foreach($faculties as $faculty){
+            Mail::to($faculty->email)->send(new PresentationNotificationMail($presentation, $faculty->name, $project_coordinator));
+        }
     }
 }
